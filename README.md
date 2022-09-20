@@ -9,16 +9,15 @@ Simply fork this repository to use the standard version of koawalib, published t
 If you want to modify the koawalib source code/have instant updates through git, follow these steps.  
 This will setup koawalib as a local repository, and as a dependency to your fork.   
 When new updates are pushed to koawalib, the user can choose how/when to upgrade through git.
-
-1. Fork this repository
-2. Clone your fork
-3. Clone [koawalib](https://github.com/AsianKoala/koawalib) in the same directory
-4. cd into the fork
-5. Add this template repo as a remote
-6. Fetch 
-7. Merge with the local-koawalib branch of this repository, allowing unrelated histories
-8. Check if koawalib is working as intended
-9. Update changes on your fork remote
+ 
+1. Clone or fork this repository
+2. Clone [koawalib](https://github.com/AsianKoala/koawalib) in the same directory
+3. cd into the fork
+4. Add this template repo as a remote
+5. Fetch 
+6. Merge with the local-koawalib branch of this repository, allowing unrelated histories
+7. Check if koawalib is working as intended
+8. Update changes on your fork remote
 
 Here is an example of me following the above steps with my personal repository.
 
