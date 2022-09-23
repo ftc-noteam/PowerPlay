@@ -10,7 +10,6 @@ import com.asiankoala.koawalib.hardware.motor.KEncoder
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.sensor.KDistanceSensor
 import com.asiankoala.koawalib.hardware.servo.KServo
-import com.asiankoala.koawalib.subsystem.odometry.KNewOdometry
 
 class Hardware {
     val flMotor = MotorFactory("fl")

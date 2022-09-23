@@ -1,7 +1,6 @@
 package asiankoala.ftc2022
 
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
-import com.asiankoala.koawalib.subsystem.odometry.KNewOdometry
 import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.Claw
 import asiankoala.ftc2022.subsystems.Lift

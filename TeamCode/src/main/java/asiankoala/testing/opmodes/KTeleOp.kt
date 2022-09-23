@@ -1,12 +1,13 @@
-package org.firstinspires.ftc.teamcode.opmodes
+package asiankoala.testing.opmodes
 
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
+import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.radians
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.Robot
+import asiankoala.testing.Robot
 
 @TeleOp
 class KTeleOp : KOpMode() {
@@ -29,5 +30,9 @@ class KTeleOp : KOpMode() {
 
         driver.x.onPress(InstantCmd({ driver.rumbleBlips(3) }))
         driver.y.onPress(InstantCmd({ driver.rumble(2500) }))
+    }
+
+    override fun mLoop() {
+        Logger.addTelemetryData("arm pos", robot.hardware.arm.pos)
     }
 }
