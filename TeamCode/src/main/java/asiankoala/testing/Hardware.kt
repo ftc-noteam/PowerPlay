@@ -42,14 +42,14 @@ class Hardware(startPose: Pose) {
 
     private val leftEncoder = KEncoder(fr, ticksPerUnit, true).reverse.zero()
     private val rightEncoder = KEncoder(fl, ticksPerUnit, true).zero()
-    private val auxEncoder = KEncoder(br, ticksPerUnit, true).reverse.zero()
+    private val auxEncoder = KEncoder(br, ticksPerUnit, true).zero()
 
     val odometry = KThreeWheelOdometry(
         leftEncoder,
         rightEncoder,
         auxEncoder,
-        9.8,
-        8.0,
+        9.86,
+        8.325,
         startPose
     )
 
