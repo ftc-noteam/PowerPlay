@@ -5,7 +5,7 @@ import com.asiankoala.koawalib.subsystem.Subsystem
 
 class Arm(val motor: KMotor) : Subsystem() {
     companion object {
-        const val topPosition = 13.0
+        const val topPosition = 35.0
         const val midPosition = -15.0
         const val bottomPosition = -30.0
         const val sharedPosition = -30.0
@@ -14,5 +14,6 @@ class Arm(val motor: KMotor) : Subsystem() {
         const val homePosition = -35.0
         const val armIntakeExt = -32.0
         const val armIntakePos = -40.0
+        const val initPos = -50.0
     }
 }

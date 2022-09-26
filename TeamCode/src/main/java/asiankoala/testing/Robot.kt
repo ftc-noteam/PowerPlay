@@ -17,9 +17,10 @@ class Robot(startPose: Pose) {
         true
     )
 
-    val arm = Arm(hardware.arm)
+//    val arm = Arm(hardware.arm)
 
     init {
-        arm.motor.setPositionTarget(Arm.homePosition)
+//        arm.motor.setProfileTarget(Arm.initPos)
+//        arm.motor.setPositionTarget(Arm.initPos)
     }
 }
