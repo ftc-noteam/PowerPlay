@@ -14,7 +14,7 @@ import com.asiankoala.koawalib.hardware.servo.KServo
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
-class Hardware(startPose: Pose) {
+class Hardware(val startPose: Pose) {
     val fl = MotorFactory("fl")
         .brake
         .forward
@@ -35,7 +35,7 @@ class Hardware(startPose: Pose) {
         .reverse
         .build()
 
-    val liftLeadMotor = MotorFactory("liftLeft")
+    val liftLeadMotor = MotorFactory("liftLeadMotor")
         .float
         .forward
         .createEncoder(Lift.ticksPerUnit, false)
@@ -49,23 +49,23 @@ class Hardware(startPose: Pose) {
         )
         .build()
 
-    val liftSecondMotor = MotorFactory("liftRight")
+    val liftFollowTop = MotorFactory("liftFollowTop")
         .float
         .build()
 
-    val liftThirdMotor = MotorFactory("liftMiddle")
+    val liftFollowBottom = MotorFactory("liftFollowBottom")
         .float
         .build()
 
     val armMotor = MotorFactory("arm")
         .float
         .createEncoder(Arm.ticksPerUnit, false)
-        .zero(Arm.homePos)
+        .zero(Arm.homePos[false])
         .withMotionProfileControl(
             PIDGains(TODO(), TODO(), TODO()),
             FFGains(kCos = TODO()),
             MotionConstraints(TODO(), TODO()),
-            allowedPositionError = 1.0,
+            allowedPositionError = TODO(),
             disabledPosition = DisabledPosition(TODO())
         )
         .build()
@@ -80,16 +80,22 @@ class Hardware(startPose: Pose) {
 
     val distanceSensor = KDistanceSensor("distanceSensor")
 
-    private val leftEncoder = KEncoder(fr, ticksPerUnit, true).reverse.zero()
-    private val rightEncoder = KEncoder(fl, ticksPerUnit, true).zero()
-    private val auxEncoder = KEncoder(br, ticksPerUnit, true).reverse.zero()
+    private val leftEncoder = KEncoder(fr, ticksPerUnit, true)
+        .reverse
+        .zero()
+    private val rightEncoder = KEncoder(fl, ticksPerUnit, true)
+        .zero()
+
+    private val auxEncoder = KEncoder(br, ticksPerUnit, true)
+        .reverse
+        .zero()
 
     val odometry = KThreeWheelOdometry(
         leftEncoder,
         rightEncoder,
         auxEncoder,
-        9.8,
-        8.0,
+        TODO(),
+        TODO(),
         startPose
     )
 

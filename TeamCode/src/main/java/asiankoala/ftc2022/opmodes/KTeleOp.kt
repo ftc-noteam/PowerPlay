@@ -1,26 +1,32 @@
-package asiankoala.testing.opmodes
+package asiankoala.ftc2022.opmodes
 
+import asiankoala.ftc2022.CmdChooser
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.radians
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import asiankoala.testing.Robot
 import com.asiankoala.koawalib.command.commands.*
-import com.asiankoala.koawalib.path.Path
 import com.asiankoala.koawalib.util.Alliance
+import asiankoala.ftc2022.Miyuki
 
 @TeleOp
 class KTeleOp(
-    private val alliance: Alliance
+    private val alliance: Alliance,
+    private val startPose: Pose
 ) : KOpMode(photonEnabled = true) {
-    private val startPose = Pose(-36.0, -60.0, 90.0.radians)
-    private val robot by lazy { Robot(startPose) }
+    private val miyuki by lazy { Miyuki(startPose) }
 
     override fun mInit() {
+        bindDrive()
+        bindStrategy()
+        bindCycling()
+    }
+
+    private fun bindDrive() {
         // TODO: check if transfer function is acceptable
-        robot.drive.setDefaultCommand(
+        miyuki.drive.setDefaultCommand(
             MecanumCmd(
-                robot.drive,
+                miyuki.drive,
                 driver.leftStick,
                 driver.rightStick,
                 0.5,
@@ -30,14 +36,23 @@ class KTeleOp(
                 1.0,
                 1.0,
                 alliance,
-                true,
-                true,
-                { robot.drive.pose.heading },
+                isTranslationFieldCentric = true,
+                isHeadingFieldCentric = true,
+                { miyuki.drive.pose.heading },
                 60.0.radians
             )
         )
     }
 
+    private fun bindStrategy() {
+        TODO()
+    }
+
+    private fun bindCycling() {
+        TODO()
+    }
+
     override fun mLoop() {
     }
 }
+
