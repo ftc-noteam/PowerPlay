@@ -7,6 +7,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.asiankoala.koawalib.command.commands.*
 import com.asiankoala.koawalib.util.Alliance
 import asiankoala.ftc2022.Miyuki
+import com.asiankoala.koawalib.command.KScheduler
+import com.asiankoala.koawalib.command.group.SequentialGroup
+import com.asiankoala.koawalib.path.HeadingController
+import com.asiankoala.koawalib.path.HermiteSplineInterpolator
+import com.asiankoala.koawalib.path.HermiteType
+import com.asiankoala.koawalib.path.Path
+import com.asiankoala.koawalib.path.gvf.GVFController
+import com.asiankoala.koawalib.path.gvf.SimpleGVFController
+import com.asiankoala.koawalib.util.OpModeState
 
 @TeleOp
 class KTeleOp(
@@ -39,6 +48,30 @@ class KTeleOp(
                 isHeadingFieldCentric = true,
                 { miyuki.drive.pose.heading },
                 60.0.radians
+            )
+        )
+
+        val testPath = Path(
+            HermiteSplineInterpolator(
+                HermiteType.CUBIC,
+                { it.angle },
+                Pose(),
+                Pose(24.0, 24.0)
+            )
+        )
+
+        + SequentialGroup(
+            WaitUntilCmd { opmodeState == OpModeState.START },
+            GVFCmd(
+                miyuki.drive,
+                SimpleGVFController(
+                    testPath,
+                    0.6,
+                    1.0 / 22.5,
+                    4.0,
+                    0.95,
+                    2.0
+                )
             )
         )
     }
