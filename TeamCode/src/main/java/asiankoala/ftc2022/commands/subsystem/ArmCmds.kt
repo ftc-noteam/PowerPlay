@@ -1,7 +1,7 @@
 package asiankoala.ftc2022.commands.subsystem
 
 import asiankoala.ftc2022.MiyukiState
-import asiankoala.ftc2022.Reversible
+import com.asiankoala.koawalib.util.Reversible
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import asiankoala.ftc2022.subsystems.Arm
 

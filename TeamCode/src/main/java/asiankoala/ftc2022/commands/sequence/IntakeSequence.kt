@@ -1,7 +1,6 @@
 package asiankoala.ftc2022.commands.sequence
 
-import asiankoala.ftc2022.CmdChooser
-import asiankoala.ftc2022.Miyuki
+import asiankoala.ftc2022.commands.CmdChooser
 import asiankoala.ftc2022.commands.subsystem.ClawCmds
 import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.Claw

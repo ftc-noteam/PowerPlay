@@ -1,6 +1,5 @@
 package asiankoala.ftc2022.opmodes
 
-import asiankoala.ftc2022.CmdChooser
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.radians

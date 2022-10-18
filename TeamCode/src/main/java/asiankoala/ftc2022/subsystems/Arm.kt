@@ -1,6 +1,6 @@
 package asiankoala.ftc2022.subsystems
 
-import asiankoala.ftc2022.Reversible
+import com.asiankoala.koawalib.util.Reversible
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
 

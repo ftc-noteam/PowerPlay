@@ -14,7 +14,7 @@ import com.asiankoala.koawalib.hardware.servo.KServo
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
-class Hardware(val startPose: Pose) {
+class Hardware(startPose: Pose) {
     val fl = MotorFactory("fl")
         .brake
         .forward
