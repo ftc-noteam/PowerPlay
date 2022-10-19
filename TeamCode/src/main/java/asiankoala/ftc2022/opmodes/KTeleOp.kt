@@ -7,13 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.asiankoala.koawalib.command.commands.*
 import com.asiankoala.koawalib.util.Alliance
 import asiankoala.ftc2022.Miyuki
-import com.asiankoala.koawalib.command.KScheduler
 import com.asiankoala.koawalib.command.group.SequentialGroup
-import com.asiankoala.koawalib.path.HeadingController
 import com.asiankoala.koawalib.path.HermiteSplineInterpolator
 import com.asiankoala.koawalib.path.HermiteType
 import com.asiankoala.koawalib.path.Path
-import com.asiankoala.koawalib.path.gvf.GVFController
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 
@@ -25,12 +22,12 @@ class KTeleOp(
     private val miyuki by lazy { Miyuki(startPose) }
 
     override fun mInit() {
-        bindDrive()
-        bindStrategy()
-        bindCycling()
+        scheduleDrive()
+        scheduleStrategy()
+        scheduleCycling()
     }
 
-    private fun bindDrive() {
+    private fun scheduleDrive() {
         // TODO: check if transfer function is acceptable
         miyuki.drive.setDefaultCommand(
             MecanumCmd(
@@ -76,11 +73,11 @@ class KTeleOp(
         )
     }
 
-    private fun bindStrategy() {
+    private fun scheduleStrategy() {
         TODO()
     }
 
-    private fun bindCycling() {
+    private fun scheduleCycling() {
         TODO()
     }
 
