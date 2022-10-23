@@ -31,7 +31,7 @@ class Miyuki(startPose: Pose) {
     val claw = Claw(hardware.clawLeftServo, hardware.clawRightServo, hardware.distanceSensor)
     val cmdChooser = CmdChooser()
     val l9SpacegliderScript1v9TurboBoostHack = L9SpacegliderScript1v9TurboBoostHack(
-        { drive.pose },
+        drive::pose,
         3.0,
         2.0,
         60.0.radians
