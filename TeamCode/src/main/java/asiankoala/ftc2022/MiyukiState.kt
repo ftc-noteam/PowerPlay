@@ -1,8 +1,11 @@
 package asiankoala.ftc2022
 
+import com.asiankoala.koawalib.util.Alliance
+
 object MiyukiState {
     enum class State {
         INTAKING,
+        READYING,
         DEPOSITING;
         val next get() = values()[(ordinal + 1) % values().size]
     }
@@ -31,4 +34,5 @@ object MiyukiState {
     var reversed = false
     var state = State.INTAKING
     var strategy = DepositState.HIGH
+    var alliance = Alliance.BLUE
 }

@@ -1,5 +1,6 @@
 package asiankoala.ftc2022.commands
 
+import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.MiyukiState
 import asiankoala.ftc2022.commands.subsystem.ArmCmds
 import asiankoala.ftc2022.commands.subsystem.LiftCmds
@@ -7,8 +8,9 @@ import asiankoala.ftc2022.commands.subsystem.PivotCmds
 import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.Lift
 import asiankoala.ftc2022.subsystems.Pivot
+import com.asiankoala.koawalib.command.group.ParallelGroup
 
-class CmdChooser {
+object CmdChooser {
     fun liftCmd(lift: Lift): LiftCmds.LiftCmd {
         return when(MiyukiState.strategy) {
             MiyukiState.DepositState.HIGH -> LiftCmds.LiftHighCmd(lift)
@@ -34,5 +36,21 @@ class CmdChooser {
             MiyukiState.DepositState.LOW -> PivotCmds.PivotLowCmd(pivot)
             MiyukiState.DepositState.GROUND -> PivotCmds.PivotGroundCmd(pivot)
         }
+    }
+
+    fun homeCmd(miyuki: Miyuki): ParallelGroup {
+        return ParallelGroup(
+            LiftCmds.LiftHomeCmd(miyuki.lift),
+            ArmCmds.ArmHomeCmd(miyuki.arm),
+            PivotCmds.PivotHomeCmd(miyuki.pivot)
+        )
+    }
+
+    fun triple(miyuki: Miyuki): ParallelGroup {
+        return ParallelGroup(
+            liftCmd(miyuki.lift),
+            armCmd(miyuki.arm),
+            pivotCmd(miyuki.pivot)
+        )
     }
 }

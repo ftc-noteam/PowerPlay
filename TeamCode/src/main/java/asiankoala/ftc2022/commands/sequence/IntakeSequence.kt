@@ -13,18 +13,9 @@ import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class IntakeSequence(
-    cmdChooser: CmdChooser,
-    lift: Lift,
-    arm: Arm,
-    pivot: Pivot,
     claw: Claw,
 ) : SequentialGroup(
     WaitUntilCmd(claw::readyToGrab),
     ClawCmds.ClawGripCmd(claw),
-    WaitCmd(0.2),
-    cmdChooser.liftCmd(lift)
-        .alongWith(cmdChooser.armCmd(arm)),
-    WaitCmd(0.2),
-    cmdChooser.pivotCmd(pivot),
     InstantCmd(MiyukiState::nextState)
 )

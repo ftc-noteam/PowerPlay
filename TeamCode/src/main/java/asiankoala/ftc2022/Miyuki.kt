@@ -9,7 +9,6 @@ import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.radians
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 
-// todo: check if intermediate steps are needed
 class Miyuki(startPose: Pose) {
     private val hardware = Hardware(startPose)
 
@@ -26,7 +25,6 @@ class Miyuki(startPose: Pose) {
     val arm = Arm(hardware.armMotor)
     val pivot = Pivot(hardware.pivotServo)
     val claw = Claw(hardware.clawLeftServo, hardware.clawRightServo, hardware.distanceSensor)
-    val cmdChooser = CmdChooser()
     val l9SpacegliderScript1v9TurboBoostHack = L9SpacegliderScript1v9TurboBoostHack(
         drive::pose,
         3.0,
