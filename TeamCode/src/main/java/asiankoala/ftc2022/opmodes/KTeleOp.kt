@@ -44,11 +44,11 @@ class KTeleOp(
         )
 
         driver.a.onToggle(
-            InstantCmd( { miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot { driver.leftStick.vector }})
+            InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector) })
         )
 
         driver.leftTrigger.onToggle(
-            InstantCmd( { miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide { driver.leftStick.vector }})
+            InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector) })
         )
     }
 
