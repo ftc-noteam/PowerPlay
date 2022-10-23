@@ -7,12 +7,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import com.asiankoala.koawalib.command.commands.*
 import com.asiankoala.koawalib.util.Alliance
 import asiankoala.ftc2022.Miyuki
-import com.asiankoala.koawalib.command.group.SequentialGroup
-import com.asiankoala.koawalib.path.HermiteSplineInterpolator
-import com.asiankoala.koawalib.path.HermiteType
-import com.asiankoala.koawalib.path.Path
-import com.asiankoala.koawalib.path.gvf.SimpleGVFController
-import com.asiankoala.koawalib.util.OpModeState
+import asiankoala.ftc2022.MiyukiState
+import asiankoala.ftc2022.commands.sequence.DepositSequence
+import asiankoala.ftc2022.commands.sequence.IntakeSequence
+import com.asiankoala.koawalib.logger.Logger
 
 @TeleOp
 class KTeleOp(
@@ -28,60 +26,62 @@ class KTeleOp(
     }
 
     private fun scheduleDrive() {
-        // TODO: check if transfer function is acceptable
-        miyuki.drive.setDefaultCommand(
-            MecanumCmd(
-                miyuki.drive,
-                driver.leftStick,
-                driver.rightStick,
-                0.5,
-                0.5,
-                0.5,
-                1.0,
-                1.0,
-                1.0,
-                alliance,
-                isTranslationFieldCentric = true,
-                isHeadingFieldCentric = true,
-                { miyuki.drive.pose.heading },
-                60.0.radians
-            )
+        miyuki.drive.defaultCommand = MecanumCmd(
+            miyuki.drive,
+            driver.leftStick,
+            driver.rightStick,
+            0.5,
+            0.5,
+            0.5,
+            1.0,
+            1.0,
+            1.0,
+            alliance,
+            isTranslationFieldCentric = true,
+            isHeadingFieldCentric = true,
+            { miyuki.drive.pose.heading },
+            60.0.radians
         )
 
-        val testPath = Path(
-            HermiteSplineInterpolator(
-                HermiteType.CUBIC,
-                { it.angle },
-                Pose(),
-                Pose(24.0, 24.0)
-            )
+        driver.a.onToggle(
+            InstantCmd( { miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot { driver.leftStick.vector }})
         )
 
-        + SequentialGroup(
-            WaitUntilCmd { opmodeState == OpModeState.START },
-            GVFCmd(
-                miyuki.drive,
-                SimpleGVFController(
-                    testPath,
-                    0.6,
-                    1.0 / 22.5,
-                    4.0,
-                    0.95,
-                    2.0
-                )
-            )
+        driver.leftTrigger.onToggle(
+            InstantCmd( { miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide { driver.leftStick.vector }})
         )
     }
 
     private fun scheduleStrategy() {
-        TODO()
+        driver.leftBumper.onPress(InstantCmd(MiyukiState::incStrat))
+        driver.rightBumper.onPress(InstantCmd(MiyukiState::decStrat))
     }
 
     private fun scheduleCycling() {
-        TODO()
+        driver.rightTrigger.onPress(
+            ChooseCmd(
+                IntakeSequence(
+                    miyuki.cmdChooser,
+                    miyuki.lift,
+                    miyuki.arm,
+                    miyuki.pivot,
+                    miyuki.claw
+                ),
+                DepositSequence(
+                    miyuki.lift,
+                    miyuki.arm,
+                    miyuki.pivot,
+                    miyuki.claw
+                )
+            ) { MiyukiState.state == MiyukiState.State.INTAKING }
+        )
     }
 
     override fun mLoop() {
+        Logger.addTelemetryData("state", MiyukiState.state)
+        Logger.addTelemetryData("strat", MiyukiState.strategy)
+        Logger.addTelemetryData("aimbot", driver.a.isToggled)
+        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
     }
 }
 

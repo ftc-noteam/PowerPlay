@@ -6,15 +6,14 @@ import com.asiankoala.koawalib.math.angleWrap
 import kotlin.math.PI
 
 class L9SpacegliderScript1v9TurboBoostHack(
-    private val obstacles: List<Vector>,
     private val ps: () -> Pose,
-    private val ins: () -> Vector,
     private val R: Double,
     private val N: Double,
     private val hp: Double,
+    private val obstacles: List<Vector> = OBSTACLES,
 ) {
     // https://www.desmos.com/calculator/vq9ykp5m3r
-    fun spaceglide(): Vector {
+    fun spaceglide(ins: () -> Vector): Vector {
         val i = ins.invoke()
         val p = ps.invoke().vec
         val o = obstacles.minByOrNull { (p - it).norm }!!
@@ -32,7 +31,7 @@ class L9SpacegliderScript1v9TurboBoostHack(
         return u / im
     }
 
-    fun aimbot(): Double {
+    fun aimbot(ins: () -> Vector): Double {
         val p = ps.invoke()
         val i = ins.invoke()
         val xn = (p.x.toInt() / 24)
@@ -44,9 +43,47 @@ class L9SpacegliderScript1v9TurboBoostHack(
             Vector(c.x - 12.0, c.y + 12.0),
             Vector(c.x - 12.0, c.y - 12.0)
         )
-        val o = os.maxBy { (it - p.vec) dot i }
+        val o = os.maxByOrNull { (it - p.vec) dot i }!!
         val a = (o - p.vec).angle
         val dh = (p.heading - a).angleWrap
         return dh / hp
+    }
+
+    companion object {
+        private val OBSTACLES = listOf(
+            Vector(-48.0, -48.0),
+            Vector(-48.0, -24.0),
+            Vector(-48.0, 0.0),
+            Vector(-48.0, 24.0),
+            Vector(-48.0, 48.0),
+            Vector(-24.0, -48.0),
+            Vector(-24.0, -24.0),
+            Vector(-24.0, 0.0),
+            Vector(-24.0, 24.0),
+            Vector(-24.0, 48.0),
+            Vector(0.0, -48.0),
+            Vector(0.0, -24.0),
+            Vector(0.0, 0.0),
+            Vector(0.0, 24.0),
+            Vector(0.0, 48.0),
+            Vector(24.0, -48.0),
+            Vector(24.0, -24.0),
+            Vector(24.0, 0.0),
+            Vector(24.0, 24.0),
+            Vector(24.0, 48.0),
+            Vector(48.0, -48.0),
+            Vector(48.0, -24.0),
+            Vector(48.0, 0.0),
+            Vector(48.0, 24.0),
+            Vector(48.0, 48.0),
+            Vector(-12.0, -70.0),
+            Vector(-12.0, 70.0),
+            Vector(12.0, -70.0),
+            Vector(12.0, 70.0),
+            Vector(-36.0, -36.0),
+            Vector(-36.0, 36.0),
+            Vector(36.0, -36.0),
+            Vector(36.0, 36.0),
+        )
     }
 }

@@ -2,7 +2,6 @@ package asiankoala.ftc2022
 
 import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.Lift
-import asiankoala.testing.Hardware
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.DisabledPosition
 import com.asiankoala.koawalib.control.motor.FFGains

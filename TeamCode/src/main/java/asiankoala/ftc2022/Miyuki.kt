@@ -6,8 +6,13 @@ import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.Claw
 import asiankoala.ftc2022.subsystems.Lift
 import asiankoala.ftc2022.subsystems.Pivot
+import com.asiankoala.koawalib.command.commands.Cmd
+import com.asiankoala.koawalib.command.commands.WaitUntilCmd
+import com.asiankoala.koawalib.command.group.ParallelGroup
 import com.asiankoala.koawalib.math.Pose
+import com.asiankoala.koawalib.math.radians
 
+// todo: check if intermediate steps are needed
 class Miyuki(startPose: Pose) {
     private val hardware = Hardware(startPose)
 
@@ -24,6 +29,11 @@ class Miyuki(startPose: Pose) {
     val arm = Arm(hardware.armMotor)
     val pivot = Pivot(hardware.pivotServo)
     val claw = Claw(hardware.clawLeftServo, hardware.clawRightServo, hardware.distanceSensor)
-
     val cmdChooser = CmdChooser()
+    val l9SpacegliderScript1v9TurboBoostHack = L9SpacegliderScript1v9TurboBoostHack(
+        { drive.pose },
+        3.0,
+        2.0,
+        60.0.radians
+    )
 }
