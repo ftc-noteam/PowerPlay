@@ -26,6 +26,5 @@ class IntakeSequence(
         .alongWith(cmdChooser.armCmd(arm)),
     WaitCmd(0.2),
     cmdChooser.pivotCmd(pivot),
-    WaitUntilCmd { arm.motor.isAtTarget() && lift.leadMotor.isAtTarget() },
     InstantCmd(MiyukiState::nextState)
 )

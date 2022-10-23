@@ -26,6 +26,5 @@ class DepositSequence(
         ArmCmds.ArmHomeCmd(arm),
         PivotCmds.PivotHomeCmd(pivot)
     ),
-    WaitUntilCmd { arm.motor.isAtTarget() && lift.leadMotor.isAtTarget() },
     InstantCmd(MiyukiState::nextState)
 )
