@@ -1,6 +1,5 @@
 package asiankoala.ftc2022
 
-import asiankoala.ftc2022.commands.CmdChooser
 import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.Claw
 import asiankoala.ftc2022.subsystems.Lift
