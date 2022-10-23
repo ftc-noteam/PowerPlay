@@ -26,15 +26,10 @@ class MiyukiAuto(startPose: Pose): KOpMode() {
     private val kS = 1.0
     private val epsilon = 1.0
 
-    private fun defaultGVFCmd(
-        path: Path, vararg cmds: Pair<Cmd, Vector>
-    ): GVFCmd {
+    private fun defaultGVFCmd(path: Path, vararg cmds: Pair<Cmd, Vector>): GVFCmd {
         return GVFCmd(
             miyuki.drive,
-            SimpleGVFController(
-                path,
-                kN, kOmega, kF, kS, epsilon,
-            ),
+            SimpleGVFController(path, kN, kOmega, kF, kS, epsilon),
             *cmds
         )
     }
