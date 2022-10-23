@@ -1,16 +1,18 @@
 package asiankoala.ftc2022.opmodes
 
-import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.math.Pose
-import com.asiankoala.koawalib.math.radians
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import com.asiankoala.koawalib.command.commands.*
-import com.asiankoala.koawalib.util.Alliance
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.MiyukiState
 import asiankoala.ftc2022.commands.sequence.DepositSequence
 import asiankoala.ftc2022.commands.sequence.IntakeSequence
+import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.commands.ChooseCmd
+import com.asiankoala.koawalib.command.commands.InstantCmd
+import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
+import com.asiankoala.koawalib.math.Pose
+import com.asiankoala.koawalib.math.radians
+import com.asiankoala.koawalib.util.Alliance
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp
 class KTeleOp(

@@ -1,7 +1,7 @@
 package asiankoala.ftc2022.commands.subsystem
 
-import com.asiankoala.koawalib.command.commands.InstantCmd
 import asiankoala.ftc2022.subsystems.Lift
+import com.asiankoala.koawalib.command.commands.InstantCmd
 
 object LiftCmds {
     open class LiftCmd(lift: Lift, pos: Double) : InstantCmd({ lift.setPos(pos) }, lift)

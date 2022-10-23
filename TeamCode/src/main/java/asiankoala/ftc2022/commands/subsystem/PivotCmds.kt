@@ -1,9 +1,9 @@
 package asiankoala.ftc2022.commands.subsystem
 
 import asiankoala.ftc2022.MiyukiState
-import com.asiankoala.koawalib.util.Reversible
-import com.asiankoala.koawalib.command.commands.InstantCmd
 import asiankoala.ftc2022.subsystems.Pivot
+import com.asiankoala.koawalib.command.commands.InstantCmd
+import com.asiankoala.koawalib.util.Reversible
 
 class PivotCmds {
     open class PivotCmd(private val pivot: Pivot, private val pos: Reversible<Double>) : InstantCmd({ pivot.setPos(pos[MiyukiState.reversed]) }, pivot)

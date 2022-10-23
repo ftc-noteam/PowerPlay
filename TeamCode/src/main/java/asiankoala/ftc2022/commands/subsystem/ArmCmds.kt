@@ -1,9 +1,9 @@
 package asiankoala.ftc2022.commands.subsystem
 
 import asiankoala.ftc2022.MiyukiState
-import com.asiankoala.koawalib.util.Reversible
-import com.asiankoala.koawalib.command.commands.InstantCmd
 import asiankoala.ftc2022.subsystems.Arm
+import com.asiankoala.koawalib.command.commands.InstantCmd
+import com.asiankoala.koawalib.util.Reversible
 
 object ArmCmds {
     open class ArmCmd(private val arm: Arm, private val pos: Reversible<Double>) : InstantCmd({ arm.setPos(pos[MiyukiState.reversed]) }, arm)

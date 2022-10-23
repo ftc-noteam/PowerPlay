@@ -1,8 +1,8 @@
 package asiankoala.ftc2022.subsystems
 
-import com.asiankoala.koawalib.util.Reversible
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
+import com.asiankoala.koawalib.util.Reversible
 
 class Arm(val motor: KMotor) : Subsystem() {
     companion object {
