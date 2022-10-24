@@ -6,7 +6,8 @@ import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.util.Reversible
 
 class PivotCmds {
-    open class PivotCmd(private val pivot: Pivot, private val pos: Reversible<Double>) : InstantCmd({ pivot.setPos(pos[MiyukiState.reversed]) }, pivot)
+    open class PivotCmd(private val pivot: Pivot, private val pos: Reversible<Double>) :
+        InstantCmd({ pivot.setPos(pos[MiyukiState.reversed]) }, pivot)
 
     class PivotHomeCmd(pivot: Pivot) : PivotCmd(pivot, Pivot.homePos)
     class PivotGroundCmd(pivot: Pivot) : PivotCmd(pivot, Pivot.groundPos)

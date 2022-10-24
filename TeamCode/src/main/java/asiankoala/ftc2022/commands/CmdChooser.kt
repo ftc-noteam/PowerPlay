@@ -12,7 +12,7 @@ import com.asiankoala.koawalib.command.group.ParallelGroup
 
 object CmdChooser {
     fun liftCmd(lift: Lift): LiftCmds.LiftCmd {
-        return when(MiyukiState.strategy) {
+        return when (MiyukiState.strategy) {
             MiyukiState.DepositState.HIGH -> LiftCmds.LiftHighCmd(lift)
             MiyukiState.DepositState.MEDIUM -> LiftCmds.LiftMedCmd(lift)
             MiyukiState.DepositState.LOW -> LiftCmds.LiftLowCmd(lift)
@@ -21,7 +21,7 @@ object CmdChooser {
     }
 
     fun armCmd(arm: Arm): ArmCmds.ArmCmd {
-        return when(MiyukiState.strategy) {
+        return when (MiyukiState.strategy) {
             MiyukiState.DepositState.HIGH -> ArmCmds.ArmHighCmd(arm)
             MiyukiState.DepositState.MEDIUM -> ArmCmds.ArmMedCmd(arm)
             MiyukiState.DepositState.LOW -> ArmCmds.ArmLowCmd(arm)
@@ -30,7 +30,7 @@ object CmdChooser {
     }
 
     fun pivotCmd(pivot: Pivot): PivotCmds.PivotCmd {
-        return when(MiyukiState.strategy) {
+        return when (MiyukiState.strategy) {
             MiyukiState.DepositState.HIGH -> PivotCmds.PivotHighCmd(pivot)
             MiyukiState.DepositState.MEDIUM -> PivotCmds.PivotMedCmd(pivot)
             MiyukiState.DepositState.LOW -> PivotCmds.PivotLowCmd(pivot)

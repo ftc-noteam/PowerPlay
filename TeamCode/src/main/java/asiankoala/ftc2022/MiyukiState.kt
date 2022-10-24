@@ -7,6 +7,7 @@ object MiyukiState {
         INTAKING,
         READYING,
         DEPOSITING;
+
         val next get() = values()[(ordinal + 1) % values().size]
     }
 
@@ -15,6 +16,7 @@ object MiyukiState {
         LOW,
         MEDIUM,
         HIGH;
+
         val next get() = values()[(ordinal + 1) % values().size]
         val prev get() = values()[(ordinal - 1) % values().size]
     }

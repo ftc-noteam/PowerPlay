@@ -6,16 +6,13 @@ import asiankoala.ftc2022.commands.sequence.DepositSequence
 import asiankoala.ftc2022.commands.sequence.IntakeSequence
 import asiankoala.ftc2022.commands.sequence.ReadySequence
 import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.command.KScheduler
-import com.asiankoala.koawalib.command.commands.ChooseCmd
-import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.radians
 import com.asiankoala.koawalib.subsystem.odometry.Odometry
 
-class MiyukiTeleOp: KOpMode(photonEnabled = true) {
+class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     private val miyuki by lazy { Miyuki(Odometry.lastPose) }
 
     override fun mInit() {
@@ -42,8 +39,13 @@ class MiyukiTeleOp: KOpMode(photonEnabled = true) {
             60.0.radians
         )
 
-        driver.a.onToggle(InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector) }))
-        driver.leftTrigger.onToggle(InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector) }))
+        driver.a.onToggle(InstantCmd({
+            miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector)
+        }))
+
+        driver.leftTrigger.onToggle(InstantCmd({
+            miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector)
+        }))
     }
 
     private fun scheduleStrategy() {
@@ -54,13 +56,12 @@ class MiyukiTeleOp: KOpMode(photonEnabled = true) {
     private fun scheduleCycling() {
         driver.rightTrigger.onPress(
             InstantCmd({
-                    + when(MiyukiState.state) {
-                        MiyukiState.State.INTAKING -> IntakeSequence(miyuki.claw)
-                        MiyukiState.State.READYING -> ReadySequence(miyuki)
-                        MiyukiState.State.DEPOSITING -> DepositSequence(miyuki)
-                    }
+                +when (MiyukiState.state) {
+                    MiyukiState.State.INTAKING -> IntakeSequence(miyuki.claw)
+                    MiyukiState.State.READYING -> ReadySequence(miyuki)
+                    MiyukiState.State.DEPOSITING -> DepositSequence(miyuki)
                 }
-            )
+            })
         )
     }
 
