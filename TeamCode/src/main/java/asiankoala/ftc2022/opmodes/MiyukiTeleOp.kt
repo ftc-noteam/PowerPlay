@@ -39,11 +39,11 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
             60.0.radians
         )
 
-        driver.a.onToggle(InstantCmd({
+        driver.leftTrigger.onToggle(InstantCmd({
             miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector)
         }))
 
-        driver.leftTrigger.onToggle(InstantCmd({
+        driver.a.onToggle(InstantCmd({
             miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector)
         }))
     }
