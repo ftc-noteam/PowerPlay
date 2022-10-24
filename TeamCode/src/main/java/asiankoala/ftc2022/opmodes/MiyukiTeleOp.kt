@@ -6,7 +6,9 @@ import asiankoala.ftc2022.commands.sequence.DepositSequence
 import asiankoala.ftc2022.commands.sequence.IntakeSequence
 import asiankoala.ftc2022.commands.sequence.ReadySequence
 import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.KScheduler
 import com.asiankoala.koawalib.command.commands.ChooseCmd
+import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
@@ -40,13 +42,8 @@ class MiyukiTeleOp: KOpMode(photonEnabled = true) {
             60.0.radians
         )
 
-        driver.a.onToggle(
-            InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector) })
-        )
-
-        driver.leftTrigger.onToggle(
-            InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector) })
-        )
+        driver.a.onToggle(InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector) }))
+        driver.leftTrigger.onToggle(InstantCmd({ miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector) }))
     }
 
     private fun scheduleStrategy() {
@@ -56,11 +53,14 @@ class MiyukiTeleOp: KOpMode(photonEnabled = true) {
 
     private fun scheduleCycling() {
         driver.rightTrigger.onPress(
-            ChooseCmd(
-                IntakeSequence(miyuki.claw)
-                    .andThen(ReadySequence(miyuki)),
-                DepositSequence(miyuki)
-            ) { MiyukiState.state == MiyukiState.State.INTAKING }
+            InstantCmd({
+                    + when(MiyukiState.state) {
+                        MiyukiState.State.DEPOSITING -> IntakeSequence(miyuki.claw)
+                        MiyukiState.State.INTAKING -> ReadySequence(miyuki)
+                        MiyukiState.State.READYING -> DepositSequence(miyuki)
+                    }
+                }
+            )
         )
     }
 

@@ -46,9 +46,8 @@ class MiyukiAuto(startPose: Pose): KOpMode() {
             Pose(-12.0, -66.0, 90.0.radians),
             Pose(-3.0, -28.0, 30.0.radians)
         )
-        val checkpoint = Vector(-12.0, -43.0)
-        val intakeP = Pair(IntakeSequence(miyuki.claw), checkpoint)
-        val readyP = Pair(ReadySequence(miyuki), checkpoint)
+        val intakeP = Pair(IntakeSequence(miyuki.claw), Vector(-12.0, -43.0))
+        val readyP = Pair(ReadySequence(miyuki), Vector(-12.0, -36.0))
         val depositP = Pair(DepositSequence(miyuki), Vector(-5.0, -30.0))
 
         + SequentialGroup(
