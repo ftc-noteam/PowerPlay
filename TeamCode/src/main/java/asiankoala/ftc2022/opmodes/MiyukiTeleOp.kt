@@ -55,9 +55,9 @@ class MiyukiTeleOp: KOpMode(photonEnabled = true) {
         driver.rightTrigger.onPress(
             InstantCmd({
                     + when(MiyukiState.state) {
-                        MiyukiState.State.DEPOSITING -> IntakeSequence(miyuki.claw)
-                        MiyukiState.State.INTAKING -> ReadySequence(miyuki)
-                        MiyukiState.State.READYING -> DepositSequence(miyuki)
+                        MiyukiState.State.INTAKING -> IntakeSequence(miyuki.claw)
+                        MiyukiState.State.READYING -> ReadySequence(miyuki)
+                        MiyukiState.State.DEPOSITING -> DepositSequence(miyuki)
                     }
                 }
             )
