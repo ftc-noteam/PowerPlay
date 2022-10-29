@@ -24,10 +24,4 @@ class Miyuki(startPose: Pose) {
     val arm = Arm(hardware.armMotor)
     val pivot = Pivot(hardware.pivotServo)
     val claw = Claw(hardware.clawLeftServo, hardware.clawRightServo, hardware.distanceSensor)
-    val l9SpacegliderScript1v9TurboBoostHack = L9SpacegliderScript1v9TurboBoostHack(
-        drive::pose,
-        3.0,
-        2.0,
-        60.0.radians
-    )
 }

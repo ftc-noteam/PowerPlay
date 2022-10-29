@@ -20,7 +20,7 @@ import com.asiankoala.koawalib.path.ReversedCubicPath
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 
-class MiyukiAuto(startPose: Pose) : KOpMode() {
+open class MiyukiAuto(startPose: Pose) : KOpMode() {
     private val miyuki by lazy { Miyuki(startPose) }
     private val kN = 0.6
     private val kOmega = 1.0 / 30.0.radians

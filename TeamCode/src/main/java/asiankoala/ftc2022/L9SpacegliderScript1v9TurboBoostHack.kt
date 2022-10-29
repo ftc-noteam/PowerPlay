@@ -13,8 +13,7 @@ class L9SpacegliderScript1v9TurboBoostHack(
     private val obstacles: List<Vector> = OBSTACLES,
 ) {
     // https://www.desmos.com/calculator/vq9ykp5m3r
-    fun spaceglide(ins: () -> Vector): Vector {
-        val i = ins.invoke()
+    fun spaceglide(i: Vector): Vector {
         val p = ps.invoke().vec
         val o = obstacles.minByOrNull { (p - it).norm }!!
         val r = p - o
@@ -31,9 +30,8 @@ class L9SpacegliderScript1v9TurboBoostHack(
         return u / im
     }
 
-    fun aimbot(ins: () -> Vector): Double {
+    fun aimbot(i: Vector): Double {
         val p = ps.invoke()
-        val i = ins.invoke()
         val xn = (p.x.toInt() / 24)
         val yn = (p.y.toInt() / 24)
         val c = Vector(xn * 24.0 + 12.0, yn * 24.0 + 12.0)

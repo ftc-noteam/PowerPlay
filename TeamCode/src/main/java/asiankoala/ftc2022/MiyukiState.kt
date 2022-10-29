@@ -36,5 +36,4 @@ object MiyukiState {
     var reversed = false
     var state = State.INTAKING
     var strategy = DepositState.HIGH
-    var alliance = Alliance.BLUE
 }

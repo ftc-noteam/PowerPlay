@@ -5,14 +5,16 @@ import asiankoala.ftc2022.MiyukiState
 import asiankoala.ftc2022.commands.sequence.DepositSequence
 import asiankoala.ftc2022.commands.sequence.IntakeSequence
 import asiankoala.ftc2022.commands.sequence.ReadySequence
+import asiankoala.ftc2022.commands.subsystem.L9SpacegliderScript1v9TurboBoostHackCmd
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.radians
 import com.asiankoala.koawalib.subsystem.odometry.Odometry
+import com.asiankoala.koawalib.util.Alliance
 
-class MiyukiTeleOp : KOpMode(photonEnabled = true) {
+open class MiyukiTeleOp(private val alliance: Alliance) : KOpMode(photonEnabled = true) {
     private val miyuki by lazy { Miyuki(Odometry.lastPose) }
 
     override fun mInit() {
@@ -22,30 +24,14 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     }
 
     private fun scheduleDrive() {
-        miyuki.drive.defaultCommand = MecanumCmd(
+        miyuki.drive.defaultCommand = L9SpacegliderScript1v9TurboBoostHackCmd(
             miyuki.drive,
             driver.leftStick,
             driver.rightStick,
-            0.5,
-            0.5,
-            0.5,
-            1.0,
-            1.0,
-            1.0,
-            MiyukiState.alliance,
-            isTranslationFieldCentric = true,
-            isHeadingFieldCentric = true,
-            { miyuki.drive.pose.heading },
-            60.0.radians
+            driver.leftTrigger::isToggled,
+            driver.a::isToggled,
+            alliance
         )
-
-        driver.leftTrigger.onToggle(InstantCmd({
-            miyuki.l9SpacegliderScript1v9TurboBoostHack.aimbot(driver.leftStick::vector)
-        }))
-
-        driver.a.onToggle(InstantCmd({
-            miyuki.l9SpacegliderScript1v9TurboBoostHack.spaceglide(driver.leftStick::vector)
-        }))
     }
 
     private fun scheduleStrategy() {
