@@ -40,11 +40,11 @@ class L9SpacegliderScript1v9TurboBoostHackCmd(
 
     override fun processPowers(): Pose {
         val default = super.processPowers()
-        val v = if(spacegliderToggle.invoke()) {
+        val v = if (spacegliderToggle.invoke()) {
             l9SpacegliderScript1v9TurboBoostHack.spaceglide(default.vec)
         } else default.vec
 
-        val h = if(aimbotToggle.invoke()) {
+        val h = if (aimbotToggle.invoke()) {
             l9SpacegliderScript1v9TurboBoostHack.aimbot(default.vec)
         } else default.heading
 

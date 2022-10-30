@@ -1,7 +1,5 @@
 package asiankoala.ftc2022
 
-import com.asiankoala.koawalib.util.Alliance
-
 object MiyukiState {
     enum class State {
         INTAKING,

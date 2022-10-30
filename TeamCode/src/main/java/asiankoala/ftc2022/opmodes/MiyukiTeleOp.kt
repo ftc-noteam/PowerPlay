@@ -8,9 +8,7 @@ import asiankoala.ftc2022.commands.sequence.ReadySequence
 import asiankoala.ftc2022.commands.subsystem.L9SpacegliderScript1v9TurboBoostHackCmd
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
-import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
-import com.asiankoala.koawalib.math.radians
 import com.asiankoala.koawalib.subsystem.odometry.Odometry
 import com.asiankoala.koawalib.util.Alliance
 
