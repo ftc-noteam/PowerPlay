@@ -69,11 +69,8 @@ open class MiyukiAuto(
         DepositSequence(miyuki), Vector(-5.0, -30.0).choose(alliance, close)
     )
 
-    private fun getGVFCmd(path: Path, vararg cmds: Pair<Cmd, Vector>): GVFCmd {
-        return GVFCmd(
-            miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon), *cmds
-        )
-    }
+    private fun getGVFCmd(path: Path, vararg cmds: Pair<Cmd, Vector>) =
+        GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon), *cmds)
 
     override fun mInit() {
         +SequentialGroup(
@@ -96,9 +93,8 @@ open class MiyukiAuto(
 
         private fun Vector.checkFlipY(alliance: Alliance) = alliance.choose(this, Vector(-x, y))
         private fun Vector.checkFlipX(close: Boolean) = close.choose(this, Vector(x, -y))
-        private fun Vector.choose(alliance: Alliance, close: Boolean): Vector {
-            return this.checkFlipY(alliance).checkFlipX(close)
-        }
+        private fun Vector.choose(alliance: Alliance, close: Boolean) =
+            this.checkFlipY(alliance).checkFlipX(close)
 
         private fun HermitePath.checkFlipY(alliance: Alliance) = alliance.choose(
             this,
@@ -122,8 +118,7 @@ open class MiyukiAuto(
             }
         )
 
-        private fun HermitePath.choose(alliance: Alliance, close: Boolean): HermitePath {
-            return this.checkFlipY(alliance).checkFlipX(close)
-        }
+        private fun HermitePath.choose(alliance: Alliance, close: Boolean) =
+            this.checkFlipY(alliance).checkFlipX(close)
     }
 }
