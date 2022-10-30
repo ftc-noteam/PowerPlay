@@ -24,10 +24,13 @@ import com.asiankoala.koawalib.util.Alliance
 import com.asiankoala.koawalib.util.OpModeState
 
 open class MiyukiAuto(
-    startPose: Pose,
     alliance: Alliance,
     close: Boolean,
 ) : KOpMode() {
+    private val startPose = Pose(
+        Vector(-66.0, -36.0).choose(alliance, close),
+        close.choose(0.0, 180.0.radians)
+    )
     private val miyuki by lazy { Miyuki(startPose) }
     private val kN = 0.6
     private val kOmega = 1.0 / 30.0.radians
