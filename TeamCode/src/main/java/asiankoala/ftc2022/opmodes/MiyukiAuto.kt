@@ -54,18 +54,15 @@ open class MiyukiAuto(
     ).choose(alliance, close)
 
     private val initialReadyP = Pair(
-        ReadySequence(miyuki),
-        Vector(-24.0, -36.0).choose(alliance, close)
+        ReadySequence(miyuki), Vector(-24.0, -36.0).choose(alliance, close)
     )
 
     private val intakeP = Pair(
-        IntakeSequence(miyuki.claw),
-        Vector(-12.0, -43.0).choose(alliance, close)
+        IntakeSequence(miyuki.claw), Vector(-12.0, -43.0).choose(alliance, close)
     )
 
     private val readyP = Pair(
-        ReadySequence(miyuki),
-        Vector(-12.0, -36.0).choose(alliance, close)
+        ReadySequence(miyuki), Vector(-12.0, -36.0).choose(alliance, close)
     )
 
     private val depositP = Pair(
@@ -74,9 +71,7 @@ open class MiyukiAuto(
 
     private fun getGVFCmd(path: Path, vararg cmds: Pair<Cmd, Vector>): GVFCmd {
         return GVFCmd(
-            miyuki.drive,
-            SimpleGVFController(path, kN, kOmega, kF, kS, epsilon),
-            *cmds
+            miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon), *cmds
         )
     }
 
