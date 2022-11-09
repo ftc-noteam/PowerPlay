@@ -6,12 +6,22 @@ import com.asiankoala.koawalib.util.Reversible
 
 class Arm(val motor: KMotor) : Subsystem() {
     companion object {
-        val ticksPerUnit: Double = TODO()
-        val homePos = Reversible<Double>(TODO(), TODO())
-        val groundPos = Reversible<Double>(TODO(), TODO())
-        val lowPos = Reversible<Double>(TODO(), TODO())
-        val medPos = Reversible<Double>(TODO(), TODO())
-        val highPos = Reversible<Double>(TODO(), TODO())
+        @JvmField var ticksPerUnit = 0.0
+        @JvmField var homePos = Reversible(0.0, 0.0)
+        @JvmField var groundPos = Reversible(0.0, 0.0)
+        @JvmField var lowPos = Reversible(0.0, 0.0)
+        @JvmField var medPos = Reversible(0.0, 0.0)
+        @JvmField var highPos = Reversible(0.0, 0.0)
+        @JvmField var kP = 0.0
+        @JvmField var kI = 0.0
+        @JvmField var kD = 0.0
+        @JvmField var kS = 0.0
+        @JvmField var kV = 0.0
+        @JvmField var kA = 0.0
+        @JvmField var kCos = 0.0
+        @JvmField var maxVel = 0.0
+        @JvmField var maxAccel = 0.0
+        @JvmField var allowedPositionError = 0.0
     }
 
     fun setPos(pos: Double) {

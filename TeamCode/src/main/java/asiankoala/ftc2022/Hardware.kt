@@ -1,9 +1,11 @@
 package asiankoala.ftc2022
 
 import asiankoala.ftc2022.subsystems.Arm
+import asiankoala.ftc2022.subsystems.Claw
 import asiankoala.ftc2022.subsystems.Lift
+import asiankoala.ftc2022.subsystems.Pivot
+import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
-import com.asiankoala.koawalib.control.motor.DisabledPosition
 import com.asiankoala.koawalib.control.motor.FFGains
 import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.KEncoder
@@ -34,25 +36,25 @@ class Hardware(startPose: Pose) {
         .reverse
         .build()
 
-    val liftLeadMotor = MotorFactory("liftLeadMotor")
+    val liftLeadMotor = MotorFactory("liftLead")
         .float
         .forward
         .createEncoder(Lift.ticksPerUnit, false)
         .zero(Lift.homePos)
         .withMotionProfileControl(
-            PIDGains(TODO(), TODO(), TODO()),
-            FFGains(kG = TODO(), kS = TODO(), kV = TODO(), kA = TODO()),
-            MotionConstraints(TODO(), TODO()),
-            allowedPositionError = TODO(),
-            disabledPosition = DisabledPosition(TODO())
+            PIDGains(Lift.kP, Lift.kI, Lift.kD),
+            FFGains(Lift.kS, Lift.kV, Lift.kA, kG = Lift.kG),
+            MotionConstraints(Lift.maxVel, Lift.maxAccel),
+            allowedPositionError = Lift.allowedPositionError,
+            disabledPosition = Lift.disabledPosition
         )
         .build()
 
-    val liftFollowTop = MotorFactory("liftFollowTop")
+    val liftBottomMotor = MotorFactory("liftBottom")
         .float
         .build()
 
-    val liftFollowBottom = MotorFactory("liftFollowBottom")
+    val liftLeftMotor = MotorFactory("liftLeft")
         .float
         .build()
 
@@ -61,21 +63,18 @@ class Hardware(startPose: Pose) {
         .createEncoder(Arm.ticksPerUnit, false)
         .zero(Arm.homePos[false])
         .withMotionProfileControl(
-            PIDGains(TODO(), TODO(), TODO()),
-            FFGains(kCos = TODO()),
-            MotionConstraints(TODO(), TODO()),
-            allowedPositionError = TODO(),
-            disabledPosition = DisabledPosition(TODO())
+            PIDGains(Arm.kP, Arm.kI, Arm.kD),
+            FFGains(Arm.kS, Arm.kV, Arm.kA, kCos = Arm.kCos),
+            MotionConstraints(Arm.maxVel, Arm.maxAccel),
+            allowedPositionError = Arm.allowedPositionError
         )
         .build()
 
-    val clawLeftServo = KServo("clawLeft")
-        .startAt(TODO())
-
-    val clawRightServo = KServo("clawRight")
-        .startAt(TODO())
+    val clawLeftServo = KServo("claw")
+        .startAt(Claw.homePos)
 
     val pivotServo = KServo("pivot")
+        .startAt(Pivot.homePos.value)
 
     val distanceSensor = KDistanceSensor("distanceSensor")
 
@@ -93,12 +92,15 @@ class Hardware(startPose: Pose) {
         leftEncoder,
         rightEncoder,
         auxEncoder,
-        TODO(),
-        TODO(),
+        TRACK_WIDTH,
+        PERP_TRACKER,
         startPose
     )
 
+    @Config
     companion object {
         private const val ticksPerUnit = 1892.3724
+        @JvmField var TRACK_WIDTH = 0.0
+        @JvmField var PERP_TRACKER = 0.0
     }
 }

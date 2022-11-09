@@ -19,7 +19,7 @@ class Miyuki(startPose: Pose) {
         true
     )
 
-    val lift = Lift(hardware.liftLeadMotor, hardware.liftFollowTop, hardware.liftFollowBottom)
+    val lift = Lift(hardware.liftLeadMotor, hardware.liftBottomMotor, hardware.liftLeftMotor)
     val arm = Arm(hardware.armMotor)
     val pivot = Pivot(hardware.pivotServo)
     val claw = Claw(hardware.clawLeftServo, hardware.clawRightServo, hardware.distanceSensor)
