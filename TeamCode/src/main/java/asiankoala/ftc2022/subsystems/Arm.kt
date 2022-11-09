@@ -5,6 +5,7 @@ import com.asiankoala.koawalib.subsystem.Subsystem
 import com.asiankoala.koawalib.util.Reversible
 
 class Arm(val motor: KMotor) : Subsystem() {
+    @Config
     companion object {
         @JvmField var ticksPerUnit = 0.0
         @JvmField var homePos = Reversible(0.0, 0.0)

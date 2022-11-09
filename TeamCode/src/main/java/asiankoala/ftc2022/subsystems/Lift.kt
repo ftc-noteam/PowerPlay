@@ -8,6 +8,7 @@ class Lift(
     private val secondMotor: KMotor,
     private val thirdMotor: KMotor
 ) : Subsystem() {
+    @Config
     companion object {
         @JvmField var homePos = 0.0
         @JvmField var groundPos = 0.0
