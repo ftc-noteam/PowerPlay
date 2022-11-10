@@ -1,5 +1,6 @@
 package asiankoala.ftc2022
 
+import com.asiankoala.koawalib.math.NVector
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.Vector
 import com.asiankoala.koawalib.math.angleWrap
@@ -9,11 +10,11 @@ class L9SpacegliderScript1v9TurboBoostHack(
     private val ps: () -> Pose,
     private val R: Double,
     private val N: Double,
-    private val hp: Double,
+    private val H: Double,
     private val obstacles: List<Vector> = OBSTACLES,
 ) {
     // https://www.desmos.com/calculator/vq9ykp5m3r
-    fun spaceglide(i: Vector): Vector {
+    fun spaceglide(i: Vector): NVector {
         val p = ps.invoke().vec
         val o = obstacles.minByOrNull { (p - it).norm }!!
         val r = p - o
@@ -26,8 +27,8 @@ class L9SpacegliderScript1v9TurboBoostHack(
         val n2 = r.rotate(if (c >= 0) theta else -theta)
         val v2 = if (d1 >= 0.0 || r.norm > R) v1 else n2 + r * a
         val im = i.norm
-        val u = v2.unit
-        return u / im
+        val u = v2.unit.asN
+        return u * im
     }
 
     fun aimbot(i: Vector): Double {
@@ -44,7 +45,7 @@ class L9SpacegliderScript1v9TurboBoostHack(
         val o = os.maxByOrNull { (it - p.vec) dot i }!!
         val a = (o - p.vec).angle
         val dh = (p.heading - a).angleWrap
-        return dh / hp
+        return dh / H
     }
 
     companion object {

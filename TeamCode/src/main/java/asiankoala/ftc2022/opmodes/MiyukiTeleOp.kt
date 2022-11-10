@@ -28,7 +28,7 @@ open class MiyukiTeleOp(private val alliance: Alliance) : KOpMode(photonEnabled 
             driver.rightStick,
             driver.leftTrigger::isToggled,
             driver.a::isToggled,
-            alliance
+            miyuki.drive::pose
         )
     }
 

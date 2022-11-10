@@ -37,6 +37,7 @@ open class MiyukiAuto(
     private val kF = 4.0
     private val kS = 1.0
     private val epsilon = 1.0
+    private val thetaEpsilon = 5.0
 
     private val initialPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
@@ -73,7 +74,7 @@ open class MiyukiAuto(
     )
 
     private fun getGVFCmd(path: Path, vararg cmds: Pair<Cmd, Vector>) =
-        GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon), *cmds)
+        GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
     override fun mInit() {
         +SequentialGroup(
