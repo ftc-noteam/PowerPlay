@@ -12,8 +12,7 @@ class Claw(
     @Config
     companion object {
         @JvmField var gripPos = 0.0
-        @JvmField var homePos = 0.0
-        @JvmField var depositPos = 0.0
+        @JvmField var openPos = 0.0
         @JvmField var distanceThreshold = 0.0
     }
 

@@ -1,10 +1,11 @@
 package asiankoala.ftc2022.subsystems
 
+import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
 import com.asiankoala.koawalib.util.Reversible
 
-class Arm(val motor: KMotor) : Subsystem() {
+class Arm(private val motor: KMotor) : Subsystem() {
     @Config
     companion object {
         @JvmField var ticksPerUnit = 0.0

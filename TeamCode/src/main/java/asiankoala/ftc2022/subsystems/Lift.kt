@@ -1,5 +1,6 @@
 package asiankoala.ftc2022.subsystems
 
+import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
 
@@ -10,12 +11,12 @@ class Lift(
 ) : Subsystem() {
     @Config
     companion object {
+        @JvmField var ticksPerUnit = 0.0
         @JvmField var homePos = 0.0
         @JvmField var groundPos = 0.0
         @JvmField var lowPos = 0.0
         @JvmField var medPos = 0.0
         @JvmField var highPos = 0.0
-        @JvmField var ticksPerUnit = 0.0
         @JvmField var kP = 0.0
         @JvmField var kI = 0.0
         @JvmField var kD = 0.0

@@ -4,10 +4,9 @@ import asiankoala.ftc2022.subsystems.Claw
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 object ClawCmds {
-    open class ClawCmd(claw: Claw, pos: Pair<Double, Double>) :
+    open class ClawCmd(claw: Claw, pos: Double) :
         InstantCmd({ claw.setPos(pos) }, claw)
 
     class ClawGripCmd(claw: Claw) : ClawCmd(claw, Claw.gripPos)
-    class ClawHomeCmd(claw: Claw) : ClawCmd(claw, Claw.homePos)
-    class ClawDepositCmd(claw: Claw) : ClawCmd(claw, Claw.depositPos)
+    class ClawDepositCmd(claw: Claw) : ClawCmd(claw, Claw.openPos)
 }

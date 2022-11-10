@@ -70,8 +70,8 @@ class Hardware(startPose: Pose) {
         )
         .build()
 
-    val clawLeftServo = KServo("claw")
-        .startAt(Claw.homePos)
+    val clawServo = KServo("claw")
+        .startAt(Claw.gripPos)
 
     val pivotServo = KServo("pivot")
         .startAt(Pivot.homePos.value)
