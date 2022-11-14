@@ -8,13 +8,13 @@ import com.asiankoala.koawalib.util.Reversible
 class Arm(private val motor: KMotor) : Subsystem() {
     @Config
     companion object {
-        @JvmField var ticksPerUnit = 0.0
+        @JvmField var ticksPerUnit = 1.0
         @JvmField var homePos = Reversible(0.0, 0.0)
         @JvmField var groundPos = Reversible(0.0, 0.0)
         @JvmField var lowPos = Reversible(0.0, 0.0)
         @JvmField var medPos = Reversible(0.0, 0.0)
         @JvmField var highPos = Reversible(0.0, 0.0)
-        @JvmField var kP = 0.0
+        @JvmField var kP = 0.005
         @JvmField var kI = 0.0
         @JvmField var kD = 0.0
         @JvmField var kS = 0.0
@@ -29,4 +29,6 @@ class Arm(private val motor: KMotor) : Subsystem() {
     fun setPos(pos: Double) {
         motor.setProfileTarget(pos)
     }
+
+    val pos get() = motor.pos
 }

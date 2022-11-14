@@ -40,17 +40,17 @@ object CmdChooser {
 
     fun homeCmd(miyuki: Miyuki): ParallelGroup {
         return ParallelGroup(
-            LiftCmds.LiftHomeCmd(miyuki.lift),
-            ArmCmds.ArmHomeCmd(miyuki.arm),
-            PivotCmds.PivotHomeCmd(miyuki.pivot)
+//            LiftCmds.LiftHomeCmd(miyuki.lift),
+//            ArmCmds.ArmHomeCmd(miyuki.arm),
+//            PivotCmds.PivotHomeCmd(miyuki.pivot)
         )
     }
 
     fun triple(miyuki: Miyuki): ParallelGroup {
         return ParallelGroup(
-            liftCmd(miyuki.lift),
-            armCmd(miyuki.arm),
-            pivotCmd(miyuki.pivot)
+//            liftCmd(miyuki.lift),
+//            armCmd(miyuki.arm),
+//            pivotCmd(miyuki.pivot)
         )
     }
 }

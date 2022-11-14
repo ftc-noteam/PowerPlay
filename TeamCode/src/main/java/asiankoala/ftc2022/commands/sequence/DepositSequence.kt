@@ -10,7 +10,7 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 class DepositSequence(
     miyuki: Miyuki
 ) : SequentialGroup(
-    ClawCmds.ClawDepositCmd(miyuki.claw),
+//    ClawCmds.ClawDepositCmd(miyuki.claw),
     CmdChooser.homeCmd(miyuki),
     InstantCmd(MiyukiState::nextState)
 )
