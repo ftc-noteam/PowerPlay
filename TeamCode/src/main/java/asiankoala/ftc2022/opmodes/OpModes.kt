@@ -21,6 +21,3 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 //
 //@Autonomous(name = "\uD83E\uDD75 FAR")
 //class MiyukiRedFarAuto : MiyukiAuto(Alliance.RED, false)
-
-@TeleOp
-class MiyukiTestTeleOp : MiyukiTeleOp(Alliance.BLUE)
