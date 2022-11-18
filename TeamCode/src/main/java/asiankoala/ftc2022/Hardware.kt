@@ -2,12 +2,8 @@ package asiankoala.ftc2022
 
 import asiankoala.ftc2022.subsystems.*
 import com.acmerobotics.dashboard.config.Config
-import com.asiankoala.koawalib.control.controller.PIDGains
-import com.asiankoala.koawalib.control.motor.FFGains
-import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.KEncoder
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
-import com.asiankoala.koawalib.hardware.sensor.KDistanceSensor
 import com.asiankoala.koawalib.hardware.servo.KServo
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
@@ -57,7 +53,7 @@ class Hardware(startPose: Pose) {
         .zero()
         .build()
 
-    val armMotor = MotorFactory("arm")
+    val arm = MotorFactory("arm")
         .float
 //        .createEncoder(Arm.ticksPerUnit, false)
 //        .zero(0.0)

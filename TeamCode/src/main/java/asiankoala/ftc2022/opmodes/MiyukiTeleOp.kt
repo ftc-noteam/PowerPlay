@@ -1,22 +1,12 @@
 package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
-import asiankoala.ftc2022.MiyukiState
-import asiankoala.ftc2022.commands.sequence.DepositSequence
-import asiankoala.ftc2022.commands.sequence.IntakeSequence
-import asiankoala.ftc2022.commands.sequence.ReadySequence
-import asiankoala.ftc2022.commands.subsystem.ClawCmds
-import asiankoala.ftc2022.commands.subsystem.L9SpacegliderScript1v9TurboBoostHackCmd
-import asiankoala.ftc2022.commands.subsystem.PivotCmds
-import asiankoala.ftc2022.subsystems.Claw
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
-import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.subsystem.odometry.Odometry
 import com.asiankoala.koawalib.util.Alliance
-import com.qualcomm.robotcore.hardware.DcMotor
 
 open class MiyukiTeleOp(private val alliance: Alliance) : KOpMode(photonEnabled = true) {
     private val miyuki by lazy { Miyuki(Odometry.lastPose) }
@@ -25,14 +15,13 @@ open class MiyukiTeleOp(private val alliance: Alliance) : KOpMode(photonEnabled 
         scheduleDrive()
 //        scheduleStrategy()
 //        scheduleCycling()
-        driver.leftBumper.onPress(ClawCmds.ClawGripCmd(miyuki.claw))
-        driver.rightBumper.onPress(ClawCmds.ClawOpenCmd(miyuki.claw))
+//        driver.leftBumper.onPress(ClawCmds.ClawGripCmd(miyuki.claw))
+//        driver.rightBumper.onPress(ClawCmds.ClawOpenCmd(miyuki.claw))
 
-//        driver.leftBumper.onToggle(InstantCmd({ miyuki.hardware.liftLead.power = 0.07 }))
-//        driver.rightBumper.onToggle(InstantCmd({ miyuki.hardware.liftLeft.power = 0.07 }))
-//        driver.leftTrigger.onToggle(InstantCmd({ miyuki.hardware.liftBottom.power = 0.07 }))
-//        driver.rightTrigger.onToggle(InstantCmd({ miyuki.hardware.arm.power = 0.07 }))
-        miyuki.hardware.armEncoder.enable()
+        driver.leftBumper.onToggle(InstantCmd({ miyuki.hardware.liftLead.power = 0.07 }))
+        driver.rightBumper.onToggle(InstantCmd({ miyuki.hardware.liftLeft.power = 0.07 }))
+        driver.leftTrigger.onToggle(InstantCmd({ miyuki.hardware.liftBottom.power = 0.07 }))
+        driver.rightTrigger.onToggle(InstantCmd({ miyuki.hardware.arm.power = 0.07 }))
     }
 
 
@@ -76,7 +65,7 @@ open class MiyukiTeleOp(private val alliance: Alliance) : KOpMode(photonEnabled 
 //        Logger.addTelemetryData("strat", MiyukiState.strategy)
 //        Logger.addTelemetryData("aimbot", driver.a.isToggled)
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
-        Logger.addTelemetryData("arm", miyuki.hardware.armMotor.pos)
+        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
         Logger.addTelemetryData("left", miyuki.hardware.leftEncoder.pos)
         Logger.addTelemetryData("right", miyuki.hardware.rightEncoder.pos)
