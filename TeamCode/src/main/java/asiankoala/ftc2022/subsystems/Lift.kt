@@ -27,7 +27,7 @@ class Lift(
         @JvmField var maxVel = 0.0
         @JvmField var maxAccel = 0.0
         @JvmField var disabledPosition = 0.0
-        @JvmField var allowedPositionError = 0.0
+        @JvmField var allowedPositionError = 1.0
     }
 
     fun setPos(pos: Double) {
