@@ -16,47 +16,28 @@ class Hardware(startPose: Pose) {
     val fl = MotorFactory("fl")
         .brake
         .forward
-        .createEncoder(1.0, false)
         .build()
 
     val bl = MotorFactory("bl")
         .brake
         .forward
-        .createEncoder(1.0, false)
         .build()
 
     val br = MotorFactory("br")
         .brake
         .reverse
-        .createEncoder(1.0, false)
         .build()
 
     val fr = MotorFactory("fr")
         .brake
         .reverse
-        .createEncoder(1.0, false)
         .build()
 
     val liftLead = MotorFactory("liftLead")
         .float
         .forward
-        .createEncoder(Lift.ticksPerUnit, false)
+        .pairEncoder(br, 1.0)
         .zero(Lift.homePos)
-//        .withMotionProfileControl(
-        .withPositionControl(
-            PIDGains(Lift.kP, Lift.kI, Lift.kD),
-            FFGains(Lift.kS, Lift.kV, Lift.kA, kG = Lift.kG),
-//            MotionConstraints(Lift.maxVel, Lift.maxAccel),
-            allowedPositionError = Lift.allowedPositionError,
-//            disabledPosition = Lift.disabledPosition
-        )
-        .build()
-
-//    val liftLeadMotor = MotorFactory("liftLead")
-//        .float
-//        .forward
-//        .createEncoder(Lift.ticksPerUnit, false)
-//        .zero(Lift.homePos)
 //        .withMotionProfileControl(
 //            PIDGains(Lift.kP, Lift.kI, Lift.kD),
 //            FFGains(Lift.kS, Lift.kV, Lift.kA, kG = Lift.kG),
@@ -64,17 +45,15 @@ class Hardware(startPose: Pose) {
 //            allowedPositionError = Lift.allowedPositionError,
 //            disabledPosition = Lift.disabledPosition
 //        )
-//        .build()
-//
+        .build()
+
     val liftBottom = MotorFactory("liftBottom")
         .float
-        .createEncoder(1.0, false)
         .zero()
         .build()
 
     val liftLeft = MotorFactory("liftLeft")
         .float
-        .createEncoder(1.0, false)
         .zero()
         .build()
 
@@ -91,6 +70,7 @@ class Hardware(startPose: Pose) {
 //            MotionConstraints(Arm.maxVel, Arm.maxAccel),
 //            allowedPositionError = Arm.allowedPositionError
 //        )
+        .createEncoder(Arm.ticksPerUnit)
         .build()
 
     val claw = KServo("claw")
@@ -113,8 +93,6 @@ class Hardware(startPose: Pose) {
     val auxEncoder = KEncoder(fl, ticksPerUnit, true)
         .reverse
         .zero()
-
-    val armEncoder = KEncoder(armMotor, 1.0)
 
     val odometry = KThreeWheelOdometry(
         leftEncoder,
