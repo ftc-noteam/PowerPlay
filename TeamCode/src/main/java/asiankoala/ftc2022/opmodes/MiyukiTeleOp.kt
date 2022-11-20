@@ -24,8 +24,6 @@ open class MiyukiTeleOp(
         scheduleCycling()
     }
 
-
-
     private fun scheduleDrive() {
 //        miyuki.drive.defaultCommand = L9SpacegliderScript1v9TurboBoostHackCmd(
 //            miyuki.drive,
@@ -35,6 +33,8 @@ open class MiyukiTeleOp(
 //            driver.a::isToggled,
 //            miyuki.drive::pose
 //        )
+
+        miyuki.hardware.odometry.unregister()
         miyuki.drive.defaultCommand = MecanumCmd(
             miyuki.drive,
             driver.leftStick.yInverted,

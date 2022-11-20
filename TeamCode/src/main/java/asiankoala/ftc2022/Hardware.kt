@@ -2,6 +2,8 @@ package asiankoala.ftc2022
 
 import asiankoala.ftc2022.subsystems.*
 import com.acmerobotics.dashboard.config.Config
+import com.asiankoala.koawalib.control.controller.PIDGains
+import com.asiankoala.koawalib.control.motor.FFGains
 import com.asiankoala.koawalib.hardware.motor.KEncoder
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
@@ -32,8 +34,10 @@ class Hardware(startPose: Pose) {
     val liftLead = MotorFactory("liftLead")
         .float
         .forward
+        .reverse
         .pairEncoder(br, 1.0)
-        .zero(Lift.homePos)
+        .reverseEncoder
+        .zero(LiftConstants.homePos)
 //        .withMotionProfileControl(
 //            PIDGains(Lift.kP, Lift.kI, Lift.kD),
 //            FFGains(Lift.kS, Lift.kV, Lift.kA, kG = Lift.kG),
@@ -45,12 +49,11 @@ class Hardware(startPose: Pose) {
 
     val liftBottom = MotorFactory("liftBottom")
         .float
-        .zero()
         .build()
 
     val liftLeft = MotorFactory("liftLeft")
         .float
-        .zero()
+        .reverse
         .build()
 
     val arm = MotorFactory("arm")
@@ -66,14 +69,21 @@ class Hardware(startPose: Pose) {
 //            MotionConstraints(Arm.maxVel, Arm.maxAccel),
 //            allowedPositionError = Arm.allowedPositionError
 //        )
-        .createEncoder(Arm.ticksPerUnit)
+        .createEncoder(ArmConstants.ticksPerUnit)
+        .reverseEncoder
+        .zero(ArmConstants.homePos[true])
+//        .withPositionControl(
+//            PIDGains(),
+//            FFGains(kCos = ArmConstants.kCos),
+//            allowedPositionError = ArmConstants.allowedPositionError
+//        )
         .build()
 
     val claw = KServo("claw")
-        .startAt(ClawConstants.openPos)
+        .startAt(ClawConstants.gripPos)
 
-//    val pivot = KServo("pivot")
-//        .startAt(Constants.pivotHome)
+    val pivot = KServo("pivot")
+        .startAt(PivotConstants.pivotHome)
 
 //
 //    val distanceSensor = KDistanceSensor("distanceSensor")

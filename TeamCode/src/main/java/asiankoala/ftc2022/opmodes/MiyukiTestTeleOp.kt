@@ -1,14 +1,27 @@
 package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
+import asiankoala.ftc2022.commands.subsystem.PivotCmds
+import asiankoala.ftc2022.subsystems.ArmConstants
+import asiankoala.ftc2022.subsystems.LiftConstants
+import asiankoala.ftc2022.subsystems.PivotConstants
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.subsystem.odometry.Odometry
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-open class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
+@TeleOp
+class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
     private val miyuki by lazy { Miyuki(Odometry.lastPose) }
+    private val hw by lazy { miyuki.hardware }
+
+    private fun bruh(p: Double) {
+        hw.liftLeft.power = p
+        hw.liftLead.power = p
+        hw.liftBottom.power = p
+    }
 
     override fun mInit() {
         scheduleDrive()
@@ -17,10 +30,15 @@ open class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.leftBumper.onPress(ClawCmds.ClawGripCmd(miyuki.claw))
 //        driver.rightBumper.onPress(ClawCmds.ClawOpenCmd(miyuki.claw))
 
-        driver.leftBumper.onToggle(InstantCmd({ miyuki.hardware.liftLead.power = 0.07 }))
-        driver.rightBumper.onToggle(InstantCmd({ miyuki.hardware.liftLeft.power = 0.07 }))
-        driver.leftTrigger.onToggle(InstantCmd({ miyuki.hardware.liftBottom.power = 0.07 }))
-        driver.rightTrigger.onToggle(InstantCmd({ miyuki.hardware.arm.power = 0.07 }))
+//        driver.leftBumper.onToggle(InstantCmd({ miyuki.hardware.liftLead.power = 0.07 }))
+//        driver.rightBumper.onToggle(InstantCmd({ miyuki.hardware.liftLeft.power = 0.07 }))
+//        driver.leftTrigger.onToggle(InstantCmd({ miyuki.hardware.liftBottom.power = 0.07 }))
+//        driver.rightTrigger.onToggle(InstantCmd({ miyuki.hardware.arm.power = 0.07 }))
+
+//        driver.leftTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotHome }))
+//        driver.rightTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotDeposit }))
+        driver.leftTrigger.onPress(InstantCmd({ bruh(1.0) }))
+        driver.rightTrigger.onPress(InstantCmd({ bruh(-1.0) }))
     }
 
 
@@ -35,8 +53,8 @@ open class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //            miyuki.drive::pose
 //        )
 
-        miyuki.testDrive.defaultCommand = MecanumCmd(
-            miyuki.testDrive,
+        miyuki.drive.defaultCommand = MecanumCmd(
+            miyuki.drive,
             driver.leftStick.yInverted,
             driver.rightStick
         )
@@ -66,8 +84,6 @@ open class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
         Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addTelemetryData("left", miyuki.hardware.leftEncoder.pos)
-        Logger.addTelemetryData("right", miyuki.hardware.rightEncoder.pos)
-        Logger.addTelemetryData("aux", miyuki.hardware.auxEncoder.pos)
+        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
     }
 }
