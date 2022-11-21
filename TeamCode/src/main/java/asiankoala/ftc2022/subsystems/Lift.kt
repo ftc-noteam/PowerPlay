@@ -1,20 +1,25 @@
 package asiankoala.ftc2022.subsystems
 
-import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
 
 class Lift(
     private val leadMotor: KMotor,
-    private val secondMotor: KMotor,
-    private val thirdMotor: KMotor
+    private val bottomMotor: KMotor,
+    private val leftMotor: KMotor
 ) : Subsystem() {
     fun setPos(pos: Double) {
         leadMotor.setProfileTarget(pos)
     }
 
+    fun openLoop(power: Double) {
+        leadMotor.power = power
+        bottomMotor.power = power
+        leftMotor.power = power
+    }
+
     override fun periodic() {
-        secondMotor.power = leadMotor.power
-        thirdMotor.power = leadMotor.power
+        bottomMotor.power = leadMotor.power
+        leftMotor.power = leadMotor.power
     }
 }

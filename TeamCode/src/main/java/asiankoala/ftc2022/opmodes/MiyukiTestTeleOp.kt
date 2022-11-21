@@ -1,6 +1,8 @@
 package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
+import asiankoala.ftc2022.commands.subsystem.ArmCmds
+import asiankoala.ftc2022.commands.subsystem.LiftCmds
 import asiankoala.ftc2022.commands.subsystem.PivotCmds
 import asiankoala.ftc2022.subsystems.ArmConstants
 import asiankoala.ftc2022.subsystems.LiftConstants
@@ -15,13 +17,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 @TeleOp
 class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
     private val miyuki by lazy { Miyuki(Odometry.lastPose) }
-    private val hw by lazy { miyuki.hardware }
-
-    private fun bruh(p: Double) {
-        hw.liftLeft.power = p
-        hw.liftLead.power = p
-        hw.liftBottom.power = p
-    }
 
     override fun mInit() {
         scheduleDrive()
@@ -37,8 +32,11 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 
 //        driver.leftTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotHome }))
 //        driver.rightTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotDeposit }))
-        driver.leftTrigger.onPress(InstantCmd({ bruh(1.0) }))
-        driver.rightTrigger.onPress(InstantCmd({ bruh(-1.0) }))
+
+        driver.leftTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, 1.0))
+        driver.rightTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, -1.0))
+        driver.leftBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, 1.0))
+        driver.rightBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -1.0))
     }
 
 

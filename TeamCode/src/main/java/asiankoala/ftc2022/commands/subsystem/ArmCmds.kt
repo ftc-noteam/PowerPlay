@@ -15,4 +15,6 @@ object ArmCmds {
     class ArmLowCmd(arm: Arm) : ArmCmd(arm, ArmConstants.lowPos)
     class ArmMedCmd(arm: Arm) : ArmCmd(arm, ArmConstants.medPos)
     class ArmHighCmd(arm: Arm) : ArmCmd(arm, ArmConstants.highPos)
+
+    class ArmOpenLoopCmd(arm: Arm, power: Double) : InstantCmd({ arm.openLoop(power) })
 }

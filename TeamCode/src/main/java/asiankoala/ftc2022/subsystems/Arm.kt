@@ -10,5 +10,9 @@ class Arm(private val motor: KMotor) : Subsystem() {
         motor.setProfileTarget(pos)
     }
 
+    fun openLoop(power: Double) {
+        motor.power = power
+    }
+
     val pos get() = motor.pos
 }
