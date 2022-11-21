@@ -93,36 +93,32 @@ open class MiyukiAuto(
 
     companion object {
         private fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
-        private fun <T> Alliance.choose(a: T, b: T) = (this == Alliance.BLUE).choose(a, b)
+        private fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
 
-        private fun Vector.checkFlipY(alliance: Alliance) = alliance.choose(this, Vector(-x, y))
-        private fun Vector.checkFlipX(close: Boolean) = close.choose(this, Vector(x, -y))
         private fun Vector.choose(alliance: Alliance, close: Boolean) =
-            this.checkFlipY(alliance).checkFlipX(close)
-
-        private fun HermitePath.checkFlipY(alliance: Alliance) = alliance.choose(
-            this,
-            this.map(FLIPPED_HEADING_CONTROLLER) {
-                Pose(
-                    -it.x,
-                    it.y,
-                    (180.0.radians - it.heading).angleWrap
-                )
-            }
-        )
-
-        private fun HermitePath.checkFlipX(close: Boolean) = close.choose(
-            this,
-            this.map(DEFAULT_HEADING_CONTROLLER) {
-                Pose(
-                    it.x,
-                    -it.y,
-                    -it.heading
-                )
-            }
-        )
+            this
+                .cond(alliance == Alliance.BLUE) { Vector(-x, y) }
+                .cond(close) { Vector(x, -y) }
 
         private fun HermitePath.choose(alliance: Alliance, close: Boolean) =
-            this.checkFlipY(alliance).checkFlipX(close)
+            this
+                .cond(alliance == Alliance.BLUE) {
+                    this.map(FLIPPED_HEADING_CONTROLLER) {
+                        Pose(
+                            -it.x,
+                            it.y,
+                            (180.0.radians - it.heading).angleWrap
+                        )
+                    }
+                }
+                .cond(close) {
+                    this.map(DEFAULT_HEADING_CONTROLLER) {
+                        Pose(
+                            it.x,
+                            -it.y,
+                            -it.heading
+                        )
+                    }
+                }
     }
 }
