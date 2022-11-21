@@ -97,12 +97,12 @@ open class MiyukiAuto(
 
         private fun Vector.choose(alliance: Alliance, close: Boolean) =
             this
-                .cond(alliance == Alliance.BLUE) { Vector(-x, y) }
+                .cond(alliance == Alliance.RED) { Vector(-x, y) }
                 .cond(close) { Vector(x, -y) }
 
         private fun HermitePath.choose(alliance: Alliance, close: Boolean) =
             this
-                .cond(alliance == Alliance.BLUE) {
+                .cond(alliance == Alliance.RED) {
                     this.map(FLIPPED_HEADING_CONTROLLER) {
                         Pose(
                             -it.x,
