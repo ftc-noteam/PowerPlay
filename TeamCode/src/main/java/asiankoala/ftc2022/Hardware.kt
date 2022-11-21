@@ -4,6 +4,7 @@ import asiankoala.ftc2022.subsystems.*
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains
+import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.KEncoder
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
@@ -35,9 +36,10 @@ class Hardware(startPose: Pose) {
         .float
         .forward
         .reverse
-        .pairEncoder(br, 1.0)
-        .reverseEncoder
-        .zero(LiftConstants.homePos)
+        .pairEncoder(br, EncoderFactory(1.0)
+                .reverse
+                .zero(LiftConstants.homePos)
+        )
 //        .withMotionProfileControl(
 //            PIDGains(Lift.kP, Lift.kI, Lift.kD),
 //            FFGains(Lift.kS, Lift.kV, Lift.kA, kG = Lift.kG),
@@ -51,8 +53,7 @@ class Hardware(startPose: Pose) {
         .float
         .build()
 
-    val liftLeft = MotorFactory("liftLeft")
-        .float
+    val liftLeft = MotorFactory("liftLeft") .float
         .reverse
         .build()
 
@@ -69,9 +70,10 @@ class Hardware(startPose: Pose) {
 //            MotionConstraints(Arm.maxVel, Arm.maxAccel),
 //            allowedPositionError = Arm.allowedPositionError
 //        )
-        .createEncoder(ArmConstants.ticksPerUnit)
-        .reverseEncoder
-        .zero(ArmConstants.homePos[true])
+        .createEncoder(EncoderFactory(1.0)
+                .reverse
+                .zero(ArmConstants.homePos[true])
+        )
 //        .withPositionControl(
 //            PIDGains(),
 //            FFGains(kCos = ArmConstants.kCos),
@@ -89,16 +91,19 @@ class Hardware(startPose: Pose) {
 //    val distanceSensor = KDistanceSensor("distanceSensor")
 //
 
-    val leftEncoder = KEncoder(bl, ticksPerUnit, true)
+    val leftEncoder = EncoderFactory(ticksPerUnit)
         .reverse
-        .zero()
+        .revEncoder
+        .build(bl)
 
-    val rightEncoder = KEncoder(fr, ticksPerUnit, true)
-        .zero()
+    val rightEncoder = EncoderFactory(ticksPerUnit)
+        .revEncoder
+        .build(fr)
 
-    val auxEncoder = KEncoder(fl, ticksPerUnit, true)
+    val auxEncoder = EncoderFactory(ticksPerUnit)
         .reverse
-        .zero()
+        .revEncoder
+        .build(fl)
 
     val odometry = KThreeWheelOdometry(
         leftEncoder,
