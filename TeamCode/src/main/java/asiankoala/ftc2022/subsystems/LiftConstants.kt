@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.config.Config
 
 @Config
 object LiftConstants {
-    @JvmField var ticksPerUnit = 0.0
+    @JvmField var ticksPerUnit = 1.0
     @JvmField var homePos = 0.0
     @JvmField var groundPos = 0.0
     @JvmField var lowPos = 0.0
@@ -21,5 +21,5 @@ object LiftConstants {
     @JvmField var maxAccel = 0.0
     @JvmField var disabledPosition = 0.0
     @JvmField var allowedPositionError = 1.0
-    @JvmField var testPower = 0.8
+    @JvmField var testPower = 0.5
 }

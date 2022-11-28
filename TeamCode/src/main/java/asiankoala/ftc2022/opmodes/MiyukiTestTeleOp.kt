@@ -11,6 +11,7 @@ import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
+import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.subsystem.odometry.Odometry
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
@@ -19,7 +20,8 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
     private val miyuki by lazy { Miyuki(Odometry.lastPose) }
 
     override fun mInit() {
-        scheduleDrive()
+        Logger.config = LoggerConfig.DASHBOARD_CONFIG
+//        scheduleDrive()
 //        scheduleStrategy()
 //        scheduleCycling()
 //        driver.leftBumper.onPress(ClawCmds.ClawGripCmd(miyuki.claw))
@@ -33,10 +35,12 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.leftTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotHome }))
 //        driver.rightTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotDeposit }))
 
-        driver.leftTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, 1.0))
-        driver.rightTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, -1.0))
-        driver.leftBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, 1.0))
-        driver.rightBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -1.0))
+//        miyuki.lift.defaultCommand = LiftCmds.LiftOpenLoopCmd(miyuki.lift, 0.0)
+        driver.leftTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, LiftConstants.testPower))
+        driver.rightTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, -LiftConstants.testPower))
+        driver.rightBumper.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, 0.0))
+//        driver.leftBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, 1.0))
+//        driver.rightBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -1.0))
     }
 
 
@@ -51,11 +55,11 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //            miyuki.drive::pose
 //        )
 
-        miyuki.drive.defaultCommand = MecanumCmd(
-            miyuki.drive,
-            driver.leftStick.yInverted,
-            driver.rightStick
-        )
+//        miyuki.drive.defaultCommand = MecanumCmd(
+//            miyuki.drive,
+//            driver.leftStick.yInverted,
+//            driver.rightStick
+//        )
     }
 
 //    private fun scheduleStrategy() {
@@ -80,8 +84,8 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("strat", MiyukiState.strategy)
 //        Logger.addTelemetryData("aimbot", driver.a.isToggled)
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
-        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
-        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
+//        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
+//        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
+//        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
     }
 }

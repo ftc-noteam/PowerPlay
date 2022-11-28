@@ -14,5 +14,5 @@ object LiftCmds {
     class LiftMedCmd(lift: Lift) : LiftCmd(lift, LiftConstants.medPos)
     class LiftHighCmd(lift: Lift) : LiftCmd(lift, LiftConstants.highPos)
 
-    class LiftOpenLoopCmd(lift: Lift, power: Double) : InstantCmd({ lift.openLoop(power) })
+    class LiftOpenLoopCmd(lift: Lift, power: Double) : InstantCmd({ lift.openLoop(power) }, lift)
 }
