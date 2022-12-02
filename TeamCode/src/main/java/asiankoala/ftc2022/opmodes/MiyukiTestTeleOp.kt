@@ -36,9 +36,12 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.rightTrigger.onPress(InstantCmd({ hw.pivot.position = PivotConstants.pivotDeposit }))
 
 //        miyuki.lift.defaultCommand = LiftCmds.LiftOpenLoopCmd(miyuki.lift, 0.0)
-        driver.leftTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, LiftConstants.testPower))
-        driver.rightTrigger.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, -LiftConstants.testPower))
-        driver.rightBumper.onPress(LiftCmds.LiftOpenLoopCmd(miyuki.lift, 0.0))
+//        driver.leftTrigger.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, ArmConstants.testPower))
+//        driver.rightTrigger.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -ArmConstants.testPower))
+//        val zeroCmd = ArmCmds.ArmOpenLoopCmd(miyuki.arm, 0.0)
+//        driver.leftTrigger.onRelease(zeroCmd)
+//        driver.rightTrigger.onRelease(zeroCmd)
+//        driver.rightBumper.onPress(zeroCmd)
 //        driver.leftBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, 1.0))
 //        driver.rightBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -1.0))
     }
@@ -86,6 +89,6 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
 //        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
 //        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-//        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
+        Logger.addTelemetryData("arm position", miyuki.arm.pos)
     }
 }

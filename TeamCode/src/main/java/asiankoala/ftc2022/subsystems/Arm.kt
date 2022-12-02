@@ -5,7 +5,7 @@ import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
 import com.asiankoala.koawalib.util.Reversible
 
-class Arm(private val motor: KMotor) : Subsystem() {
+class Arm(val motor: KMotor) : Subsystem() {
     fun setPos(pos: Double) {
         motor.setProfileTarget(pos)
     }

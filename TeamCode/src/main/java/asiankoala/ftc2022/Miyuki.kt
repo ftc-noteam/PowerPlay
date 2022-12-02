@@ -9,7 +9,7 @@ import com.asiankoala.koawalib.subsystem.drive.KMecanumDrive
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 
 class Miyuki(startPose: Pose) {
-    val hardware = Hardware(startPose)
+    private val hardware = Hardware(startPose)
 
 //    val drive = KMecanumOdoDrive(
 //        hardware.fl,
@@ -21,7 +21,11 @@ class Miyuki(startPose: Pose) {
 //    )
 
     val lift = Lift(hardware.liftLead, hardware.liftBottom, hardware.liftLeft)
-//    val arm = Arm(hardware.arm)
+    val arm = Arm(hardware.arm)
 //    val pivot = Pivot(hardware.pivot)
 //    val claw = Claw(hardware.claw)
+
+    init {
+        arm.motor.setPositionTarget(180.0)
+    }
 }
