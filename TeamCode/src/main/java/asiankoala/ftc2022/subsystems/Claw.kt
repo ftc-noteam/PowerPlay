@@ -8,7 +8,7 @@ class Claw(
 //    private val distanceSensor: KDistanceSensor
 ) : Subsystem() {
     // distanceSensor.lastRead < Constants.clawDistanceThreshold
-    val readyToGrab get() = true
+//    val readyToGrab get() = true
 
     fun setPos(pos: Double) {
         servo.position = pos

@@ -10,7 +10,6 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 class IntakeSequence(
     claw: Claw,
 ) : SequentialGroup(
-    WaitUntilCmd(claw::readyToGrab),
     ClawCmds.ClawGripCmd(claw),
     InstantCmd(MiyukiState::nextState)
 )

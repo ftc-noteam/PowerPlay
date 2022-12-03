@@ -4,6 +4,7 @@ import asiankoala.ftc2022.subsystems.*
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains
+import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
@@ -70,10 +71,16 @@ class Hardware(startPose: Pose) {
             FFGains(kCos = ArmConstants.kCos),
             allowedPositionError = ArmConstants.allowedPositionError
         )
+//        .withMotionProfileControl(
+//            PIDGains(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD),
+//            FFGains(kCos = ArmConstants.kCos),
+//            MotionConstraints(ArmConstants.maxVel, ArmConstants.maxAccel),
+//            allowedPositionError = 0.5
+//        )
         .build()
 
-//    val claw = KServo("claw")
-//        .startAt(ClawConstants.gripPos)
+    val claw = KServo("claw")
+        .startAt(ClawConstants.gripPos)
 //
     val pivot = KServo("pivot")
         .startAt(PivotConstants.pivotHome)

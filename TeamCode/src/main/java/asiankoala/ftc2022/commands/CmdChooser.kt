@@ -20,23 +20,23 @@ object CmdChooser {
         }
     }
 
-    fun armCmd(arm: Arm): ArmCmds.ArmCmd {
-        return when (MiyukiState.strategy) {
-            MiyukiState.DepositState.HIGH -> ArmCmds.ArmHighCmd(arm)
-            MiyukiState.DepositState.MEDIUM -> ArmCmds.ArmMedCmd(arm)
-            MiyukiState.DepositState.LOW -> ArmCmds.ArmLowCmd(arm)
-            MiyukiState.DepositState.GROUND -> ArmCmds.ArmGroundCmd(arm)
-        }
-    }
-
-    fun pivotCmd(pivot: Pivot): PivotCmds.PivotCmd {
-        return when (MiyukiState.strategy) {
-            MiyukiState.DepositState.HIGH -> PivotCmds.PivotHighCmd(pivot)
-            MiyukiState.DepositState.MEDIUM -> PivotCmds.PivotMedCmd(pivot)
-            MiyukiState.DepositState.LOW -> PivotCmds.PivotLowCmd(pivot)
-            MiyukiState.DepositState.GROUND -> PivotCmds.PivotGroundCmd(pivot)
-        }
-    }
+//    fun armCmd(arm: Arm): ArmCmds.ArmCmd {
+//        return when (MiyukiState.strategy) {
+//            MiyukiState.DepositState.HIGH -> ArmCmds.ArmHighCmd(arm)
+//            MiyukiState.DepositState.MEDIUM -> ArmCmds.ArmMedCmd(arm)
+//            MiyukiState.DepositState.LOW -> ArmCmds.ArmLowCmd(arm)
+//            MiyukiState.DepositState.GROUND -> ArmCmds.ArmGroundCmd(arm)
+//        }
+//    }
+//
+//    fun pivotCmd(pivot: Pivot): PivotCmds.PivotCmd {
+//        return when (MiyukiState.strategy) {
+//            MiyukiState.DepositState.HIGH -> PivotCmds.PivotHighCmd(pivot)
+//            MiyukiState.DepositState.MEDIUM -> PivotCmds.PivotMedCmd(pivot)
+//            MiyukiState.DepositState.LOW -> PivotCmds.PivotLowCmd(pivot)
+//            MiyukiState.DepositState.GROUND -> PivotCmds.PivotGroundCmd(pivot)
+//        }
+//    }
 
     fun homeCmd(miyuki: Miyuki): ParallelGroup {
         return ParallelGroup(

@@ -1,10 +1,12 @@
 package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
-import asiankoala.ftc2022.commands.subsystem.ArmCmds
+import asiankoala.ftc2022.commands.subsystem.ArmCmds.ArmCmd
+import asiankoala.ftc2022.commands.subsystem.LiftCmds.LiftCmd
 import asiankoala.ftc2022.commands.subsystem.LiftCmds
 import asiankoala.ftc2022.commands.subsystem.PivotCmds
 import asiankoala.ftc2022.subsystems.ArmConstants
+import asiankoala.ftc2022.subsystems.ClawConstants
 import asiankoala.ftc2022.subsystems.LiftConstants
 import asiankoala.ftc2022.subsystems.PivotConstants
 import com.asiankoala.koawalib.command.KOpMode
@@ -17,9 +19,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp
 class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
-    private val miyuki by lazy { Miyuki(Odometry.lastPose) }
+    private lateinit var miyuki: Miyuki
 
     override fun mInit() {
+        miyuki = Miyuki(Odometry.lastPose)
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
 //        scheduleDrive()
 //        scheduleStrategy()
@@ -44,6 +47,12 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.rightBumper.onPress(zeroCmd)
 //        driver.leftBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, 1.0))
 //        driver.rightBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -1.0))
+        driver.leftBumper.onPress(InstantCmd({ miyuki.hardware.pivot.position = PivotConstants.pivotHome }))
+        driver.rightBumper.onPress(InstantCmd({ miyuki.hardware.pivot.position = PivotConstants.pivotDeposit }))
+        driver.leftTrigger.onPress(InstantCmd({ miyuki.hardware.claw.position = ClawConstants.openPos }))
+        driver.rightTrigger.onPress(InstantCmd({ miyuki.hardware.claw.position = ClawConstants.gripPos }))
+        driver.a.onPress(ArmCmd(miyuki.arm, 0.0))
+        driver.b.onPress(ArmCmd(miyuki.arm, 135.0))
     }
 
 
@@ -87,8 +96,7 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("strat", MiyukiState.strategy)
 //        Logger.addTelemetryData("aimbot", driver.a.isToggled)
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
-//        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
-//        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addTelemetryData("arm position", miyuki.arm.pos)
+        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
+        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
     }
 }

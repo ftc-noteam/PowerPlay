@@ -9,7 +9,8 @@ class Lift(
     private val leftMotor: KMotor
 ) : Subsystem() {
     fun setPos(pos: Double) {
-        leadMotor.setProfileTarget(pos)
+//        leadMotor.setProfileTarget(pos)
+        leadMotor.setPositionTarget(pos)
     }
 
     fun openLoop(power: Double) {

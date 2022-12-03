@@ -5,8 +5,8 @@ import com.asiankoala.koawalib.util.Reversible
 
 @Config
 object PivotConstants {
-    @JvmField var pivotHome = 0.4 // reverse
-    @JvmField var pivotDeposit = 0.0
+    @JvmField var pivotHome = 0.77 // reverse
+    @JvmField var pivotDeposit = 0.95
 
     var homePos = Reversible(pivotHome, 0.4)
     var groundPos = Reversible(0.0, 0.0)
