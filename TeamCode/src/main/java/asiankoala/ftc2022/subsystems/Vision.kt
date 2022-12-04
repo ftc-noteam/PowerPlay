@@ -17,7 +17,7 @@ class Vision: Subsystem() {
     fun start() {
         webcam.startStreaming()
     }
-    
+
     fun stop() {
         webcam.stopStreaming()
         pipeline.release()
