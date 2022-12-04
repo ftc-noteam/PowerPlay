@@ -18,7 +18,10 @@ object LiftConstants {
     @JvmField var kD = 0.005
     @JvmField var kG = 0.25
     @JvmField var home = 0.0
-    @JvmField var med = 2.0
+    @JvmField var ready = 2.0
+    @JvmField var ground = ready
+    @JvmField var low = ready
+    @JvmField var med = ready
     @JvmField var high = 10.0
     @JvmField var disabledPosition = home
     @JvmField var allowedPositionError = 2.0

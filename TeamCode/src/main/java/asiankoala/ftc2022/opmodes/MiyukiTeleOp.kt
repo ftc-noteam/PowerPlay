@@ -1,73 +1,69 @@
 package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
-import asiankoala.ftc2022.MiyukiState
-import asiankoala.ftc2022.commands.sequence.DepositSequence
-import asiankoala.ftc2022.commands.sequence.IntakeSequence
-import asiankoala.ftc2022.commands.sequence.ReadySequence
-import asiankoala.ftc2022.commands.subsystem.ClawCmds
+import asiankoala.ftc2022.State
+import asiankoala.ftc2022.commands.sequence.teleop.DepositSequence
+import asiankoala.ftc2022.commands.sequence.teleop.IntakeSequence
 import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
-import com.asiankoala.koawalib.subsystem.odometry.Odometry
-import com.asiankoala.koawalib.util.Alliance
+import com.asiankoala.koawalib.logger.LoggerConfig
+import com.asiankoala.koawalib.math.Pose
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-//open class MiyukiTeleOp(
-//    private val alliance: Alliance
-//) : KOpMode(photonEnabled = true) {
-//    private val miyuki by lazy { Miyuki(Odometry.lastPose) }
-//
-//    override fun mInit() {
-//        scheduleDrive()
-//        scheduleStrategy()
-//        scheduleCycling()
-//    }
-//
-//    private fun scheduleDrive() {
-////        miyuki.drive.defaultCommand = L9SpacegliderScript1v9TurboBoostHackCmd(
-////            miyuki.drive,
-////            driver.leftStick,
-////            driver.rightStick,
-////            driver.leftTrigger::isToggled,
-////            driver.a::isToggled,
-////            miyuki.drive::pose
-////        )
-//
-//        miyuki.hardware.odometry.unregister()
-//        miyuki.drive.defaultCommand = MecanumCmd(
-//            miyuki.drive,
-//            driver.leftStick.yInverted,
-//            driver.rightStick
-//        )
-//    }
-//
-//    private fun scheduleStrategy() {
-//        driver.leftBumper.onPress(InstantCmd(MiyukiState::incStrat))
-//        driver.rightBumper.onPress(InstantCmd(MiyukiState::decStrat))
-//    }
-//
-//    private fun scheduleCycling() {
-//        driver.rightTrigger.onPress(
-//            InstantCmd({
-//                +when (MiyukiState.state) {
-//                    MiyukiState.State.INTAKING -> IntakeSequence(miyuki.claw)
-//                    MiyukiState.State.READYING -> ReadySequence(miyuki)
-//                    MiyukiState.State.DEPOSITING -> DepositSequence(miyuki)
-//                }
-//            })
-//        )
-//    }
-//
-//    override fun mLoop() {
-////        Logger.addTelemetryData("state", MiyukiState.state)
-////        Logger.addTelemetryData("strat", MiyukiState.strategy)
-////        Logger.addTelemetryData("aimbot", driver.a.isToggled)
-////        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
-//        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
-//        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-//        Logger.addTelemetryData("left", miyuki.hardware.leftEncoder.pos)
-//        Logger.addTelemetryData("right", miyuki.hardware.rightEncoder.pos)
-//        Logger.addTelemetryData("aux", miyuki.hardware.auxEncoder.pos)
-//    }
-//}
+@TeleOp
+class MiyukiTeleOp : KOpMode(photonEnabled = true) {
+    private lateinit var miyuki: Miyuki
+
+    override fun mInit() {
+        Logger.config = LoggerConfig.DASHBOARD_CONFIG
+        miyuki = Miyuki(Pose())
+        miyuki.hardware.odometry.unregister()
+        scheduleDrive()
+        scheduleStrat()
+        scheduleCycling()
+    }
+
+    private fun scheduleDrive() {
+        miyuki.drive.defaultCommand = MecanumCmd(
+            miyuki.drive,
+            driver.leftStick,
+            driver.rightStick,
+            xScalar = 0.7,
+            yScalar = 0.7,
+            rScalar = 0.5,
+        )
+    }
+
+    private fun scheduleCycling() {
+        + object : Cmd() {
+            override fun execute() {
+                if(driver.leftTrigger.isJustPressed && miyuki.state == State.INTAKING) {
+                    + IntakeSequence(miyuki, driver.leftTrigger::isJustPressed)
+                        .cancelIf(driver.rightTrigger::isJustPressed)
+                }
+            }
+        }
+        + object : Cmd() {
+            override fun execute() {
+                if(driver.rightTrigger.isJustPressed && miyuki.state == State.DEPOSITING) {
+                    + DepositSequence(miyuki, driver.rightTrigger::isJustPressed)
+                }
+            }
+        }
+    }
+
+    private fun scheduleStrat() {
+        driver.leftBumper.onPress(InstantCmd(miyuki::decStrat))
+        driver.rightBumper.onPress(InstantCmd(miyuki::incStrat))
+    }
+
+    override fun mLoop() {
+        Logger.addTelemetryData("state", miyuki.state)
+        Logger.addTelemetryData("strat", miyuki.strategy)
+        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
+        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
+    }
+}

@@ -13,24 +13,22 @@ import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 class Hardware(startPose: Pose) {
     val fl = MotorFactory("fl")
         .brake
-//        .forward
         .reverse
         .build()
 
     val bl = MotorFactory("bl")
         .brake
-//        .forward
         .reverse
         .build()
 
     val br = MotorFactory("br")
         .brake
-//        .reverse
+        .forward
         .build()
 
     val fr = MotorFactory("fr")
         .brake
-//        .reverse
+        .forward
         .build()
 
     val liftLead = MotorFactory("liftLead")
@@ -45,13 +43,6 @@ class Hardware(startPose: Pose) {
             allowedPositionError = LiftConstants.allowedPositionError,
             disabledPosition = LiftConstants.disabledPosition
         )
-//        .withMotionProfileControl(
-//            PIDGains(Lift.kP, Lift.kI, Lift.kD),
-//            FFGains(Lift.kS, Lift.kV, Lift.kA, kG = Lift.kG),
-//            MotionConstraints(Lift.maxVel, Lift.maxAccel),
-//            allowedPositionError = Lift.allowedPositionError,
-//            disabledPosition = Lift.disabledPosition
-//        )
         .build()
 
     val liftBottom = MotorFactory("liftBottom")
@@ -65,7 +56,7 @@ class Hardware(startPose: Pose) {
         .build()
 
     val arm = MotorFactory("arm")
-        .float
+        .brake
         .reverse
         .createEncoder(EncoderFactory(ArmConstants.ticksPerUnit)
                 .reverse
@@ -76,31 +67,25 @@ class Hardware(startPose: Pose) {
             FFGains(kCos = ArmConstants.kCos),
             allowedPositionError = ArmConstants.allowedPositionError
         )
-//        .withMotionProfileControl(
-//            PIDGains(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD),
-//            FFGains(kCos = ArmConstants.kCos),
-//            MotionConstraints(ArmConstants.maxVel, ArmConstants.maxAccel),
-//            allowedPositionError = 0.5
-//        )
         .build()
 
     val claw = KServo("claw")
         .startAt(ClawConstants.open)
-//
+
     val pivot = KServo("pivot")
         .startAt(PivotConstants.home)
 
-    val leftEncoder = EncoderFactory(ticksPerUnit)
+    private val leftEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
         .build(bl)
 
-    val rightEncoder = EncoderFactory(ticksPerUnit)
+    private val rightEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
         .build(fr)
 
-    val auxEncoder = EncoderFactory(ticksPerUnit)
+    private val auxEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
         .build(fl)

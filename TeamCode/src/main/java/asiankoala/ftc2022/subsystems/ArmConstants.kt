@@ -10,8 +10,6 @@ object ArmConstants {
     @JvmField var maxVel = 180.0
     @JvmField var maxAccel = 180.0
 
-
-
     @JvmField var ticksPerUnit = 2.0434
     @JvmField var kP = 0.02
     @JvmField var kI = 0.0
@@ -22,5 +20,8 @@ object ArmConstants {
 
     @JvmField var home = -69.0 // thanks ritwik
     @JvmField var pickup = -66.0
-    @JvmField var deposit = 130.0
+    @JvmField var ground = 130.0
+    @JvmField var low = 130.0
+    @JvmField var med = 130.0
+    @JvmField var high = 130.0
 }

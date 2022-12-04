@@ -6,8 +6,6 @@ import com.asiankoala.koawalib.command.commands.InstantCmd
 
 object LiftCmds {
     open class LiftCmd(lift: Lift, pos: Double) : InstantCmd({ lift.setPos(pos) }, lift)
-
     class LiftHomeCmd(lift: Lift) : LiftCmd(lift, LiftConstants.home)
-    class LiftMedCmd(lift: Lift) : LiftCmd(lift, LiftConstants.med)
-    class LiftHighCmd(lift: Lift) : LiftCmd(lift, LiftConstants.high)
+    class LiftReadyCmd(lift: Lift) : LiftCmd(lift, LiftConstants.med)
 }

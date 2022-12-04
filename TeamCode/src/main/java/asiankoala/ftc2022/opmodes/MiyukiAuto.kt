@@ -1,28 +1,5 @@
 package asiankoala.ftc2022.opmodes
 
-import asiankoala.ftc2022.Miyuki
-import asiankoala.ftc2022.commands.CmdChooser
-import asiankoala.ftc2022.commands.sequence.DepositSequence
-import asiankoala.ftc2022.commands.sequence.IntakeSequence
-import asiankoala.ftc2022.commands.sequence.ReadySequence
-import asiankoala.ftc2022.commands.subsystem.ClawCmds
-import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.command.commands.Cmd
-import com.asiankoala.koawalib.command.commands.GVFCmd
-import com.asiankoala.koawalib.command.commands.WaitUntilCmd
-import com.asiankoala.koawalib.command.group.SequentialGroup
-import com.asiankoala.koawalib.math.Pose
-import com.asiankoala.koawalib.math.Vector
-import com.asiankoala.koawalib.math.angleWrap
-import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.path.DEFAULT_HEADING_CONTROLLER
-import com.asiankoala.koawalib.path.FLIPPED_HEADING_CONTROLLER
-import com.asiankoala.koawalib.path.HermitePath
-import com.asiankoala.koawalib.path.Path
-import com.asiankoala.koawalib.path.gvf.SimpleGVFController
-import com.asiankoala.koawalib.util.Alliance
-import com.asiankoala.koawalib.util.OpModeState
-
 //open class MiyukiAuto(
 //    alliance: Alliance,
 //    close: Boolean,
