@@ -57,7 +57,7 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.b.onPress(ArmCmd(miyuki.arm, 0.0))
 //        driver.y.onPress(LiftCmd(miyuki.lift, LiftConstants.testPos))
 //        driver.a.onPress(LiftCmd(miyuki.lift, LiftConstants.home))
-        driver.rightBumper.onPress(IntakeSequence(miyuki.claw))
+        driver.rightBumper.onPress(IntakeSequence(miyuki))
         driver.leftTrigger.onPress(ReadySequence(miyuki))
         driver.rightTrigger.onPress(DepositSequence(miyuki))
     }
@@ -77,7 +77,10 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
         miyuki.drive.defaultCommand = MecanumCmd(
             miyuki.drive,
             driver.leftStick,
-            driver.rightStick
+            driver.rightStick,
+            xScalar = 0.7,
+            yScalar = 0.7,
+            rScalar = 0.5,
         )
     }
 

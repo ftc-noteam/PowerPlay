@@ -22,7 +22,7 @@ class Miyuki(startPose: Pose) {
     val claw = Claw(hardware.claw)
 
     init {
-        arm.setPos(ArmConstants.home)
+        arm.setPos(ArmConstants.pickup)
         lift.setPos(LiftConstants.home)
     }
 }

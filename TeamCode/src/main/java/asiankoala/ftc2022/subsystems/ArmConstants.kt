@@ -13,13 +13,14 @@ object ArmConstants {
 
 
     @JvmField var ticksPerUnit = 2.0434
-    @JvmField var kP = 0.015
+    @JvmField var kP = 0.02
     @JvmField var kI = 0.0
     @JvmField var kD = 0.0008
-    @JvmField var kCos = 0.28
+    @JvmField var kCos = 0.31
     @JvmField var allowedPositionError = 1.0
 
 
     @JvmField var home = -69.0 // thanks ritwik
-    @JvmField var deposit = 135.0
+    @JvmField var pickup = -66.0
+    @JvmField var deposit = 130.0
 }
