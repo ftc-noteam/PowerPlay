@@ -6,6 +6,7 @@ import asiankoala.ftc2022.subsystems.*
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
+import com.asiankoala.koawalib.subsystem.vision.KWebcam
 
 class Miyuki(startPose: Pose) {
     val hardware = Hardware(startPose)
@@ -21,6 +22,7 @@ class Miyuki(startPose: Pose) {
     val arm = Arm(hardware.arm)
     val pivot = Pivot(hardware.pivot)
     val claw = Claw(hardware.claw)
+    val vision = Vision()
 
     var state = State.INTAKING
     var strategy = DepositState.HIGH
@@ -72,3 +74,4 @@ enum class DepositState {
     val next get() = values()[(ordinal + 1) % values().size]
     val prev get() = values()[(ordinal - 1) % values().size]
 }
+
