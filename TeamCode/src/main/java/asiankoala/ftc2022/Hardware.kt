@@ -4,7 +4,6 @@ import asiankoala.ftc2022.subsystems.*
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains
-import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
@@ -14,31 +13,37 @@ import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 class Hardware(startPose: Pose) {
     val fl = MotorFactory("fl")
         .brake
-        .forward
+//        .forward
+        .reverse
         .build()
 
     val bl = MotorFactory("bl")
         .brake
-        .forward
+//        .forward
+        .reverse
         .build()
 
     val br = MotorFactory("br")
         .brake
-        .reverse
+//        .reverse
         .build()
 
     val fr = MotorFactory("fr")
         .brake
-        .reverse
+//        .reverse
         .build()
 
     val liftLead = MotorFactory("liftLead")
         .float
         .forward
-        .reverse
-        .pairEncoder(br, EncoderFactory(1.0)
-                .reverse
-                .zero(LiftConstants.homePos)
+        .pairEncoder(br, EncoderFactory(LiftConstants.ticksPerUnit)
+                .zero(LiftConstants.home)
+        )
+        .withPositionControl(
+            PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
+            FFGains(kG = LiftConstants.kG),
+            allowedPositionError = LiftConstants.allowedPositionError,
+            disabledPosition = LiftConstants.disabledPosition
         )
 //        .withMotionProfileControl(
 //            PIDGains(Lift.kP, Lift.kI, Lift.kD),
@@ -83,36 +88,36 @@ class Hardware(startPose: Pose) {
         .startAt(ClawConstants.gripPos)
 //
     val pivot = KServo("pivot")
-        .startAt(PivotConstants.pivotHome)
-//
-//
-//    val leftEncoder = EncoderFactory(ticksPerUnit)
-//        .reverse
-//        .revEncoder
-//        .build(bl)
-//
-//    val rightEncoder = EncoderFactory(ticksPerUnit)
-//        .revEncoder
-//        .build(fr)
-//
-//    val auxEncoder = EncoderFactory(ticksPerUnit)
-//        .reverse
-//        .revEncoder
-//        .build(fl)
-//
-//    val odometry = KThreeWheelOdometry(
-//        leftEncoder,
-//        rightEncoder,
-//        auxEncoder,
-//        TRACK_WIDTH,
-//        PERP_TRACKER,
-//        startPose
-//    )
+        .startAt(PivotConstants.home)
+
+    val leftEncoder = EncoderFactory(ticksPerUnit)
+        .reverse
+        .revEncoder
+        .build(bl)
+
+    val rightEncoder = EncoderFactory(ticksPerUnit)
+        .reverse
+        .revEncoder
+        .build(fr)
+
+    val auxEncoder = EncoderFactory(ticksPerUnit)
+        .reverse
+        .revEncoder
+        .build(fl)
+
+    val odometry = KThreeWheelOdometry(
+        leftEncoder,
+        rightEncoder,
+        auxEncoder,
+        TRACK_WIDTH,
+        PERP_TRACKER,
+        startPose
+    )
 
     @Config
     companion object {
         private const val ticksPerUnit = 1892.3724
-        @JvmField var TRACK_WIDTH = 12.0
-        @JvmField var PERP_TRACKER = 4.0
+        @JvmField var TRACK_WIDTH = 12.1259842
+        @JvmField var PERP_TRACKER = 3.346
     }
 }

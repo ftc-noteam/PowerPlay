@@ -3,8 +3,6 @@ package asiankoala.ftc2022.opmodes
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.commands.subsystem.ArmCmds.ArmCmd
 import asiankoala.ftc2022.commands.subsystem.LiftCmds.LiftCmd
-import asiankoala.ftc2022.commands.subsystem.LiftCmds
-import asiankoala.ftc2022.commands.subsystem.PivotCmds
 import asiankoala.ftc2022.subsystems.ArmConstants
 import asiankoala.ftc2022.subsystems.ClawConstants
 import asiankoala.ftc2022.subsystems.LiftConstants
@@ -14,7 +12,7 @@ import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
-import com.asiankoala.koawalib.subsystem.odometry.Odometry
+import com.asiankoala.koawalib.math.Pose
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp
@@ -22,9 +20,10 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
     private lateinit var miyuki: Miyuki
 
     override fun mInit() {
-        miyuki = Miyuki(Odometry.lastPose)
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
-//        scheduleDrive()
+        miyuki = Miyuki(Pose())
+        miyuki.hardware.odometry.unregister()
+        scheduleDrive()
 //        scheduleStrategy()
 //        scheduleCycling()
 //        driver.leftBumper.onPress(ClawCmds.ClawGripCmd(miyuki.claw))
@@ -47,12 +46,16 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.rightBumper.onPress(zeroCmd)
 //        driver.leftBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, 1.0))
 //        driver.rightBumper.onPress(ArmCmds.ArmOpenLoopCmd(miyuki.arm, -1.0))
-        driver.leftBumper.onPress(InstantCmd({ miyuki.hardware.pivot.position = PivotConstants.pivotHome }))
-        driver.rightBumper.onPress(InstantCmd({ miyuki.hardware.pivot.position = PivotConstants.pivotDeposit }))
-        driver.leftTrigger.onPress(InstantCmd({ miyuki.hardware.claw.position = ClawConstants.openPos }))
-        driver.rightTrigger.onPress(InstantCmd({ miyuki.hardware.claw.position = ClawConstants.gripPos }))
-        driver.a.onPress(ArmCmd(miyuki.arm, 0.0))
-        driver.b.onPress(ArmCmd(miyuki.arm, 135.0))
+//        driver.leftBumper.onPress(InstantCmd({ miyuki.hardware.pivot.position = PivotConstants.home }))
+//        driver.rightBumper.onPress(InstantCmd({ miyuki.hardware.pivot.position = PivotConstants.deposit }))
+//        driver.leftTrigger.onPress(InstantCmd({ miyuki.hardware.claw.position = ClawConstants.openPos }))
+//        driver.rightTrigger.onPress(InstantCmd({ miyuki.hardware.claw.position = ClawConstants.gripPos }))
+//        driver.x.onPress(ArmCmd(miyuki.arm, ArmConstants.deposit))
+//        driver.b.onPress(ArmCmd(miyuki.arm, 0.0))
+//        driver.y.onPress(LiftCmd(miyuki.lift, LiftConstants.testPos))
+//        driver.a.onPress(LiftCmd(miyuki.lift, LiftConstants.home))
+
+        driver.rightBumper.onPress()
     }
 
 
@@ -67,11 +70,11 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //            miyuki.drive::pose
 //        )
 
-//        miyuki.drive.defaultCommand = MecanumCmd(
-//            miyuki.drive,
-//            driver.leftStick.yInverted,
-//            driver.rightStick
-//        )
+        miyuki.drive.defaultCommand = MecanumCmd(
+            miyuki.drive,
+            driver.leftStick,
+            driver.rightStick
+        )
     }
 
 //    private fun scheduleStrategy() {
@@ -97,6 +100,8 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("aimbot", driver.a.isToggled)
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
         Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
+        Logger.addTelemetryData("powers", miyuki.drive.powers)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
+        Logger.addVar("lift pos", miyuki.hardware.liftLead.pos)
     }
 }

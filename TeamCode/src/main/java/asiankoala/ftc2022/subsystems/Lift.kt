@@ -13,14 +13,10 @@ class Lift(
         leadMotor.setPositionTarget(pos)
     }
 
-    fun openLoop(power: Double) {
-        leadMotor.power = power
-        bottomMotor.power = power
-        leftMotor.power = power
-    }
-
     override fun periodic() {
         bottomMotor.power = leadMotor.power
         leftMotor.power = leadMotor.power
     }
+
+    val pos get() = leadMotor.pos
 }

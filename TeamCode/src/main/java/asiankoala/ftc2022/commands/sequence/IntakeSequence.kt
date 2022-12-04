@@ -11,5 +11,5 @@ class IntakeSequence(
     claw: Claw,
 ) : SequentialGroup(
     ClawCmds.ClawGripCmd(claw),
-    InstantCmd(MiyukiState::nextState)
+//    InstantCmd(MiyukiState::nextState)
 )
