@@ -1,6 +1,6 @@
 package asiankoala.ftc2022.opmodes
 
-import asiankoala.ftc2022.subsystems.Vision
+import asiankoala.ftc2022.subsystems.vision.Vision
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.logger.Logger
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp

@@ -1,6 +1,9 @@
 package asiankoala.ftc2022
 
-import asiankoala.ftc2022.subsystems.*
+import asiankoala.ftc2022.subsystems.constants.ArmConstants
+import asiankoala.ftc2022.subsystems.constants.ClawConstants
+import asiankoala.ftc2022.subsystems.constants.LiftConstants
+import asiankoala.ftc2022.subsystems.constants.PivotConstants
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains

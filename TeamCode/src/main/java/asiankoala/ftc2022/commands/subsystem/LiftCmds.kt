@@ -1,7 +1,7 @@
 package asiankoala.ftc2022.commands.subsystem
 
 import asiankoala.ftc2022.subsystems.Lift
-import asiankoala.ftc2022.subsystems.LiftConstants
+import asiankoala.ftc2022.subsystems.constants.LiftConstants
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 object LiftCmds {

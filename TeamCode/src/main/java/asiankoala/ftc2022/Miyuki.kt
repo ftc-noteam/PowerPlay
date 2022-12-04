@@ -3,10 +3,12 @@ package asiankoala.ftc2022
 import asiankoala.ftc2022.commands.subsystem.ArmCmds
 import asiankoala.ftc2022.commands.subsystem.LiftCmds
 import asiankoala.ftc2022.subsystems.*
+import asiankoala.ftc2022.subsystems.constants.ArmConstants
+import asiankoala.ftc2022.subsystems.constants.LiftConstants
+import asiankoala.ftc2022.subsystems.vision.Vision
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
-import com.asiankoala.koawalib.subsystem.vision.KWebcam
 
 class Miyuki(startPose: Pose) {
     val hardware = Hardware(startPose)

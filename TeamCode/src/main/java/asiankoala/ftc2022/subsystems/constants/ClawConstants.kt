@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.subsystems
+package asiankoala.ftc2022.subsystems.constants
 
 import com.acmerobotics.dashboard.config.Config
 

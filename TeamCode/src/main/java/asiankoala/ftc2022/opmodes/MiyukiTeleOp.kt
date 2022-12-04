@@ -2,8 +2,8 @@ package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.State
-import asiankoala.ftc2022.commands.sequence.teleop.DepositSequence
-import asiankoala.ftc2022.commands.sequence.teleop.IntakeSequence
+import asiankoala.ftc2022.commands.sequence.DepositSequence
+import asiankoala.ftc2022.commands.sequence.IntakeSequence
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd

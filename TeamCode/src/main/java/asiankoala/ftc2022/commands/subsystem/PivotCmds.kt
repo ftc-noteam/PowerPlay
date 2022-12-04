@@ -1,7 +1,7 @@
 package asiankoala.ftc2022.commands.subsystem
 
 import asiankoala.ftc2022.subsystems.Pivot
-import asiankoala.ftc2022.subsystems.PivotConstants
+import asiankoala.ftc2022.subsystems.constants.PivotConstants
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 class PivotCmds {

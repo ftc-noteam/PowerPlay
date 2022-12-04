@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.subsystems
+package asiankoala.ftc2022.subsystems.vision
 
 import asiankoala.ftc2022.Zones
 import com.asiankoala.koawalib.subsystem.Subsystem

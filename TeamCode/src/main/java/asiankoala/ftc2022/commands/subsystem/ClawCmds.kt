@@ -1,7 +1,7 @@
 package asiankoala.ftc2022.commands.subsystem
 
 import asiankoala.ftc2022.subsystems.Claw
-import asiankoala.ftc2022.subsystems.ClawConstants
+import asiankoala.ftc2022.subsystems.constants.ClawConstants
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 object ClawCmds {
