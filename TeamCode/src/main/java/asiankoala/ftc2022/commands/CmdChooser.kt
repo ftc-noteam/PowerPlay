@@ -11,14 +11,14 @@ import asiankoala.ftc2022.subsystems.Pivot
 import com.asiankoala.koawalib.command.group.ParallelGroup
 
 object CmdChooser {
-    fun liftCmd(lift: Lift): LiftCmds.LiftCmd {
-        return when (MiyukiState.strategy) {
-            MiyukiState.DepositState.HIGH -> LiftCmds.LiftHighCmd(lift)
-            MiyukiState.DepositState.MEDIUM -> LiftCmds.LiftMedCmd(lift)
-            MiyukiState.DepositState.LOW -> LiftCmds.LiftLowCmd(lift)
-            MiyukiState.DepositState.GROUND -> LiftCmds.LiftGroundCmd(lift)
-        }
-    }
+//    fun liftCmd(lift: Lift): LiftCmds.LiftCmd {
+//        return when (MiyukiState.strategy) {
+//            MiyukiState.DepositState.HIGH -> LiftCmds.LiftHighCmd(lift)
+//            MiyukiState.DepositState.MEDIUM -> LiftCmds.LiftMedCmd(lift)
+//            MiyukiState.DepositState.LOW -> LiftCmds.LiftLowCmd(lift)
+//            MiyukiState.DepositState.GROUND -> LiftCmds.LiftGroundCmd(lift)
+//        }
+//    }
 
 //    fun armCmd(arm: Arm): ArmCmds.ArmCmd {
 //        return when (MiyukiState.strategy) {

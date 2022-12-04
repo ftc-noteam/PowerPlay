@@ -16,8 +16,8 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 class DepositSequence(
     miyuki: Miyuki
 ) : SequentialGroup(
-    ClawCmds.ClawOpenCmd(miyuki.claw),
-    WaitCmd(0.3),
+    ClawCmds.ClawDepositCmd(miyuki.claw),
+    WaitCmd(0.5),
     ParallelGroup(
         ClawCmds.ClawGripCmd(miyuki.claw),
         PivotCmds.PivotHomeCmd(miyuki.pivot),

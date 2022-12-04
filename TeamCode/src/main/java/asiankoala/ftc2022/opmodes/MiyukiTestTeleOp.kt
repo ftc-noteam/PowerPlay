@@ -1,6 +1,9 @@
 package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
+import asiankoala.ftc2022.commands.sequence.DepositSequence
+import asiankoala.ftc2022.commands.sequence.IntakeSequence
+import asiankoala.ftc2022.commands.sequence.ReadySequence
 import asiankoala.ftc2022.commands.subsystem.ArmCmds.ArmCmd
 import asiankoala.ftc2022.commands.subsystem.LiftCmds.LiftCmd
 import asiankoala.ftc2022.subsystems.ArmConstants
@@ -54,8 +57,9 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        driver.b.onPress(ArmCmd(miyuki.arm, 0.0))
 //        driver.y.onPress(LiftCmd(miyuki.lift, LiftConstants.testPos))
 //        driver.a.onPress(LiftCmd(miyuki.lift, LiftConstants.home))
-
-        driver.rightBumper.onPress()
+        driver.rightBumper.onPress(IntakeSequence(miyuki.claw))
+        driver.leftTrigger.onPress(ReadySequence(miyuki))
+        driver.rightTrigger.onPress(DepositSequence(miyuki))
     }
 
 
@@ -100,8 +104,6 @@ class MiyukiTestTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("aimbot", driver.a.isToggled)
 //        Logger.addTelemetryData("spaceglide", driver.leftTrigger.isToggled)
         Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
-        Logger.addTelemetryData("powers", miyuki.drive.powers)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addVar("lift pos", miyuki.hardware.liftLead.pos)
     }
 }

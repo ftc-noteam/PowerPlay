@@ -12,7 +12,7 @@ import com.asiankoala.koawalib.command.group.ParallelGroup
 import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class ReadySequence(
-    miyuki: Miyuki
+    miyuki: Miyuki,
 ) : ParallelGroup(
     LiftCmds.LiftMedCmd(miyuki.lift),
     ArmCmds.ArmDepositCmd(miyuki.arm),
