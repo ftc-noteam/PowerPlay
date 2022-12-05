@@ -41,9 +41,16 @@ class Hardware(startPose: Pose) {
         .pairEncoder(br, EncoderFactory(LiftConstants.ticksPerUnit)
                 .zero(LiftConstants.home)
         )
-        .withPositionControl(
+//        .withPositionControl(
+//            PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
+//            FFGains(kG = LiftConstants.kG),
+//            allowedPositionError = LiftConstants.allowedPositionError,
+//            disabledPosition = LiftConstants.disabledPosition
+//        )
+        .withMotionProfileControl(
             PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
-            FFGains(kG = LiftConstants.kG),
+            FFGains(kG = LiftConstants.kG, kS = LiftConstants.kS, kV = LiftConstants.kV, kA = LiftConstants.kA),
+            MotionConstraints(LiftConstants.maxVel, LiftConstants.maxAccel),
             allowedPositionError = LiftConstants.allowedPositionError,
             disabledPosition = LiftConstants.disabledPosition
         )

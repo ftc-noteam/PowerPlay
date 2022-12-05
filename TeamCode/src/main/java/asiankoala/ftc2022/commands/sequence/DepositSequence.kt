@@ -17,13 +17,13 @@ class DepositSequence(
     rightTriggerPressed: () -> Boolean
 ) : SequentialGroup(
     ClawCmds.ClawDepositCmd(miyuki.claw),
-    WaitCmd(0.5),
-    WaitUntilCmd(rightTriggerPressed),
-    ClawCmds.ClawGripCmd(miyuki.claw),
+    InstantCmd({ miyuki.state = State.HOMING }),
+    ClawCmds.ClawGripCmd(miyuki.claw)
+        .waitUntil(rightTriggerPressed),
     ParallelGroup(
         PivotCmds.PivotHomeCmd(miyuki.pivot),
         LiftCmds.LiftHomeCmd(miyuki.lift),
-        ClawCmds.ClawOpenCmd(miyuki.claw).waitUntil { miyuki.arm.pos > 90.0 },
+        ClawCmds.ClawOpenCmd(miyuki.claw).waitUntil { miyuki.arm.pos < 90.0 },
         ArmCmds.ArmCmd(miyuki.arm, 0.0)
             .andThen(
                 WaitCmd(1.0),

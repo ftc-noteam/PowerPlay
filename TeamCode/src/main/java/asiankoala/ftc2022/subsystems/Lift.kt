@@ -9,8 +9,8 @@ class Lift(
     private val leftMotor: KMotor
 ) : Subsystem() {
     fun setPos(pos: Double) {
-//        leadMotor.setProfileTarget(pos)
-        leadMotor.setPositionTarget(pos)
+        leadMotor.setProfileTarget(pos)
+//        leadMotor.setPositionTarget(pos)
     }
 
     override fun periodic() {
@@ -19,4 +19,5 @@ class Lift(
     }
 
     val pos get() = leadMotor.pos
+    val vel get() = leadMotor.vel
 }

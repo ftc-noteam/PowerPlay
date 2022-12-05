@@ -7,6 +7,7 @@ import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.subsystems.constants.LiftConstants
 import asiankoala.ftc2022.subsystems.vision.Vision
 import com.asiankoala.koawalib.command.commands.Cmd
+import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 
@@ -54,6 +55,7 @@ class Miyuki(startPose: Pose) {
     }
 
     init {
+        Logger.logInfo("arm pos at init", arm.pos)
         arm.setPos(ArmConstants.pickup)
         lift.setPos(LiftConstants.home)
     }
@@ -62,7 +64,8 @@ class Miyuki(startPose: Pose) {
 enum class State {
     INTAKING,
     READYING,
-    DEPOSITING;
+    DEPOSITING,
+    HOMING;
 
     val next get() = values()[(ordinal + 1) % values().size]
 }
