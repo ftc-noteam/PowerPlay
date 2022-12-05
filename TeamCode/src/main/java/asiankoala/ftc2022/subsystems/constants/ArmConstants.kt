@@ -5,16 +5,16 @@ import com.acmerobotics.dashboard.config.Config
 @Config
 object ArmConstants {
     @JvmField var kS = 0.0
-    @JvmField var kV = 0.0
-    @JvmField var kA = 0.0
-    @JvmField var maxVel = 180.0
-    @JvmField var maxAccel = 180.0
+    @JvmField var kV = 0.00001
+    @JvmField var kA = 0.0000
+    @JvmField var maxVel = 360.0
+    @JvmField var maxAccel = 360.0
 
     @JvmField var ticksPerUnit = 2.0434
-    @JvmField var kP = 0.02
-    @JvmField var kI = 0.0
-    @JvmField var kD = 0.0008
-    @JvmField var kCos = 0.31
+    @JvmField var kP = 0.014
+    @JvmField var kI = 0.001
+    @JvmField var kD = 0.0007
+    @JvmField var kCos = 0.23
     @JvmField var allowedPositionError = 1.0
 
 

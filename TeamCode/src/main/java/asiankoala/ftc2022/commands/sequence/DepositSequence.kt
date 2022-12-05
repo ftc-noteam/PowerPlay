@@ -17,8 +17,9 @@ class DepositSequence(
     rightTriggerPressed: () -> Boolean
 ) : SequentialGroup(
     ClawCmds.ClawDepositCmd(miyuki.claw),
-    ClawCmds.ClawGripCmd(miyuki.claw),
+    WaitCmd(0.5),
     WaitUntilCmd(rightTriggerPressed),
+    ClawCmds.ClawGripCmd(miyuki.claw),
     ParallelGroup(
         PivotCmds.PivotHomeCmd(miyuki.pivot),
         LiftCmds.LiftHomeCmd(miyuki.lift),

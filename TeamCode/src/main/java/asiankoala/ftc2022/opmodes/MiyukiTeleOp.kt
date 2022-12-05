@@ -21,6 +21,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(Pose())
         miyuki.hardware.odometry.unregister()
+        miyuki.vision.unregister()
         scheduleDrive()
         scheduleStrat()
         scheduleCycling()
@@ -29,7 +30,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     private fun scheduleDrive() {
         miyuki.drive.defaultCommand = MecanumCmd(
             miyuki.drive,
-            driver.leftStick,
+            driver.leftStick.xInverted,
             driver.rightStick,
             xScalar = 0.7,
             yScalar = 0.7,

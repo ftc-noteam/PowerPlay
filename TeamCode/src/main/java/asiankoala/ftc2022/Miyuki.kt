@@ -27,7 +27,7 @@ class Miyuki(startPose: Pose) {
     val vision = Vision()
 
     var state = State.INTAKING
-    var strategy = DepositState.HIGH
+    var strategy = DepositState.MED
 
     val armCmd: Cmd
         get() = ArmCmds.ArmCmd(arm, when(strategy) {

@@ -7,6 +7,7 @@ import asiankoala.ftc2022.subsystems.constants.PivotConstants
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains
+import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
@@ -61,13 +62,15 @@ class Hardware(startPose: Pose) {
     val arm = MotorFactory("arm")
         .brake
         .reverse
+//        .voltageCorrected
         .createEncoder(EncoderFactory(ArmConstants.ticksPerUnit)
                 .reverse
                 .zero(ArmConstants.home)
         )
-        .withPositionControl(
+        .withMotionProfileControl(
             PIDGains(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD),
-            FFGains(kCos = ArmConstants.kCos),
+            FFGains(kCos = ArmConstants.kCos, kS = ArmConstants.kS, kV = ArmConstants.kV, kA = ArmConstants.kA),
+            MotionConstraints(ArmConstants.maxVel, ArmConstants.maxAccel),
             allowedPositionError = ArmConstants.allowedPositionError
         )
         .build()
