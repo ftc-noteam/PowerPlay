@@ -5,11 +5,11 @@ import com.acmerobotics.dashboard.config.Config
 @Config
 object LiftConstants {
     @JvmField var ticksPerUnit = 305.0 / 10.0
-    @JvmField var kS = 0.03
-    @JvmField var kV = 0.00001
+    @JvmField var kS = 0.05
+    @JvmField var kV = 0.007
     @JvmField var kA = 0.0
-    @JvmField var maxVel = 30.0
-    @JvmField var maxAccel = 30.0
+    @JvmField var maxVel = 200.0
+    @JvmField var maxAccel = 200.0
     @JvmField var kP = 0.5
     @JvmField var kI = 0.0
     @JvmField var kD = 0.005
