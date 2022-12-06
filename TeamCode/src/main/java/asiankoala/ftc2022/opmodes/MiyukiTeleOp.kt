@@ -27,9 +27,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         miyuki.vision.unregister()
         scheduleDrive()
         scheduleStrat()
-//        scheduleCycling()
-        driver.rightTrigger.onPress(LiftCmds.LiftCmd(miyuki.lift, LiftConstants.high))
-        driver.leftTrigger.onPress(LiftCmds.LiftCmd(miyuki.lift, LiftConstants.home))
+        scheduleCycling()
     }
 
     private fun scheduleDrive() {
@@ -73,9 +71,9 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         Logger.addTelemetryData("strat", miyuki.strategy)
         Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addVar("lift pos", miyuki.lift.pos)
-        Logger.addVar("lift vel", miyuki.lift.vel)
-        Logger.addVar("target pos", miyuki.hardware.liftLead.setpoint.x)
-        Logger.addVar("target vel", miyuki.hardware.liftLead.setpoint.v)
+//        Logger.addVar("lift pos", miyuki.lift.pos)
+//        Logger.addVar("lift vel", miyuki.lift.vel)
+//        Logger.addVar("target pos", miyuki.hardware.liftLead.setpoint.x)
+//        Logger.addVar("target vel", miyuki.hardware.liftLead.setpoint.v)
     }
 }
