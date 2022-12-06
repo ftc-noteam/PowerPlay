@@ -22,6 +22,9 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         miyuki = Miyuki(Pose())
         miyuki.hardware.odometry.unregister()
         miyuki.vision.unregister()
+        driver.leftStick.setDeadzone(0.1)
+        driver.rightStick.setDeadzone(0.1)
+
         scheduleDrive()
         scheduleStrat()
         scheduleCycling()
@@ -30,7 +33,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     private fun scheduleDrive() {
         miyuki.drive.defaultCommand = MecanumCmd(
             miyuki.drive,
-            driver.leftStick.xInverted,
+            driver.leftStick,
             driver.rightStick,
             xScalar = 0.7,
             yScalar = 0.7,
@@ -43,15 +46,15 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
             override fun execute() {
                 // left trigger is used to transition between intake and ready sequence
                 // so schedule this command only when we're intaking
-                if(driver.leftTrigger.isJustPressed && miyuki.state == State.INTAKING) {
+                if(driver.rightTrigger.isJustPressed && miyuki.state == State.INTAKING) {
                     + IntakeSeq(miyuki, driver.leftTrigger::isJustPressed)
-                        .cancelIf(driver.rightTrigger::isJustPressed)
+                        .cancelIf(driver.leftTrigger::isJustPressed)
                 }
             }
         }
         + object : Cmd() {
             override fun execute() {
-                if(driver.rightTrigger.isJustPressed && miyuki.state == State.DEPOSITING) {
+                if(driver.leftTrigger.isJustPressed && miyuki.state == State.DEPOSITING) {
                     + DepositSeq(miyuki, driver.rightTrigger::isJustPressed)
                 }
             }

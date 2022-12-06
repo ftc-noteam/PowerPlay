@@ -16,8 +16,8 @@ class Miyuki(startPose: Pose) {
     val drive = KMecanumOdoDrive(
         hardware.fl,
         hardware.bl,
-        hardware.fr,
         hardware.br,
+        hardware.fr,
         hardware.odometry,
         false
     )

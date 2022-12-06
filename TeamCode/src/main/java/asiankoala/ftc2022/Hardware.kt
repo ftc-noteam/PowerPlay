@@ -77,7 +77,7 @@ class Hardware(startPose: Pose) {
         .withMotionProfileControl(
             PIDGains(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD),
             FFGains(kCos = ArmConstants.kCos, kS = ArmConstants.kS, kV = ArmConstants.kV, kA = ArmConstants.kA),
-            MotionConstraints(ArmConstants.maxVel, ArmConstants.maxAccel),
+            MotionConstraints(ArmConstants.maxVel, ArmConstants.maxAccel, ArmConstants.maxDeccel),
             allowedPositionError = ArmConstants.allowedPositionError
         )
         .build()

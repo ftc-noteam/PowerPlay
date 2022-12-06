@@ -21,5 +21,5 @@ object LiftConstants {
     @JvmField var med = ready
     @JvmField var high = 12.0
     @JvmField var disabledPosition = home
-    @JvmField var allowedPositionError = 2.0
+    @JvmField var allowedPositionError = 0.5
 }
