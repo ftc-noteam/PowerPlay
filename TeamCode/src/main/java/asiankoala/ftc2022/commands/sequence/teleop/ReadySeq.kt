@@ -1,11 +1,11 @@
-package asiankoala.ftc2022.commands.sequence
+package asiankoala.ftc2022.commands.sequence.teleop
 
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.commands.subsystem.PivotCmds
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.ParallelGroup
 
-class ReadySequence(
+class ReadySeq(
     miyuki: Miyuki,
 ) : ParallelGroup(
     miyuki.liftCmd,

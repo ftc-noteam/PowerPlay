@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.commands.sequence
+package asiankoala.ftc2022.commands.sequence.teleop
 
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.State
@@ -7,7 +7,7 @@ import asiankoala.ftc2022.commands.subsystem.LiftCmds
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 
-class IntakeSequence(
+class IntakeSeq(
     miyuki: Miyuki,
     leftTriggerPressed: () -> Boolean
 ) : SequentialGroup(
@@ -15,7 +15,7 @@ class IntakeSequence(
         .andPause(0.5),
     LiftCmds.LiftReadyCmd(miyuki.lift),
     InstantCmd({ miyuki.state = State.READYING }),
-    ReadySequence(miyuki)
+    ReadySeq(miyuki)
         .waitUntil(leftTriggerPressed),
     InstantCmd({ miyuki.state = State.DEPOSITING })
 )

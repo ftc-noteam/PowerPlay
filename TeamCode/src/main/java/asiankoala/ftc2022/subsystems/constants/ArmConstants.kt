@@ -17,11 +17,11 @@ object ArmConstants {
     @JvmField var kCos = 0.26
     @JvmField var allowedPositionError = 1.0
 
-
     @JvmField var home = -69.0 // thanks ritwik
     @JvmField var pickup = -66.0
     @JvmField var ground = 130.0
     @JvmField var low = 130.0
     @JvmField var med = 130.0
     @JvmField var high = 130.0
+    @JvmField var autoInit = 260.0
 }

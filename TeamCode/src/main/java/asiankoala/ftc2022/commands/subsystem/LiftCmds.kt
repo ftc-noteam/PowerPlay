@@ -8,4 +8,5 @@ object LiftCmds {
     open class LiftCmd(lift: Lift, pos: Double) : InstantCmd({ lift.setPos(pos) }, lift)
     class LiftHomeCmd(lift: Lift) : LiftCmd(lift, LiftConstants.home)
     class LiftReadyCmd(lift: Lift) : LiftCmd(lift, LiftConstants.med)
+    class LiftHighCmd(lift: Lift) : LiftCmd(lift, LiftConstants.high)
 }

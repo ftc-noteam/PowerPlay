@@ -2,15 +2,12 @@ package asiankoala.ftc2022.opmodes
 
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.State
-import asiankoala.ftc2022.commands.sequence.DepositSequence
-import asiankoala.ftc2022.commands.sequence.IntakeSequence
-import asiankoala.ftc2022.commands.subsystem.LiftCmds
-import asiankoala.ftc2022.subsystems.constants.LiftConstants
+import asiankoala.ftc2022.commands.sequence.teleop.DepositSeq
+import asiankoala.ftc2022.commands.sequence.teleop.IntakeSeq
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.MecanumCmd
-import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.math.Pose
@@ -47,7 +44,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
                 // left trigger is used to transition between intake and ready sequence
                 // so schedule this command only when we're intaking
                 if(driver.leftTrigger.isJustPressed && miyuki.state == State.INTAKING) {
-                    + IntakeSequence(miyuki, driver.leftTrigger::isJustPressed)
+                    + IntakeSeq(miyuki, driver.leftTrigger::isJustPressed)
                         .cancelIf(driver.rightTrigger::isJustPressed)
                 }
             }
@@ -55,7 +52,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         + object : Cmd() {
             override fun execute() {
                 if(driver.rightTrigger.isJustPressed && miyuki.state == State.DEPOSITING) {
-                    + DepositSequence(miyuki, driver.rightTrigger::isJustPressed)
+                    + DepositSeq(miyuki, driver.rightTrigger::isJustPressed)
                 }
             }
         }
