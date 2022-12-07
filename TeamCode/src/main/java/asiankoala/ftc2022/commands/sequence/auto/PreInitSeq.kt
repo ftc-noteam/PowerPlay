@@ -13,7 +13,8 @@ import com.asiankoala.koawalib.util.OpModeState
 class PreInitCmd(miyuki: Miyuki, rightTriggerIsJustPressed: () -> Boolean) : SequentialGroup(
     ArmCmd(miyuki.arm, ArmConstants.autoInit)
         .waitUntil(rightTriggerIsJustPressed),
-    ClawOpenCmd(miyuki.claw),
+    ClawOpenCmd(miyuki.claw)
+        .waitUntil(rightTriggerIsJustPressed),
     ClawGripCmd(miyuki.claw)
         .waitUntil(rightTriggerIsJustPressed)
 )
