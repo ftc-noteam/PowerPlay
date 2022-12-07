@@ -6,6 +6,17 @@ import asiankoala.ftc2022.commands.sequence.auto.AutoIntakeSeq
 import asiankoala.ftc2022.commands.sequence.auto.AutoReadySeq
 import asiankoala.ftc2022.commands.sequence.auto.PreInitCmd
 import asiankoala.ftc2022.commands.subsystem.*
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.deltaLift
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositPath
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositProj
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.getGVFCmd
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.initPath
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.initReadyProj
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakePath
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakeProj
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeights
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.readyProj
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.startPose
 import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
@@ -30,47 +41,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 @Disabled
 class MiyukiTestAuto : KOpMode(photonEnabled = true) {
     private lateinit var miyuki: Miyuki
-    private val startPose = Pose(AutoConstants.startPoseX, AutoConstants.startPoseY)
-    private val kN = AutoConstants.kN
-    private val kOmega = AutoConstants.kOmega
-    private val kF = AutoConstants.kF
-    private val kS = AutoConstants.kS
-    private val epsilon = AutoConstants.epsilon
-    private val thetaEpsilon = AutoConstants.thetaEpsilon
-
-    private fun getGVFCmd(path: Path, vararg cmds: Pair<Cmd, ProjQuery>) =
-        GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
-
-
-    private val depositVec = Vector(AutoConstants.depositX, AutoConstants.depositY)
-    private val intakeVec = Vector(AutoConstants.intakeX, AutoConstants.intakeY)
-
-    private val initPath = HermitePath(
-        FLIPPED_HEADING_CONTROLLER,
-        startPose.copy(heading = 0.0),
-        Pose(-24.0, -36.0, 0.0),
-        Pose(depositVec, AutoConstants.initDepositHeadingDeg.radians)
-    )
-
-    private val initReadyProj = Vector(AutoConstants.initReadyProjX, AutoConstants.initReadyProjY)
-    private val depositProj = Vector(AutoConstants.depositProjX, AutoConstants.depositProjY)
-
-    private val intakePath = HermitePath(
-        { 270.0.radians },
-        Pose(depositVec, AutoConstants.depositToIntakeHeadingDeg.radians),
-        Pose(intakeVec, 270.0.radians)
-    )
-
-    private val depositPath = HermitePath(
-        { 45.0.radians },
-        Pose(intakeVec, 90.0.radians),
-        Pose(depositVec, AutoConstants.depositHeadingDeg.radians)
-    )
-
-    private val deltaLift = AutoConstants.deltaLift
-    private val liftHeights = listOf(AutoConstants.liftHeight)
-    private val intakeProj = Vector(AutoConstants.intakeProjX, AutoConstants.intakeProjY)
-    private val readyProj = Vector(AutoConstants.readyProjX, AutoConstants.readyProjY)
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
@@ -80,6 +50,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
             PreInitCmd(miyuki, driver.rightTrigger::isJustPressed),
             WaitUntilCmd { opModeState == OpModeState.START },
             getGVFCmd(
+                miyuki,
                 initPath,
                 Pair(AutoReadySeq(miyuki), ProjQuery(initReadyProj)),
                 Pair(AutoDepositSeq(miyuki), ProjQuery(depositProj))
@@ -87,6 +58,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
             *List(5) {
                 listOf(
                     getGVFCmd(
+                        miyuki,
                         intakePath,
                         Pair(
                             LiftCmd(miyuki.lift, liftHeights[it]),
@@ -95,6 +67,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                     ),
                     AutoIntakeSeq(miyuki, liftHeights[it] + deltaLift),
                     getGVFCmd(
+                        miyuki,
                         depositPath,
                         Pair(
                             AutoReadySeq(miyuki),
@@ -108,14 +81,5 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                 )
             }.flatten().toTypedArray(),
         )
-
-//        + SequentialGroup(
-//            preInitCmd,
-////            getGVFCmd(
-////                initPath,
-////                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyVec)),
-////                Pair(AutoDepositSeq(miyuki), ProjQuery(depositVec))
-////            )
-//        )
     }
 }
