@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.opmodes
+package asiankoala.ftc2022.opmodes.tele
 
 import asiankoala.ftc2022.Miyuki
 import com.asiankoala.koawalib.command.KOpMode

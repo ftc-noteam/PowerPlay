@@ -1,9 +1,11 @@
-package asiankoala.ftc2022.opmodes
+package asiankoala.ftc2022.opmodes.tele
 
+import asiankoala.ftc2022.DepositState
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.State
-import asiankoala.ftc2022.commands.sequence.teleop.DepositSeq
-import asiankoala.ftc2022.commands.sequence.teleop.IntakeSeq
+import asiankoala.ftc2022.commands.sequence.tele.DepositSeq
+import asiankoala.ftc2022.commands.sequence.tele.HomeSeq
+import asiankoala.ftc2022.commands.sequence.tele.IntakeSeq
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
@@ -39,16 +41,23 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
             yScalar = 0.7,
             rScalar = 0.5,
         )
+
+        driver.rightBumper.onToggle(MecanumCmd(
+            miyuki.drive,
+            driver.leftStick,
+            driver.rightStick,
+            xScalar = 0.3,
+            yScalar = 0.3,
+            rScalar = 0.3
+        ))
     }
 
     private fun scheduleCycling() {
         + object : Cmd() {
             override fun execute() {
-                // left trigger is used to transition between intake and ready sequence
-                // so schedule this command only when we're intaking
                 if(driver.rightTrigger.isJustPressed && miyuki.state == State.INTAKING) {
                     + IntakeSeq(miyuki, driver.leftTrigger::isJustPressed)
-                        .cancelIf(driver.leftTrigger::isJustPressed)
+                        .cancelIf(driver.leftBumper::isJustPressed)
                 }
             }
         }
@@ -56,14 +65,21 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
             override fun execute() {
                 if(driver.leftTrigger.isJustPressed && miyuki.state == State.DEPOSITING) {
                     + DepositSeq(miyuki, driver.rightTrigger::isJustPressed)
+                        .cancelIf(driver.leftBumper::isJustPressed)
                 }
             }
         }
+
+        driver.leftBumper.onPress(HomeSeq(miyuki))
     }
 
     private fun scheduleStrat() {
-        driver.leftBumper.onPress(InstantCmd(miyuki::decStrat))
-        driver.rightBumper.onPress(InstantCmd(miyuki::incStrat))
+//        driver.leftBumper.onPress(InstantCmd(miyuki::decStrat))
+//        driver.rightBumper.onPress(InstantCmd(miyuki::incStrat))
+        driver.y.onPress(InstantCmd({ miyuki.strategy = DepositState.HIGH }))
+        driver.a.onPress(InstantCmd({ miyuki.strategy = DepositState.GROUND }))
+        driver.x.onPress(InstantCmd({ miyuki.strategy = DepositState.LOW }))
+        driver.b.onPress(InstantCmd({ miyuki.strategy = DepositState.MED }))
     }
 
     override fun mLoop() {

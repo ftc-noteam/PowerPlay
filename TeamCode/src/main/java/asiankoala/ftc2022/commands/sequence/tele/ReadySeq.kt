@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.commands.sequence.teleop
+package asiankoala.ftc2022.commands.sequence.tele
 
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.commands.subsystem.PivotCmds

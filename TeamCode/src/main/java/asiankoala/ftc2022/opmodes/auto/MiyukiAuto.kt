@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.opmodes
+package asiankoala.ftc2022.opmodes.auto
 
 //open class MiyukiAuto(
 //    alliance: Alliance,

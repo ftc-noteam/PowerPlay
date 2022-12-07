@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.opmodes
+package asiankoala.ftc2022.opmodes.auto
 
 import asiankoala.ftc2022.subsystems.vision.Vision
 import com.asiankoala.koawalib.command.KOpMode

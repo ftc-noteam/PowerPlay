@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.opmodes
+package asiankoala.ftc2022.opmodes.auto
 
 import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.commands.sequence.auto.AutoDepositSeq
