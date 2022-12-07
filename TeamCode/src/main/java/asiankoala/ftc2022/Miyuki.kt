@@ -1,7 +1,7 @@
 package asiankoala.ftc2022
 
-import asiankoala.ftc2022.commands.subsystem.ArmCmds
-import asiankoala.ftc2022.commands.subsystem.LiftCmds
+import asiankoala.ftc2022.commands.subsystem.ArmCmd
+import asiankoala.ftc2022.commands.subsystem.LiftCmd
 import asiankoala.ftc2022.subsystems.*
 import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.subsystems.constants.LiftConstants
@@ -31,7 +31,7 @@ class Miyuki(startPose: Pose) {
     var strategy = DepositState.MED
 
     val armCmd: Cmd
-        get() = ArmCmds.ArmCmd(arm, when(strategy) {
+        get() = ArmCmd(arm, when(strategy) {
                 DepositState.GROUND -> ArmConstants.ground
                 DepositState.LOW -> ArmConstants.low
                 DepositState.MED -> ArmConstants.med
@@ -39,7 +39,7 @@ class Miyuki(startPose: Pose) {
             })
 
     val liftCmd: Cmd
-        get() = LiftCmds.LiftCmd(lift, when(strategy) {
+        get() = LiftCmd(lift, when(strategy) {
             DepositState.GROUND -> LiftConstants.ground
             DepositState.LOW -> LiftConstants.low
             DepositState.MED -> LiftConstants.med
@@ -80,3 +80,4 @@ enum class DepositState {
     val prev get() = values()[(ordinal - 1) % values().size]
 }
 
+enum class Zones { LEFT, MIDDLE, RIGHT, WTF }

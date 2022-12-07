@@ -4,10 +4,8 @@ import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.commands.sequence.auto.AutoDepositSeq
 import asiankoala.ftc2022.commands.sequence.auto.AutoIntakeSeq
 import asiankoala.ftc2022.commands.sequence.auto.AutoReadySeq
-import asiankoala.ftc2022.commands.subsystem.ArmCmds
-import asiankoala.ftc2022.commands.subsystem.ClawCmds
-import asiankoala.ftc2022.commands.subsystem.LiftCmds.LiftCmd
-import asiankoala.ftc2022.commands.subsystem.PivotCmds
+import asiankoala.ftc2022.commands.sequence.auto.PreInitCmd
+import asiankoala.ftc2022.commands.subsystem.*
 import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
@@ -78,17 +76,9 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(startPose)
 
-        val preInitCmd = SequentialGroup(
-            ClawCmds.ClawGripCmd(miyuki.claw),
-            ArmCmds.ArmCmd(miyuki.arm, ArmConstants.autoInit)
-                .waitUntil(driver.rightTrigger::isJustPressed),
-            PivotCmds.PivotDepositCmd(miyuki.pivot)
-                .waitUntil { miyuki.arm.pos > 90.0 },
-            WaitUntilCmd { opModeState == OpModeState.START }
-        )
-
         + SequentialGroup(
-            preInitCmd,
+            PreInitCmd(miyuki, driver.rightTrigger::isJustPressed),
+            WaitUntilCmd { opModeState == OpModeState.START },
             getGVFCmd(
                 initPath,
                 Pair(AutoReadySeq(miyuki), ProjQuery(initReadyProj)),
