@@ -24,5 +24,5 @@ object ArmConstants {
     @JvmField var low = 130.0
     @JvmField var med = 130.0
     @JvmField var high = 130.0
-    @JvmField var autoInit = 245.0
+    @JvmField var autoInit = 225.0
 }

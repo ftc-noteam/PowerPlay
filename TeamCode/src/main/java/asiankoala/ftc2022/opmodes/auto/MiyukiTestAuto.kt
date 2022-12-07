@@ -26,8 +26,10 @@ import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 
 @Autonomous
+@Disabled
 class MiyukiTestAuto : KOpMode(photonEnabled = true) {
     private lateinit var miyuki: Miyuki
     private val startPose = Pose(-66.0, -36.0, 180.0.radians)

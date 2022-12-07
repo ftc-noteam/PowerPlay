@@ -3,9 +3,11 @@ package asiankoala.ftc2022.opmodes.auto
 import asiankoala.ftc2022.subsystems.vision.Vision
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.logger.Logger
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp
+@Disabled
 class AprilTagTest : KOpMode() {
     private lateinit var vision: Vision
 
