@@ -14,6 +14,7 @@ import asiankoala.ftc2022.opmodes.auto.AutoConstants.initPath
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.initReadyProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakePath
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakeProj
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeight
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeights
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.readyProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.startPose
@@ -53,7 +54,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                 miyuki,
                 initPath,
                 Pair(AutoReadySeq(miyuki), ProjQuery(initReadyProj)),
-                Pair(AutoDepositSeq(miyuki), ProjQuery(depositProj))
+                Pair(AutoDepositSeq(miyuki, liftHeight), ProjQuery(depositProj))
             ),
             *List(5) {
                 listOf(
@@ -74,7 +75,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                             ProjQuery(readyProj)
                         ),
                         Pair(
-                            AutoDepositSeq(miyuki),
+                            AutoDepositSeq(miyuki, liftHeights[it]),
                             ProjQuery(depositProj)
                         )
                     ),

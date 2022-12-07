@@ -62,7 +62,7 @@ object AutoConstants {
     private val intakeVec = Vector(intakeX, intakeY)
     val initReadyProj = Vector(initReadyProjX, initReadyProjY)
     val depositProj = Vector(depositProjX, depositProjY)
-    val liftHeights = listOf(liftHeight)
+    val liftHeights = List(5) { liftHeight - it }
     val intakeProj = Vector(intakeProjX, intakeProjY)
     val readyProj = Vector(readyProjX, readyProjY)
 
