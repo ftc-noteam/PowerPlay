@@ -32,44 +32,47 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 @Disabled
 class MiyukiTestAuto : KOpMode(photonEnabled = true) {
     private lateinit var miyuki: Miyuki
-    private val startPose = Pose(-66.0, -36.0, 180.0.radians)
-    private val kN = 0.6
-    private val kOmega = 30.0
-    private val kF = 4.0
-    private val kS = 1.0
-    private val epsilon = 2.0
-    private val thetaEpsilon = 5.0
+    private val startPose = Pose(AutoConstants.startPoseX, AutoConstants.startPoseY)
+    private val kN = AutoConstants.kN
+    private val kOmega = AutoConstants.kOmega
+    private val kF = AutoConstants.kF
+    private val kS = AutoConstants.kS
+    private val epsilon = AutoConstants.epsilon
+    private val thetaEpsilon = AutoConstants.thetaEpsilon
 
     private fun getGVFCmd(path: Path, vararg cmds: Pair<Cmd, ProjQuery>) =
         GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
 
+    private val depositVec = Vector(AutoConstants.depositX, AutoConstants.depositY)
+    private val intakeVec = Vector(AutoConstants.intakeX, AutoConstants.intakeY)
+
     private val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
         startPose.copy(heading = 0.0),
         Pose(-24.0, -36.0, 0.0),
-        Pose(-8.0, -32.0, 25.0.radians)
+        Pose(depositVec, AutoConstants.initDepositHeadingDeg.radians)
     )
 
-    private val initReadyVec = Vector(-17.0, -36.0)
-    private val depositVec = Vector(-8.0, -33.0)
+    private val initReadyProj = Vector(AutoConstants.initReadyProjX, AutoConstants.initReadyProjY)
+    private val depositProj = Vector(AutoConstants.depositProjX, AutoConstants.depositProjY)
 
     private val intakePath = HermitePath(
         { 270.0.radians },
-        Pose(-8.0, -32.0, 250.0.radians),
-        Pose(-12.0, -65.0, 270.0.radians)
+        Pose(depositVec, AutoConstants.depositToIntakeHeadingDeg.radians),
+        Pose(intakeVec, 270.0.radians)
     )
 
     private val depositPath = HermitePath(
         { 45.0.radians },
-        Pose(-12.0, -65.0, 90.0.radians),
-        Pose(-8.0, -32.0, 60.0.radians)
+        Pose(intakeVec, 90.0.radians),
+        Pose(depositVec, AutoConstants.depositHeadingDeg.radians)
     )
 
-    private val deltaLift = 4.0
-    private val liftHeights = listOf(6.0)
-    private val intakeReadyVec = Vector(-12.0, -45.0)
-    private val readyVec = Vector(-12.0, -40.0)
+    private val deltaLift = AutoConstants.deltaLift
+    private val liftHeights = listOf(AutoConstants.liftHeight)
+    private val intakeProj = Vector(AutoConstants.intakeProjX, AutoConstants.intakeProjY)
+    private val readyProj = Vector(AutoConstants.readyProjX, AutoConstants.readyProjY)
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
@@ -84,45 +87,45 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
             WaitUntilCmd { opModeState == OpModeState.START }
         )
 
-//        + SequentialGroup(
-//            preInitCmd,
-//            getGVFCmd(
-//                initPath,
-//                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyVec)),
-//                Pair(AutoDepositSeq(miyuki), ProjQuery(depositVec))
-//            ),
-//            *List(5) {
-//                listOf(
-//                    getGVFCmd(
-//                        intakePath,
-//                        Pair(
-//                            LiftCmd(miyuki.lift, liftHeights[it]),
-//                            ProjQuery(intakeReadyVec)
-//                        )
-//                    ),
-//                    AutoIntakeSeq(miyuki, liftHeights[it] + deltaLift),
-//                    getGVFCmd(
-//                        depositPath,
-//                        Pair(
-//                            AutoReadySeq(miyuki),
-//                            ProjQuery(readyVec)
-//                        ),
-//                        Pair(
-//                            AutoDepositSeq(miyuki),
-//                            ProjQuery(depositVec)
-//                        )
-//                    ),
-//                )
-//            }.flatten().toTypedArray(),
-//        )
-
         + SequentialGroup(
             preInitCmd,
-//            getGVFCmd(
-//                initPath,
-//                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyVec)),
-//                Pair(AutoDepositSeq(miyuki), ProjQuery(depositVec))
-//            )
+            getGVFCmd(
+                initPath,
+                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyProj)),
+                Pair(AutoDepositSeq(miyuki), ProjQuery(depositProj))
+            ),
+            *List(5) {
+                listOf(
+                    getGVFCmd(
+                        intakePath,
+                        Pair(
+                            LiftCmd(miyuki.lift, liftHeights[it]),
+                            ProjQuery(intakeProj)
+                        )
+                    ),
+                    AutoIntakeSeq(miyuki, liftHeights[it] + deltaLift),
+                    getGVFCmd(
+                        depositPath,
+                        Pair(
+                            AutoReadySeq(miyuki),
+                            ProjQuery(readyProj)
+                        ),
+                        Pair(
+                            AutoDepositSeq(miyuki),
+                            ProjQuery(depositProj)
+                        )
+                    ),
+                )
+            }.flatten().toTypedArray(),
         )
+
+//        + SequentialGroup(
+//            preInitCmd,
+////            getGVFCmd(
+////                initPath,
+////                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyVec)),
+////                Pair(AutoDepositSeq(miyuki), ProjQuery(depositVec))
+////            )
+//        )
     }
 }

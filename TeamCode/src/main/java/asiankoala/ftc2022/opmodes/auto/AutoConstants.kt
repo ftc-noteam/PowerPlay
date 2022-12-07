@@ -18,12 +18,13 @@ object AutoConstants {
     @JvmField var depositY = -32.0
     @JvmField var initDepositHeadingDeg = 25.0
 
-    @JvmField var initReadyX = -17.0
-    @JvmField var initReadyY = -36.0
+    @JvmField var initReadyProjX = -17.0
+    @JvmField var initReadyProjY = -36.0
 
     @JvmField var depositProjX = -8.0
     @JvmField var depositProjY = -33.0
 
+    @JvmField var depositToIntakeHeadingDeg = 250.0
     @JvmField var intakeX = -12.0
     @JvmField var intakeY = -65.0
 
@@ -32,9 +33,9 @@ object AutoConstants {
     @JvmField var deltaLift = 4.0
     @JvmField var liftHeight = 6.0
 
-    @JvmField var intakeReadyX = -12.0
-    @JvmField var intakeReadyY = -45.0
+    @JvmField var intakeProjX = -12.0
+    @JvmField var intakeProjY = -45.0
 
-    @JvmField var readyX = -12.0
-    @JvmField var readyY = -40.0
+    @JvmField var readyProjX = -12.0
+    @JvmField var readyProjY = -40.0
 }
