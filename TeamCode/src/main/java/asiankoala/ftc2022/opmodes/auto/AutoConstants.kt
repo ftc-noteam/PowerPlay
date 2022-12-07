@@ -54,15 +54,17 @@ object AutoConstants {
     @JvmField var readyProjX = -12.0
     @JvmField var readyProjY = -40.0
 
-
-    val startPose = Pose(startPoseX, startPoseY)
     fun getGVFCmd(miyuki: Miyuki, path: Path, vararg cmds: Pair<Cmd, ProjQuery>) =
         GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
+    val startPose = Pose(startPoseX, startPoseY)
     private val depositVec = Vector(depositX, depositY)
     private val intakeVec = Vector(intakeX, intakeY)
     val initReadyProj = Vector(initReadyProjX, initReadyProjY)
     val depositProj = Vector(depositProjX, depositProjY)
+    val liftHeights = listOf(liftHeight)
+    val intakeProj = Vector(intakeProjX, intakeProjY)
+    val readyProj = Vector(readyProjX, readyProjY)
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
@@ -82,10 +84,6 @@ object AutoConstants {
         Pose(intakeVec, 90.0.radians),
         Pose(depositVec, depositHeadingDeg.radians)
     )
-
-    val liftHeights = listOf(liftHeight)
-    val intakeProj = Vector(intakeProjX, intakeProjY)
-    val readyProj = Vector(readyProjX, readyProjY)
 }
 
 
