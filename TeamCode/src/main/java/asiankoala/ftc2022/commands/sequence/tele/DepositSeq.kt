@@ -9,12 +9,11 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class DepositSeq(
     miyuki: Miyuki,
-    rightTriggerPressed: () -> Boolean
 ) : SequentialGroup(
-    ClawDepositCmd(miyuki.claw),
     InstantCmd({ miyuki.state = State.HOMING }),
+    ClawDepositCmd(miyuki.claw)
+        .andPause(1.0),
     ClawGripCmd(miyuki.claw),
-//        .waitUntil(rightTriggerPressed),
     ParallelGroup(
         PivotHomeCmd(miyuki.pivot),
         LiftHomeCmd(miyuki.lift),

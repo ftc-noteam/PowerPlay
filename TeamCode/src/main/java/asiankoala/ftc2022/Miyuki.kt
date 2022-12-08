@@ -16,8 +16,8 @@ class Miyuki(startPose: Pose) {
     val drive = KMecanumOdoDrive(
         hardware.fl,
         hardware.bl,
-        hardware.br,
         hardware.fr,
+        hardware.br,
         hardware.odometry,
         false
     )
@@ -46,14 +46,6 @@ class Miyuki(startPose: Pose) {
             DepositState.HIGH -> LiftConstants.high
         })
 
-    fun incStrat() {
-        strategy = strategy.next
-    }
-
-    fun decStrat() {
-        strategy = strategy.prev
-    }
-
     init {
         Logger.logInfo("arm pos at init", arm.pos)
         arm.setPos(ArmConstants.pickup)
@@ -66,8 +58,6 @@ enum class State {
     READYING,
     DEPOSITING,
     HOMING;
-
-    val next get() = values()[(ordinal + 1) % values().size]
 }
 
 enum class DepositState {
@@ -75,9 +65,11 @@ enum class DepositState {
     LOW,
     MED,
     HIGH;
-
-    val next get() = values()[(ordinal + 1) % values().size]
-    val prev get() = values()[(ordinal - 1) % values().size]
 }
 
-enum class Zones { LEFT, MIDDLE, RIGHT, WTF }
+enum class Zones {
+    LEFT,
+    MIDDLE,
+    RIGHT,
+    WTF
+}
