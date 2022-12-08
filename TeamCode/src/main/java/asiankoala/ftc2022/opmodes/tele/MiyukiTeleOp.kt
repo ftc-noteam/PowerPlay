@@ -50,7 +50,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
 
             override fun execute() {
                 val raws = NVector(
-                    driver.leftStick.xSupplier.invoke(),
+                    -driver.leftStick.xSupplier.invoke(),
                     -driver.leftStick.ySupplier.invoke(),
                     -driver.rightStick.xSupplier.invoke()
                 )
