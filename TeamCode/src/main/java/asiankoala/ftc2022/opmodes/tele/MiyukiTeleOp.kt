@@ -33,13 +33,9 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         miyuki.vision.unregister()
         driver.leftStick.setDeadzone(0.12)
         driver.rightStick.setDeadzone(0.12)
-
-//        scheduleDrive()
-//        scheduleStrat()
-//        scheduleCycling()
-
-        driver.leftTrigger.onPress(ArmHighCmd(miyuki.arm))
-        driver.rightTrigger.onPress(ArmPickupCmd(miyuki.arm))
+        scheduleDrive()
+        scheduleStrat()
+        scheduleCycling()
     }
 
     private fun scheduleDrive() {
@@ -62,6 +58,10 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
                 miyuki.drive.powers = raws
                     .mapIndexed { i, d -> joystickFunction(scalars[i], 1.0, d) }
                     .asPose
+            }
+
+            init {
+                addRequirements(miyuki.drive)
             }
         }
 
