@@ -11,6 +11,7 @@ import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
+import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
@@ -69,7 +70,6 @@ class Hardware(startPose: Pose) {
     val arm = MotorFactory("arm")
         .brake
         .reverse
-//        .voltageCorrected
         .createEncoder(EncoderFactory(ArmConstants.ticksPerUnit)
                 .reverse
                 .zero(ArmConstants.home)
