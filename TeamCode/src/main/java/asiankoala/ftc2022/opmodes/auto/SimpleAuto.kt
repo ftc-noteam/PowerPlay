@@ -20,4 +20,10 @@ abstract class SimpleAuto : KOpMode(photonEnabled = true) {
         + WaitUntilCmd { opModeState == OpModeState.START }
             .andThen(mainCmd)
     }
+
+    override fun mLoop() {
+        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
+        Logger.addTelemetryData("arm pos", miyuki.arm.pos)
+        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
+    }
 }

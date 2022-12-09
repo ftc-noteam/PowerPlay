@@ -1,10 +1,7 @@
 package asiankoala.ftc2022.opmodes.auto
 
 import asiankoala.ftc2022.Miyuki
-import asiankoala.ftc2022.commands.sequence.auto.AutoDepositSeq
-import asiankoala.ftc2022.commands.sequence.auto.AutoIntakeSeq
-import asiankoala.ftc2022.commands.sequence.auto.AutoReadySeq
-import asiankoala.ftc2022.commands.sequence.auto.PreInitCmd
+import asiankoala.ftc2022.commands.sequence.auto.*
 import asiankoala.ftc2022.commands.subsystem.*
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.deltaLift
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositPath
@@ -48,7 +45,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
         miyuki = Miyuki(startPose)
 
         + SequentialGroup(
-            PreInitCmd(miyuki, driver.rightTrigger::isJustPressed),
+            PreInitSeq(miyuki, driver.rightTrigger::isJustPressed),
             WaitUntilCmd { opModeState == OpModeState.START },
             getGVFCmd(
                 miyuki,

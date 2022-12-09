@@ -10,11 +10,9 @@ import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.util.OpModeState
 
-class PreInitCmd(miyuki: Miyuki, rightTriggerIsJustPressed: () -> Boolean) : SequentialGroup(
+class PreInitSeq(miyuki: Miyuki, rightTriggerIsJustPressed: () -> Boolean) : SequentialGroup(
+    ClawGripCmd(miyuki.claw)
+        .waitUntil(rightTriggerIsJustPressed),
     ArmCmd(miyuki.arm, ArmConstants.autoInit)
         .waitUntil(rightTriggerIsJustPressed),
-    ClawOpenCmd(miyuki.claw)
-        .waitUntil(rightTriggerIsJustPressed),
-    ClawGripCmd(miyuki.claw)
-        .waitUntil(rightTriggerIsJustPressed)
 )

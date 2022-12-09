@@ -33,15 +33,18 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         miyuki.vision.unregister()
         driver.leftStick.setDeadzone(0.12)
         driver.rightStick.setDeadzone(0.12)
-        scheduleDrive()
-        scheduleStrat()
-        scheduleCycling()
+//        scheduleDrive()
+//        scheduleStrat()
+//        scheduleCycling()
+        miyuki.lift.unregister()
+        driver.leftTrigger.onPress(ArmHighCmd(miyuki.arm))
+        driver.rightTrigger.onPress(ArmPickupCmd(miyuki.arm))
     }
 
     private fun scheduleDrive() {
         miyuki.drive.defaultCommand = object : Cmd() {
             val fastScalars = NVector(0.8, 0.8, 0.3)
-            val slowScalars = NVector(0.4, 0.4, 0.3)
+            val slowScalars = NVector(0.3, 0.3, 0.3)
             val scalars get() = if(slowMode) slowScalars else fastScalars
 
             private fun joystickFunction(s: Double, k: Double, x: Double): Double {
@@ -100,10 +103,12 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
 //        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
 //        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
 //        Logger.addTelemetryData("power", miyuki.drive.powers)
+        Logger.addTelemetryData("arm pos", miyuki.arm.pos)
+        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
 
-        Logger.addVar("arm pos", miyuki.arm.pos)
-        Logger.addVar("arm vel", miyuki.arm.vel)
-        Logger.addVar("arm target pos", miyuki.hardware.arm.setpoint.x)
-        Logger.addVar("arm target vel", miyuki.hardware.arm.setpoint.v)
+//        Logger.addVar("arm pos", miyuki.arm.pos)
+//        Logger.addVar("arm vel", miyuki.arm.vel)
+//        Logger.addVar("arm target pos", miyuki.hardware.arm.setpoint.x)
+//        Logger.addVar("arm target vel", miyuki.hardware.arm.setpoint.v)
     }
 }
