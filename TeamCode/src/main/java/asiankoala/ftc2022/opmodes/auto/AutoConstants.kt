@@ -1,6 +1,7 @@
 package asiankoala.ftc2022.opmodes.auto
 
 import asiankoala.ftc2022.Miyuki
+import asiankoala.ftc2022.Zones
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.GVFCmd
@@ -95,6 +96,27 @@ object AutoConstants {
         depositPose,
         depositToIntake
     )
+
+    val parkLeftPath = HermitePath(
+        { 270.0.radians.angleWrap },
+        depositPose.copy(heading = 90.0.radians),
+        Pose(-12.0, -12.0, 90.0.radians)
+    )
+
+    val parkRightPath = HermitePath(
+        { 270.0.radians.angleWrap },
+        depositPose.copy(heading = 270.0.radians.angleWrap),
+        Pose(-12.0, -54.0, 270.0.radians.angleWrap)
+    )
+
+    fun getParkVector(alliance: Alliance, far: Boolean, zone: Zones): Vector {
+        return when(zone) {
+            Zones.LEFT -> Vector(-12.0, -12.0)
+            Zones.MIDDLE -> Vector(-12.0, -36.0)
+            Zones.RIGHT -> Vector(-12.0, 54.0)
+            else -> Vector()
+        }.choose(alliance, far)
+    }
 
     fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
     fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
