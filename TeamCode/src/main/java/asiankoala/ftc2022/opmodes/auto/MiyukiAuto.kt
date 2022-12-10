@@ -34,16 +34,6 @@ open class MiyukiAuto(private val alliance: Alliance, private val far: Boolean) 
 
     private val startPose = AutoConstants.startPose.choose(alliance, far)
     private val pathStart = startPose.copy(heading = 0.0)
-//    private val initPath = AutoConstants.initPath.choose(alliance, far)
-//    private val initIntakePath = AutoConstants.initIntakePath.choose(alliance, far)
-//    private val depositPath = AutoConstants.depositPath.choose(alliance, far)
-//    private val intakePath = AutoConstants.intakePath.choose(alliance, far)
-//
-//    private val intakeProj = AutoConstants.intakeProj.choose(alliance, far)
-//    private val readyProj = AutoConstants.readyProj.choose(alliance, far)
-//
-//    private val parkLeftPath = AutoConstants.parkLeftPath.choose(alliance, far)
-//    private val parkRightPath = AutoConstants.parkRightPath.choose(alliance, far)
 
     private val leftPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
@@ -69,8 +59,6 @@ open class MiyukiAuto(private val alliance: Alliance, private val far: Boolean) 
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(startPose)
         miyuki.vision.start()
-//        val initReadyProj = Pair(AutoReadySeq(miyuki), ProjQuery(AutoConstants.initReadyProj.choose(alliance, far)))
-//        val depositProj = Pair(AutoDepositSeq(miyuki, AutoConstants.liftHeight), ProjQuery(AutoConstants.depositProj.choose(alliance, far), 0.95))
         + SequentialGroup(
             ChooseCmd(
                 getGVFCmd(miyuki, leftPath),
@@ -79,23 +67,6 @@ open class MiyukiAuto(private val alliance: Alliance, private val far: Boolean) 
                     getGVFCmd(miyuki, rightPath)
                 ) { miyuki.vision.zone == Zones.MIDDLE },
             ) { miyuki.vision.zone == Zones.LEFT }
-//            PreInitSeq(miyuki, driver.rightTrigger::isJustPressed, startPose),
-//            WaitUntilCmd { opModeState == OpModeState.START },
-//
-//            AutoConstants.getGVFCmd(miyuki, initPath, initReadyProj).andPause(0.5),
-//            ClawDepositCmd(miyuki.claw)
-//                .andPause(1.0),
-//            ClawGripCmd(miyuki.claw)
-//                .andPause(1.0),
-//            ParallelGroup(
-//                PivotHomeCmd(miyuki.pivot),
-//                LiftHomeCmd(miyuki.lift),
-//                ClawOpenCmd(miyuki.claw).waitUntil { miyuki.arm.pos < 90.0 },
-//                ArmPickupCmd(miyuki.arm)
-//            ),
-//
-//            WaitCmd(1.0),
-//            ParkCmd(miyuki, miyuki.vision::zone)
         )
     }
 
