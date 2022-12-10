@@ -6,4 +6,5 @@ import com.acmerobotics.dashboard.config.Config
 object PivotConstants {
     @JvmField var home = 0.75
     @JvmField var deposit = 0.97
+    @JvmField var FUCK = 0.35
 }

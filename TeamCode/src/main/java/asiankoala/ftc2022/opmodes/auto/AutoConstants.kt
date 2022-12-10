@@ -1,7 +1,6 @@
 package asiankoala.ftc2022.opmodes.auto
 
 import asiankoala.ftc2022.Miyuki
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.choose
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.GVFCmd
@@ -48,7 +47,7 @@ object AutoConstants {
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
-        startPose,
+        startPose.copy(heading = 0.0),
         Pose(middleVec, middlePoseHeadingDeg.radians),
         Pose(depositVec, initDepositHeadingDeg.radians)
     )
@@ -65,15 +64,15 @@ object AutoConstants {
         Pose(depositVec, depositHeadingDeg.radians)
     )
 
-    fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
-    fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
+    private fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
+    private fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
 
-    fun Vector.choose(alliance: Alliance, far: Boolean) =
+    private fun Vector.choose(alliance: Alliance, close: Boolean) =
         this
             .cond(alliance == Alliance.RED) { Vector(-x, y) }
-            .cond(far) { Vector(x, -y) }
+            .cond(close) { Vector(x, -y) }
 
-    fun HermitePath.choose(alliance: Alliance, close: Boolean) =
+    private fun HermitePath.choose(alliance: Alliance, close: Boolean) =
         this
             .cond(alliance == Alliance.RED) {
                 this.map(FLIPPED_HEADING_CONTROLLER) {
@@ -94,3 +93,22 @@ object AutoConstants {
                 }
             }
 }
+
+object bruhlmfao {
+    @JvmStatic
+    fun main(args: Array<String>) {
+        val alliance = Alliance.BLUE
+        val close = true
+        val blueStart = AutoConstants.startVec
+    }
+}
+
+
+
+
+
+
+
+
+
+
