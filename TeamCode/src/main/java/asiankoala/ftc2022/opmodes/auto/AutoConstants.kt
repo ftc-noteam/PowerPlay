@@ -13,6 +13,7 @@ import com.asiankoala.koawalib.path.Path
 import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 
+// assuming blue side close
 @Config
 object AutoConstants {
     @JvmField var kN = 0.5
@@ -22,54 +23,33 @@ object AutoConstants {
     @JvmField var epsilon = 2.0
     @JvmField var thetaEpsilon = 5.0
 
-    @JvmField var startPoseX = -66.0
-    @JvmField var startPoseY = -36.0
-
-    @JvmField var middlePoseX = -24.0
-    @JvmField var middlePoseY = -36.0
     @JvmField var middlePoseHeadingDeg = 0.0
-
-    @JvmField var depositX = -8.0
-    @JvmField var depositY = -32.0
     @JvmField var initDepositHeadingDeg = 25.0
-
-    @JvmField var initReadyProjX = -17.0
-    @JvmField var initReadyProjY = -36.0
-
-    @JvmField var depositProjX = -8.0
-    @JvmField var depositProjY = -33.0
-
     @JvmField var depositToIntakeHeadingDeg = 250.0
-    @JvmField var intakeX = -12.0
-    @JvmField var intakeY = -65.0
-
     @JvmField var depositHeadingDeg = 60.0
 
-    @JvmField var deltaLift = 4.0
+    @JvmField var startVec = Vector(-66.0, -36.0)
+    @JvmField var middleVec = Vector(-24.0, -36.0)
+    @JvmField var depositVec = Vector(-8.0, -32.0)
+    @JvmField var initReadyProjVec = Vector(-17.0, -36.0)
+    @JvmField var depositProjVec = Vector(-8.0, -33.0)
+    @JvmField var intakeVec = Vector(-12.0, -65.0)
+    @JvmField var intakeProjVec = Vector(-12.0, -45.0)
+    @JvmField var readyProjVec = Vector(-12.0, -40.0)
+
+    @JvmField var liftDeltaHeightToPickupFuckingConeOffStack = 4.0
     @JvmField var liftHeight = 6.0
-
-    @JvmField var intakeProjX = -12.0
-    @JvmField var intakeProjY = -45.0
-
-    @JvmField var readyProjX = -12.0
-    @JvmField var readyProjY = -40.0
 
     fun getGVFCmd(miyuki: Miyuki, path: Path, vararg cmds: Pair<Cmd, ProjQuery>) =
         GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
-    val startPose = Pose(startPoseX, startPoseY)
-    private val depositVec = Vector(depositX, depositY)
-    private val intakeVec = Vector(intakeX, intakeY)
-    val initReadyProj = Vector(initReadyProjX, initReadyProjY)
-    val depositProj = Vector(depositProjX, depositProjY)
+    val startPose = Pose(startVec, 180.0.radians)
     val liftHeights = List(5) { liftHeight - it }
-    val intakeProj = Vector(intakeProjX, intakeProjY)
-    val readyProj = Vector(readyProjX, readyProjY)
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
         startPose.copy(heading = 0.0),
-        Pose(middlePoseX, middlePoseY, middlePoseHeadingDeg.radians),
+        Pose(middleVec, middlePoseHeadingDeg.radians),
         Pose(depositVec, initDepositHeadingDeg.radians)
     )
 
