@@ -59,24 +59,32 @@ object AutoConstants {
     val startPose = Pose(startPoseX, startPoseY, 180.0.radians)
     val liftHeights = List(5) { liftHeight - it }
 
-    val initReadyProj = Vector(-17.0, -36.0)
-    val depositProj = Vector(-8.0, -33.0)
-    val intakeProj = Vector(-12.0, -45.0)
-    val readyProj = Vector(-12.0, -40.0)
 
     private val initMiddlePose = Pose(-24.0, -36.0, 0.0)
-    private val initDepositPose = Pose(-12.0, -32.0, 40.0.radians)
+    private val initDepositPose = Pose(-8.0, -28.0, 40.0.radians)
     private val initDepositToIntake = initDepositPose.copy(heading = 250.0.radians.angleWrap)
     private val intakePose = Pose(-12.0, -58.5, 270.0.radians.angleWrap)
     private val intakeToDepositPose = intakePose.copy(heading = 90.0.radians)
-    private val depositPose = Pose(-10.0, initDepositPose.y, 45.0.radians)
+    private val depositPose = Pose(-12.0, initDepositPose.y, 45.0.radians)
     private val depositToIntake = depositPose.copy(heading = 250.0.radians.angleWrap)
+
+
+    val initReadyProj = Vector(-36.0, -36.0)
+    val depositProj = Vector(initDepositPose.x - 0.5, initDepositPose.y - 0.5)
+    val intakeProj = Vector(-12.0, -45.0)
+    val readyProj = Vector(-12.0, -40.0)
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
         startPose.copy(heading = 0.0),
         initMiddlePose,
         initDepositPose
+    )
+
+    val bruhPath = HermitePath(
+        { 270.0.radians.angleWrap },
+        initDepositPose.copy(heading = 225.0.radians),
+        Pose(-12.0, -36.0, 225.0.radians)
     )
 
     val initIntakePath = HermitePath(

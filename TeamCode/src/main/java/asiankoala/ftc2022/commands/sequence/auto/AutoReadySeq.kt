@@ -8,6 +8,6 @@ import com.asiankoala.koawalib.command.group.ParallelGroup
 class AutoReadySeq(miyuki: Miyuki) : ParallelGroup(
     LiftHighCmd(miyuki.lift),
     ArmHighCmd(miyuki.arm),
-    WaitUntilCmd { miyuki.arm.pos > 0.0 && miyuki.arm.pos < 180.0 }
+    WaitUntilCmd { miyuki.arm.pos > 0.0 }
         .andThen(PivotDepositCmd(miyuki.pivot))
 )
