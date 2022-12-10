@@ -6,5 +6,5 @@ import com.acmerobotics.dashboard.config.Config
 object ClawConstants {
     @JvmField var grip = 0.66
     @JvmField var open = 0.43
-    @JvmField var deposit = 0.5
+    @JvmField var deposit = 0.53
 }

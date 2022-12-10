@@ -13,17 +13,18 @@ class DepositSeq(
     miyuki: Miyuki,
 ) : SequentialGroup(
     InstantCmd({ miyuki.state = State.HOMING }),
-    ClawDepositCmd(miyuki.claw),
-    WaitCmd(1.0),
+    ClawDepositCmd(miyuki.claw)
+        .andPause(1.0),
     ClawGripCmd(miyuki.claw),
+    WaitCmd(1.0),
     ParallelGroup(
-//        PivotHomeCmd(miyuki.pivot),
+        PivotHomeCmd(miyuki.pivot),
         LiftHomeCmd(miyuki.lift),
-//        ClawOpenCmd(miyuki.claw).waitUntil { miyuki.arm.pos < 90.0 },
+        ClawOpenCmd(miyuki.claw).waitUntil { miyuki.arm.pos < 90.0 },
         ArmPickupCmd(miyuki.arm)
     ),
-    WaitUntilCmd { miyuki.arm.pos < 45.0 },
-    ClawOpenCmd(miyuki.claw),
-    PivotHomeCmd(miyuki.pivot),
+//    WaitUntilCmd { miyuki.arm.pos < 45.0 },
+//    ClawOpenCmd(miyuki.claw),
+//    PivotHomeCmd(miyuki.pivot),
     InstantCmd({ miyuki.state = State.INTAKING })
 )
