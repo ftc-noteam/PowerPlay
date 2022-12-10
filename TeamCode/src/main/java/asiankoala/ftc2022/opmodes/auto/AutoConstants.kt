@@ -20,6 +20,7 @@ also, heading is really important, 0.5 degrees off is too much
 needs to go a bit further
 
 when we go back from normal deposit to intake, it hits the ground (ADD ANOTHER CONTROL POSE)
+fixed
  */
 @Config
 object AutoConstants {
@@ -46,13 +47,13 @@ object AutoConstants {
     @JvmField var depositProjX = -8.0
     @JvmField var depositProjY = -33.0
 
-    @JvmField var depositToIntakeHeadingDeg = 270.0
+    @JvmField var depositToIntakeHeadingDeg = 250.0
     @JvmField var intakeX = -12.0
     @JvmField var intakeY = -58.5
 
     @JvmField var depositX = -10.0
     @JvmField var depositY = initDepositY
-    @JvmField var depositHeadingDeg = 180.0 + 45.0
+    @JvmField var depositHeadingDeg = 225.0
     @JvmField var depositPathHeadingDeg = 45.0
 
     @JvmField var liftDeltaHeightToPickupFuckingConeOffStack = 4.0
@@ -64,57 +65,71 @@ object AutoConstants {
     @JvmField var readyProjX = -12.0
     @JvmField var readyProjY = -40.0
 
-    fun getGVFCmd(miyuki: Miyuki, path: Path, vararg cmds: Pair<Cmd, ProjQuery>) =
+    fun getGVFCmd(
+        miyuki: Miyuki,
+        path: Path,
+        kN: Double = AutoConstants.kN,
+        kOmega: Double = AutoConstants.kOmega,
+        kF: Double = AutoConstants.kF,
+        kS: Double = AutoConstants.kS,
+        epsilon: Double = AutoConstants.epsilon,
+        thetaEpsilon: Double = AutoConstants.thetaEpsilon,
+        vararg cmds: Pair<Cmd, ProjQuery>) =
         GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
     val startPose = Pose(startPoseX, startPoseY, 180.0.radians)
-    val initDepositVec = Vector(initDepositX, initDepositY)
-    val depositVec = Vector(depositX, depositY)
-    val intakeVec = Vector(intakeX, intakeY)
-    val middleVec = Vector(middlePoseX, middlePoseY)
+    val liftHeights = List(5) { liftHeight - it }
+
     val initReadyProj = Vector(initReadyProjX, initReadyProjY)
     val depositProj = Vector(depositProjX, depositProjY)
-    val liftHeights = List(5) { liftHeight - it }
     val intakeProj = Vector(intakeProjX, intakeProjY)
     val readyProj = Vector(readyProjX, readyProjY)
+
+    private val initMiddlePose = Pose(middlePoseX, middlePoseY, middlePoseHeadingDeg.radians.angleWrap)
+    private val initDepositPose = Pose(initDepositX, initDepositY, initDepositHeadingDeg.radians.angleWrap)
+    private val initDepositToIntake = Pose(initDepositX, initDepositY, depositToIntakeHeadingDeg.radians.angleWrap)
+    private val intakePose = Pose(intakeX, intakeY, 270.0.radians.angleWrap)
+    private val intakeToDepositPose = Pose(intakeX, intakeY, 90.0.radians.angleWrap)
+    private val depositPose = Pose(depositX, depositY, depositPathHeadingDeg.radians.angleWrap)
+    private val depositToIntake = Pose(depositX, depositY, depositToIntakeHeadingDeg.radians.angleWrap)
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
         startPose.copy(heading = 0.0),
-        Pose(middleVec, middlePoseHeadingDeg.radians),
-        Pose(initDepositVec, initDepositHeadingDeg.radians)
+        initMiddlePose,
+        initDepositPose
     )
 
     val initIntakePath = HermitePath(
         { 270.0.radians.angleWrap },
-        Pose(initDepositVec, depositToIntakeHeadingDeg.radians),
-        Pose(intakeVec, 270.0.radians)
+        initDepositToIntake,
+        intakePose
     )
 
     val depositPath = HermitePath(
         { depositHeadingDeg.radians },
-        Pose(intakeVec, 90.0.radians),
-        Pose(depositVec, depositPathHeadingDeg.radians)
+        intakeToDepositPose,
+        depositPose
     )
 
     val intakePath = HermitePath(
         { 270.0.radians.angleWrap },
-        Pose(depositVec, depositToIntakeHeadingDeg.radians),
-        Pose(intakeVec, 270.0.radians)
+        depositPose,
+        depositToIntake
     )
 
-    private fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
-    private fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
+    fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
+    fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
 
-    private fun Vector.choose(alliance: Alliance, close: Boolean) =
+    fun Vector.choose(alliance: Alliance, far: Boolean) =
         this
             .cond(alliance == Alliance.RED) { Vector(-x, y) }
-            .cond(close) { Vector(x, -y) }
+            .cond(far) { Vector(x, -y) }
 
-    private fun HermitePath.choose(alliance: Alliance, close: Boolean) =
+    fun HermitePath.choose(alliance: Alliance, far: Boolean) =
         this
             .cond(alliance == Alliance.RED) {
-                this.map(FLIPPED_HEADING_CONTROLLER) {
+                this.map(this.headingController.flip()) {
                     Pose(
                         -it.x,
                         it.y,
@@ -122,8 +137,8 @@ object AutoConstants {
                     )
                 }
             }
-            .cond(close) {
-                this.map(DEFAULT_HEADING_CONTROLLER) {
+            .cond(far) {
+                this.map(this.headingController) {
                     Pose(
                         it.x,
                         -it.y,
@@ -131,14 +146,9 @@ object AutoConstants {
                     )
                 }
             }
+
+    fun Pose.choose(alliance: Alliance, far: Boolean) =
+        this
+            .cond(alliance == Alliance.RED) { Pose(-x, y, (heading + 180.0).angleWrap) }
+            .cond(far) { Pose(x, -y, heading)}
 }
-
-
-
-
-
-
-
-
-
-

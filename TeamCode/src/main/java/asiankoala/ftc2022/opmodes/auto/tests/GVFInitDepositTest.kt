@@ -23,7 +23,7 @@ class GVFInitDepositTest : SimpleAuto() {
             WaitUntilCmd { opModeState == OpModeState.START },
             getGVFCmd(
                 miyuki,
-                initPath
+                initPath,
             ).andPause(0.5),
             getGVFCmd(
                 miyuki,
