@@ -34,8 +34,8 @@ object AutoConstants {
     @JvmField var startPoseX = -63.0
     @JvmField var startPoseY = -36.0
 
-    @JvmField var liftDeltaHeightToPickupFuckingConeOffStack = 4.0
-    @JvmField var liftHeight = 6.0
+    @JvmField var liftDeltaHeightToPickupFuckingConeOffStack = 3.0
+    @JvmField var liftHeight = 4.0
 
     fun getGVFCmd(
         miyuki: Miyuki,

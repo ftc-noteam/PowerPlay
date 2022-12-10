@@ -15,8 +15,8 @@ class DepositSeq(
     InstantCmd({ miyuki.state = State.HOMING }),
     ClawDepositCmd(miyuki.claw)
         .andPause(1.0),
-    ClawGripCmd(miyuki.claw),
-    WaitCmd(1.0),
+    ClawGripCmd(miyuki.claw)
+        .andPause(1.0),
     ParallelGroup(
         PivotHomeCmd(miyuki.pivot),
         LiftHomeCmd(miyuki.lift),

@@ -8,16 +8,13 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class AutoDepositSeq(miyuki: Miyuki, liftHeight: Double) : SequentialGroup(
     ClawDepositCmd(miyuki.claw)
-        .andPause(0.5),
-    ClawGripCmd(miyuki.claw),
+        .andPause(1.0),
+    ClawGripCmd(miyuki.claw)
+        .andPause(1.0),
     ParallelGroup(
         PivotHomeCmd(miyuki.pivot),
         LiftCmd(miyuki.lift, liftHeight),
         ClawOpenCmd(miyuki.claw).waitUntil { miyuki.arm.pos < 90.0 },
-        ArmCmd(miyuki.arm, 0.0)
-            .andThen(
-                WaitCmd(1.0),
-                ArmPickupCmd(miyuki.arm)
-            )
+        ArmPickupCmd(miyuki.arm)
     )
 )
