@@ -33,37 +33,9 @@ object AutoConstants {
 
     @JvmField var startPoseX = -63.0
     @JvmField var startPoseY = -36.0
-    @JvmField var middlePoseX = -24.0
-    @JvmField var middlePoseY = -36.0
-    @JvmField var middlePoseHeadingDeg = 0.0
-
-    @JvmField var initDepositX = -12.0
-    @JvmField var initDepositY = -32.0
-    @JvmField var initDepositHeadingDeg = 40.0
-
-    @JvmField var initReadyProjX = -17.0
-    @JvmField var initReadyProjY = -36.0
-
-    @JvmField var depositProjX = -8.0
-    @JvmField var depositProjY = -33.0
-
-    @JvmField var depositToIntakeHeadingDeg = 250.0
-    @JvmField var intakeX = -12.0
-    @JvmField var intakeY = -58.5
-
-    @JvmField var depositX = -10.0
-    @JvmField var depositY = initDepositY
-    @JvmField var depositHeadingDeg = 225.0
-    @JvmField var depositPathHeadingDeg = 45.0
 
     @JvmField var liftDeltaHeightToPickupFuckingConeOffStack = 4.0
     @JvmField var liftHeight = 6.0
-
-    @JvmField var intakeProjX = -12.0
-    @JvmField var intakeProjY = -45.0
-
-    @JvmField var readyProjX = -12.0
-    @JvmField var readyProjY = -40.0
 
     fun getGVFCmd(
         miyuki: Miyuki,
@@ -80,18 +52,18 @@ object AutoConstants {
     val startPose = Pose(startPoseX, startPoseY, 180.0.radians)
     val liftHeights = List(5) { liftHeight - it }
 
-    val initReadyProj = Vector(initReadyProjX, initReadyProjY)
-    val depositProj = Vector(depositProjX, depositProjY)
-    val intakeProj = Vector(intakeProjX, intakeProjY)
-    val readyProj = Vector(readyProjX, readyProjY)
+    val initReadyProj = Vector(-17.0, -36.0)
+    val depositProj = Vector(-8.0, -33.0)
+    val intakeProj = Vector(-12.0, -45.0)
+    val readyProj = Vector(-12.0, -40.0)
 
-    private val initMiddlePose = Pose(middlePoseX, middlePoseY, middlePoseHeadingDeg.radians.angleWrap)
-    private val initDepositPose = Pose(initDepositX, initDepositY, initDepositHeadingDeg.radians.angleWrap)
-    private val initDepositToIntake = Pose(initDepositX, initDepositY, depositToIntakeHeadingDeg.radians.angleWrap)
-    private val intakePose = Pose(intakeX, intakeY, 270.0.radians.angleWrap)
-    private val intakeToDepositPose = Pose(intakeX, intakeY, 90.0.radians.angleWrap)
-    private val depositPose = Pose(depositX, depositY, depositPathHeadingDeg.radians.angleWrap)
-    private val depositToIntake = Pose(depositX, depositY, depositToIntakeHeadingDeg.radians.angleWrap)
+    private val initMiddlePose = Pose(-24.0, -36.0, 0.0)
+    private val initDepositPose = Pose(-12.0, -32.0, 40.0.radians)
+    private val initDepositToIntake = initDepositPose.copy(heading = 250.0.radians.angleWrap)
+    private val intakePose = Pose(-12.0, -58.5, 270.0.radians.angleWrap)
+    private val intakeToDepositPose = intakePose.copy(heading = 90.0.radians)
+    private val depositPose = Pose(-10.0, initDepositPose.y, 45.0.radians)
+    private val depositToIntake = depositPose.copy(heading = 250.0.radians.angleWrap)
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
@@ -107,7 +79,7 @@ object AutoConstants {
     )
 
     val depositPath = HermitePath(
-        { depositHeadingDeg.radians },
+        { 225.0.radians.angleWrap },
         intakeToDepositPose,
         depositPose
     )
