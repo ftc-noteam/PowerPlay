@@ -4,23 +4,33 @@ import asiankoala.ftc2022.Miyuki
 import asiankoala.ftc2022.commands.sequence.auto.*
 import asiankoala.ftc2022.commands.subsystem.*
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositPath
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositProjVec
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.getGVFCmd
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.initPath
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.initReadyProjVec
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.initReadyProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakePath
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakeProjVec
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakeProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftDeltaHeightToPickupFuckingConeOffStack
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeight
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeights
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.readyProjVec
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.readyProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.startPose
+import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.commands.Cmd
+import com.asiankoala.koawalib.command.commands.GVFCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
+import com.asiankoala.koawalib.math.Pose
+import com.asiankoala.koawalib.math.Vector
+import com.asiankoala.koawalib.math.radians
+import com.asiankoala.koawalib.path.FLIPPED_HEADING_CONTROLLER
+import com.asiankoala.koawalib.path.HermitePath
+import com.asiankoala.koawalib.path.Path
 import com.asiankoala.koawalib.path.ProjQuery
+import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
@@ -40,8 +50,8 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
             getGVFCmd(
                 miyuki,
                 initPath,
-                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyProjVec)),
-                Pair(AutoDepositSeq(miyuki, liftHeight), ProjQuery(depositProjVec))
+                Pair(AutoReadySeq(miyuki), ProjQuery(initReadyProj)),
+                Pair(AutoDepositSeq(miyuki, liftHeight), ProjQuery(depositProj))
             ),
             *List(5) {
                 listOf(
@@ -50,7 +60,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                         intakePath,
                         Pair(
                             LiftCmd(miyuki.lift, liftHeights[it]),
-                            ProjQuery(intakeProjVec)
+                            ProjQuery(intakeProj)
                         )
                     ),
                     AutoIntakeSeq(miyuki, liftHeights[it] + liftDeltaHeightToPickupFuckingConeOffStack),
@@ -59,11 +69,11 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                         depositPath,
                         Pair(
                             AutoReadySeq(miyuki),
-                            ProjQuery(readyProjVec)
+                            ProjQuery(readyProj)
                         ),
                         Pair(
                             AutoDepositSeq(miyuki, liftHeights[it]),
-                            ProjQuery(depositProjVec)
+                            ProjQuery(depositProj)
                         )
                     ),
                 )
