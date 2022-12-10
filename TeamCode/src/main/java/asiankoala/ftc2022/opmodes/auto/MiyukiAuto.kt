@@ -5,22 +5,16 @@ import asiankoala.ftc2022.Zones
 import asiankoala.ftc2022.commands.sequence.auto.AutoDepositSeq
 import asiankoala.ftc2022.commands.sequence.auto.AutoReadySeq
 import asiankoala.ftc2022.commands.sequence.auto.PreInitSeq
-import asiankoala.ftc2022.commands.sequence.tele.HomeSeq
 import asiankoala.ftc2022.commands.subsystem.*
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.bruhPath
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.middlePath
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.choose
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.getGVFCmd
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.parkRightPath
 import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.ParallelGroup
 import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
-import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.path.HermitePath
 import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.util.Alliance
 import com.asiankoala.koawalib.util.OpModeState
@@ -64,9 +58,9 @@ open class MiyukiAuto(private val alliance: Alliance, private val far: Boolean) 
 
             WaitCmd(1.0),
 
-            getGVFCmd(
+            AutoConstants.getGVFCmd(
                 miyuki,
-                bruhPath
+                middlePath
             ),
 
             WaitCmd(1.0),

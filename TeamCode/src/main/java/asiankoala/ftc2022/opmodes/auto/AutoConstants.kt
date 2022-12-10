@@ -81,10 +81,22 @@ object AutoConstants {
         initDepositPose
     )
 
-    val bruhPath = HermitePath(
+    val middlePath = HermitePath(
         { 270.0.radians.angleWrap },
-        initDepositPose.copy(heading = 225.0.radians),
+        initDepositPose.copy(heading = 225.0.radians.angleWrap),
         Pose(-12.0, -36.0, 225.0.radians)
+    )
+
+    val rightPath = HermitePath(
+        { 270.0.radians.angleWrap },
+        initDepositPose.copy(heading = 225.0.radians.angleWrap),
+        Pose(-12.0, -54.0, 270.0.radians.angleWrap)
+    )
+
+    val leftPath = HermitePath(
+        { 270.0.radians.angleWrap },
+        initDepositPose.copy(heading = 180.0.radians.angleWrap),
+        Pose(-12.0, -12.0, 90.0.radians)
     )
 
     val initIntakePath = HermitePath(
