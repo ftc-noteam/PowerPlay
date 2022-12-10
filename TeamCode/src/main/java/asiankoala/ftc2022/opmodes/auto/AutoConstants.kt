@@ -13,6 +13,14 @@ import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.Alliance
 
 // assuming blue side close
+/*
+notes: when going for intake,
+the bot is somewhat too far to the left (so too much x), although this doesnt show on pose
+also, heading is really important, 0.5 degrees off is too much
+needs to go a bit further
+
+when we go back from normal deposit to intake, it hits the ground (ADD ANOTHER CONTROL POSE)
+ */
 @Config
 object AutoConstants {
     @JvmField var kN = 0.5
@@ -28,8 +36,8 @@ object AutoConstants {
     @JvmField var middlePoseY = -36.0
     @JvmField var middlePoseHeadingDeg = 0.0
 
-    @JvmField var depositX = -12.0
-    @JvmField var depositY = -32.0
+    @JvmField var initDepositX = -12.0
+    @JvmField var initDepositY = -32.0
     @JvmField var initDepositHeadingDeg = 40.0
 
     @JvmField var initReadyProjX = -17.0
@@ -38,11 +46,14 @@ object AutoConstants {
     @JvmField var depositProjX = -8.0
     @JvmField var depositProjY = -33.0
 
-    @JvmField var depositToIntakeHeadingDeg = 250.0
+    @JvmField var depositToIntakeHeadingDeg = 270.0
     @JvmField var intakeX = -12.0
-    @JvmField var intakeY = -65.0
+    @JvmField var intakeY = -58.5
 
-    @JvmField var depositHeadingDeg = 60.0
+    @JvmField var depositX = -10.0
+    @JvmField var depositY = initDepositY
+    @JvmField var depositHeadingDeg = 180.0 + 45.0
+    @JvmField var depositPathHeadingDeg = 45.0
 
     @JvmField var liftDeltaHeightToPickupFuckingConeOffStack = 4.0
     @JvmField var liftHeight = 6.0
@@ -57,8 +68,9 @@ object AutoConstants {
         GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
     val startPose = Pose(startPoseX, startPoseY, 180.0.radians)
-    private val depositVec = Vector(depositX, depositY)
-    private val intakeVec = Vector(intakeX, intakeY)
+    val initDepositVec = Vector(initDepositX, initDepositY)
+    val depositVec = Vector(depositX, depositY)
+    val intakeVec = Vector(intakeX, intakeY)
     val middleVec = Vector(middlePoseX, middlePoseY)
     val initReadyProj = Vector(initReadyProjX, initReadyProjY)
     val depositProj = Vector(depositProjX, depositProjY)
@@ -70,19 +82,25 @@ object AutoConstants {
         FLIPPED_HEADING_CONTROLLER,
         startPose.copy(heading = 0.0),
         Pose(middleVec, middlePoseHeadingDeg.radians),
-        Pose(depositVec, initDepositHeadingDeg.radians)
+        Pose(initDepositVec, initDepositHeadingDeg.radians)
     )
 
-    val intakePath = HermitePath(
-        { 270.0.radians },
-        Pose(depositVec, depositToIntakeHeadingDeg.radians),
+    val initIntakePath = HermitePath(
+        { 270.0.radians.angleWrap },
+        Pose(initDepositVec, depositToIntakeHeadingDeg.radians),
         Pose(intakeVec, 270.0.radians)
     )
 
     val depositPath = HermitePath(
-        { 45.0.radians },
+        { depositHeadingDeg.radians },
         Pose(intakeVec, 90.0.radians),
-        Pose(depositVec, depositHeadingDeg.radians)
+        Pose(depositVec, depositPathHeadingDeg.radians)
+    )
+
+    val intakePath = HermitePath(
+        { 270.0.radians.angleWrap },
+        Pose(depositVec, depositToIntakeHeadingDeg.radians),
+        Pose(intakeVec, 270.0.radians)
     )
 
     private fun <T> Boolean.choose(a: T, b: T) = if (this) a else b

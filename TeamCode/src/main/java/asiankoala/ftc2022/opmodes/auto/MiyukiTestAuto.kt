@@ -8,29 +8,19 @@ import asiankoala.ftc2022.opmodes.auto.AutoConstants.depositProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.getGVFCmd
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.initPath
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.initReadyProj
-import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakePath
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.initIntakePath
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.intakeProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftDeltaHeightToPickupFuckingConeOffStack
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeight
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.liftHeights
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.readyProj
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.startPose
-import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.command.commands.Cmd
-import com.asiankoala.koawalib.command.commands.GVFCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
-import com.asiankoala.koawalib.math.Pose
-import com.asiankoala.koawalib.math.Vector
-import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.path.FLIPPED_HEADING_CONTROLLER
-import com.asiankoala.koawalib.path.HermitePath
-import com.asiankoala.koawalib.path.Path
 import com.asiankoala.koawalib.path.ProjQuery
-import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
@@ -57,7 +47,7 @@ class MiyukiTestAuto : KOpMode(photonEnabled = true) {
                 listOf(
                     getGVFCmd(
                         miyuki,
-                        intakePath,
+                        initIntakePath,
                         Pair(
                             LiftCmd(miyuki.lift, liftHeights[it]),
                             ProjQuery(intakeProj)
