@@ -21,5 +21,5 @@ class PreInitSeq(
     ArmCmd(miyuki.arm, ArmConstants.autoInit)
         .waitUntil(rightTriggerIsJustPressed),
     ResetPoseCmd(miyuki, startPose)
-        .waitUntil(rightTriggerIsJustPressed)
+        .waitUntil(rightTriggerIsJustPressed),
 )

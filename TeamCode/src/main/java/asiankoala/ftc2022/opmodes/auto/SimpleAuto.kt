@@ -17,8 +17,11 @@ abstract class SimpleAuto : KOpMode(photonEnabled = true) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(Pose())
-        + WaitUntilCmd { opModeState == OpModeState.START }
-            .andThen(mainCmd)
+        + mainCmd
+    }
+
+    override fun mStart() {
+        miyuki.vision.unregister()
     }
 
     override fun mLoop() {

@@ -1,17 +1,17 @@
 package asiankoala.ftc2022.opmodes.auto
 
 import asiankoala.ftc2022.Miyuki
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.choose
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.GVFCmd
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.Vector
+import com.asiankoala.koawalib.math.angleWrap
 import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.path.FLIPPED_HEADING_CONTROLLER
-import com.asiankoala.koawalib.path.HermitePath
-import com.asiankoala.koawalib.path.Path
-import com.asiankoala.koawalib.path.ProjQuery
+import com.asiankoala.koawalib.path.*
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
+import com.asiankoala.koawalib.util.Alliance
 
 // assuming blue side close
 @Config
@@ -48,7 +48,7 @@ object AutoConstants {
 
     val initPath = HermitePath(
         FLIPPED_HEADING_CONTROLLER,
-        startPose.copy(heading = 0.0),
+        startPose,
         Pose(middleVec, middlePoseHeadingDeg.radians),
         Pose(depositVec, initDepositHeadingDeg.radians)
     )
@@ -65,15 +65,32 @@ object AutoConstants {
         Pose(depositVec, depositHeadingDeg.radians)
     )
 
-    @JvmField var testVec = Vector(1.0, 2.0)
+    fun <T> Boolean.choose(a: T, b: T) = if (this) a else b
+    fun <T> T.cond(cond: Boolean, f: (T) -> T) = cond.choose(f.invoke(this), this)
+
+    fun Vector.choose(alliance: Alliance, far: Boolean) =
+        this
+            .cond(alliance == Alliance.RED) { Vector(-x, y) }
+            .cond(far) { Vector(x, -y) }
+
+    fun HermitePath.choose(alliance: Alliance, close: Boolean) =
+        this
+            .cond(alliance == Alliance.RED) {
+                this.map(FLIPPED_HEADING_CONTROLLER) {
+                    Pose(
+                        -it.x,
+                        it.y,
+                        (180.0.radians - it.heading).angleWrap
+                    )
+                }
+            }
+            .cond(close) {
+                this.map(DEFAULT_HEADING_CONTROLLER) {
+                    Pose(
+                        it.x,
+                        -it.y,
+                        -it.heading
+                    )
+                }
+            }
 }
-
-
-
-
-
-
-
-
-
-
