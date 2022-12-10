@@ -84,6 +84,8 @@ object AutoConstants {
         Pose(intakeVec, 90.0.radians),
         Pose(depositVec, depositHeadingDeg.radians)
     )
+
+    @JvmField var testVec = Vector(1.0, 2.0)
 }
 
 
