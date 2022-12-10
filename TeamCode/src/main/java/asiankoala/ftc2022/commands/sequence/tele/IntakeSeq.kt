@@ -9,13 +9,13 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class IntakeSeq(
     miyuki: Miyuki,
-//    leftTriggerPressed: () -> Boolean
+    rightTriggerPressed: () -> Boolean
 ) : SequentialGroup(
     ClawGripCmd(miyuki.claw)
         .andPause(0.5),
     LiftReadyCmd(miyuki.lift),
     InstantCmd({ miyuki.state = State.READYING }),
-    ReadySeq(miyuki),
-//        .waitUntil(leftTriggerPressed),
+    ReadySeq(miyuki)
+        .waitUntil(rightTriggerPressed),
     InstantCmd({ miyuki.state = State.DEPOSITING })
 )

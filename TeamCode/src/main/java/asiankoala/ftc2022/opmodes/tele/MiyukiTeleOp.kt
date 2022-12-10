@@ -75,7 +75,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         + object : Cmd() {
             override fun execute() {
                 if(driver.rightTrigger.isJustPressed && miyuki.state == State.INTAKING) {
-                    + IntakeSeq(miyuki)
+                    + IntakeSeq(miyuki, driver.rightTrigger::isJustPressed)
                         .cancelIf(driver.leftBumper::isJustPressed)
                 }
             }
