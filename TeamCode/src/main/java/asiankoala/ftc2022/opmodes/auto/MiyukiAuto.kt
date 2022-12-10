@@ -8,6 +8,8 @@ import asiankoala.ftc2022.commands.sequence.auto.PreInitSeq
 import asiankoala.ftc2022.commands.subsystem.*
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.middlePath
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.choose
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.leftPath
+import asiankoala.ftc2022.opmodes.auto.AutoConstants.rightPath
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
@@ -58,17 +60,11 @@ open class MiyukiAuto(private val alliance: Alliance, private val far: Boolean) 
 
             WaitCmd(1.0),
 
-            AutoConstants.getGVFCmd(
-                miyuki,
-                middlePath
-            ),
-
-            WaitCmd(1.0),
-
             // now we park
             when(miyuki.vision.zone) {
-                Zones.LEFT -> AutoConstants.getGVFCmd(miyuki, parkLeftPath)
-                Zones.RIGHT -> AutoConstants.getGVFCmd(miyuki, parkRightPath)
+                Zones.LEFT -> AutoConstants.getGVFCmd(miyuki, leftPath)
+                Zones.MIDDLE -> AutoConstants.getGVFCmd(miyuki, middlePath)
+                Zones.RIGHT -> AutoConstants.getGVFCmd(miyuki, rightPath)
                 else -> WaitCmd(0.5)
             }
         )
