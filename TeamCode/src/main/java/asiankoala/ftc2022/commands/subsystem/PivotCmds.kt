@@ -5,6 +5,6 @@ import asiankoala.ftc2022.subsystems.constants.PivotConstants
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 open class PivotCmd(private val pivot: Pivot, private val pos: Double) :
-    InstantCmd({ pivot.setPos(pos) }, pivot)
+    InstantCmd({ pivot.setPos(pos) })
 class PivotHomeCmd(pivot: Pivot) : PivotCmd(pivot, PivotConstants.home)
 class PivotDepositCmd(pivot: Pivot) : PivotCmd(pivot, PivotConstants.deposit)

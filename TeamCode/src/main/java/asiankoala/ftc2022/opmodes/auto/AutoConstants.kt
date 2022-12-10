@@ -68,7 +68,6 @@ object AutoConstants {
     private val depositPose = Pose(-12.0, initDepositPose.y, 45.0.radians)
     private val depositToIntake = depositPose.copy(heading = 250.0.radians.angleWrap)
 
-
     val initReadyProj = Vector(-36.0, -36.0)
     val depositProj = Vector(initDepositPose.x - 0.5, initDepositPose.y - 0.5)
     val intakeProj = Vector(-12.0, -45.0)
@@ -127,6 +126,12 @@ object AutoConstants {
         { 270.0.radians.angleWrap },
         depositPose.copy(heading = 270.0.radians.angleWrap),
         Pose(-12.0, -54.0, 270.0.radians.angleWrap)
+    )
+
+    val ACTUAL_PARK_LEFT = HermitePath(
+        DEFAULT_HEADING_CONTROLLER,
+        startPose.copy(heading = 180.0.radians),
+
     )
 
     fun getParkVector(alliance: Alliance, far: Boolean, zone: Zones): Vector {
