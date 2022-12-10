@@ -49,6 +49,12 @@ object AutoConstants {
         vararg cmds: Pair<Cmd, ProjQuery>) =
         GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
 
+    fun getGVFCmd(
+        miyuki: Miyuki,
+        path: Path,
+        vararg cmds: Pair<Cmd, ProjQuery>) =
+        GVFCmd(miyuki.drive, SimpleGVFController(path, kN, kOmega, kF, kS, epsilon, thetaEpsilon), *cmds)
+
     val startPose = Pose(startPoseX, startPoseY, 180.0.radians)
     val liftHeights = List(5) { liftHeight - it }
 
