@@ -14,9 +14,9 @@ class DepositSeq(
 ) : SequentialGroup(
     InstantCmd({ miyuki.state = State.HOMING }),
     ClawDepositCmd(miyuki.claw)
-        .andPause(1.0),
+        .andPause(0.6),
     ClawGripCmd(miyuki.claw)
-        .andPause(1.0),
+        .andPause(0.3),
     ParallelGroup(
         PivotHomeCmd(miyuki.pivot),
         LiftHomeCmd(miyuki.lift),

@@ -8,6 +8,7 @@ import asiankoala.ftc2022.commands.sequence.tele.HomeSeq
 import asiankoala.ftc2022.commands.sequence.tele.IntakeSeq
 import asiankoala.ftc2022.commands.subsystem.ArmHighCmd
 import asiankoala.ftc2022.commands.subsystem.ArmPickupCmd
+import asiankoala.ftc2022.commands.subsystem.ClawOpenCmd
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
@@ -34,8 +35,6 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         driver.leftStick.setDeadzone(0.12)
         driver.rightStick.setDeadzone(0.12)
 
-        driver.leftTrigger.onPress(ArmHighCmd(miyuki.arm))
-        driver.rightTrigger.onPress(ArmPickupCmd(miyuki.arm))
         scheduleDrive()
         scheduleStrat()
         scheduleCycling()
@@ -75,8 +74,8 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         + object : Cmd() {
             override fun execute() {
                 if(driver.rightTrigger.isJustPressed && miyuki.state == State.INTAKING) {
-//                    + IntakeSeq(miyuki, driver.rightTrigger::isJustPressed).cancelIf(driver.leftBumper::isJustPressed)
-                    + IntakeSeq(miyuki)
+                    + IntakeSeq(miyuki, driver.rightTrigger::isJustPressed).cancelIf(driver.leftBumper::isJustPressed)
+//                    + IntakeSeq(miyuki)
                     Logger.logInfo("scheduled intake sequence")
                 }
             }
@@ -89,7 +88,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
                 }
             }
         }
-        driver.leftBumper.onPress(HomeSeq(miyuki))
+        driver.leftBumper.onPress(ClawOpenCmd(miyuki.claw))
     }
 
     private fun scheduleStrat() {

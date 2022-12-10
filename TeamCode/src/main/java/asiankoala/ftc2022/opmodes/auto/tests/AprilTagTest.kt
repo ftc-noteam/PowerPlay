@@ -6,7 +6,6 @@ import com.asiankoala.koawalib.logger.Logger
 import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class AprilTagTest : KOpMode() {
     private lateinit var vision: Vision
 

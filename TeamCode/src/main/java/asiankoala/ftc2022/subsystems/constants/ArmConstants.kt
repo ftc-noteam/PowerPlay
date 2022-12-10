@@ -12,14 +12,14 @@ object ArmConstants {
     @JvmField var maxDeccel = 500.0
 
     @JvmField var ticksPerUnit = 2.025157 // 4.1320754
-    @JvmField var kP = 0.065
+    @JvmField var kP = 0.075
     @JvmField var kI = 0.000
     @JvmField var kD = 0.001
-    @JvmField var kCos = 0.26
+    @JvmField var kCos = 0.25
     @JvmField var allowedPositionError = 1.0
 
     @JvmField var home = -68.0 // thanks ritwik
-    @JvmField var pickup = -67.0
+    @JvmField var pickup = -69.0
     @JvmField var ground = 150.0
     @JvmField var low = 180.0
     @JvmField var med = 138.0

@@ -13,7 +13,6 @@ import kotlin.math.max
 import kotlin.math.pow
 import kotlin.math.sign
 
-@TeleOp
 class DTTest : KOpMode() {
     private lateinit var miyuki: Miyuki
     private var slowMode = true

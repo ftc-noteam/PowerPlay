@@ -8,7 +8,6 @@ import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class InitTest : SimpleAuto() {
     override val mainCmd: Cmd by lazy {
         PreInitSeq(miyuki, driver.rightTrigger::isJustPressed, Pose())

@@ -25,10 +25,10 @@ fixed
  */
 @Config
 object AutoConstants {
-    @JvmField var kN = 0.5
-    @JvmField var kOmega = 30.0
+    @JvmField var kN = 0.4
+    @JvmField var kOmega = 45.0
     @JvmField var kF = 4.0
-    @JvmField var kS = 0.4
+    @JvmField var kS = 0.5
     @JvmField var epsilon = 2.0
     @JvmField var thetaEpsilon = 5.0
 

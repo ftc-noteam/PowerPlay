@@ -13,8 +13,10 @@ import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 
 @Autonomous
+@Disabled
 class GVFInitDepositTest : SimpleAuto() {
     override val mainCmd: Cmd by lazy {
         SequentialGroup(
