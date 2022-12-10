@@ -5,6 +5,7 @@ import asiankoala.ftc2022.Zones
 import asiankoala.ftc2022.commands.sequence.auto.AutoDepositSeq
 import asiankoala.ftc2022.commands.sequence.auto.AutoReadySeq
 import asiankoala.ftc2022.commands.sequence.auto.PreInitSeq
+import asiankoala.ftc2022.commands.sequence.tele.HomeSeq
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.choose
 import asiankoala.ftc2022.opmodes.auto.AutoConstants.parkRightPath
 import com.asiankoala.koawalib.command.KOpMode
@@ -43,6 +44,8 @@ open class MiyukiAuto(alliance: Alliance, far: Boolean) : KOpMode(photonEnabled 
             WaitUntilCmd { opModeState == OpModeState.START },
 
             AutoConstants.getGVFCmd(miyuki, initPath, initReadyProj, depositProj).andPause(0.5),
+
+            HomeSeq(miyuki),
 
 
             // now we park
