@@ -15,10 +15,10 @@ import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 
 @Config
 object AutoConstants {
-    @JvmField var kN = 0.6
+    @JvmField var kN = 0.5
     @JvmField var kOmega = 30.0
     @JvmField var kF = 4.0
-    @JvmField var kS = 1.0
+    @JvmField var kS = 0.4
     @JvmField var epsilon = 2.0
     @JvmField var thetaEpsilon = 5.0
 

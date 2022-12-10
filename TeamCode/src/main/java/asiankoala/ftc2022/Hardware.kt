@@ -89,7 +89,7 @@ class Hardware(startPose: Pose, hasZeroPositionAlready: Boolean = false) {
     val leftEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
-        .build(bl)
+        .build(fl)
 
     val rightEncoder = EncoderFactory(ticksPerUnit)
         .reverse
@@ -97,9 +97,8 @@ class Hardware(startPose: Pose, hasZeroPositionAlready: Boolean = false) {
         .build(fr)
 
     val auxEncoder = EncoderFactory(ticksPerUnit)
-        .reverse
         .revEncoder
-        .build(fl)
+        .build(bl)
 
     @Config
     companion object {

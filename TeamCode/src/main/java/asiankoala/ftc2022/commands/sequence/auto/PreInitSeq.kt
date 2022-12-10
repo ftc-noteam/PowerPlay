@@ -11,11 +11,15 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.util.OpModeState
 
-class PreInitSeq(miyuki: Miyuki, rightTriggerIsJustPressed: () -> Boolean) : SequentialGroup(
+class PreInitSeq(
+    miyuki: Miyuki,
+    rightTriggerIsJustPressed: () -> Boolean,
+    startPose: Pose
+) : SequentialGroup(
     ClawGripCmd(miyuki.claw)
         .waitUntil(rightTriggerIsJustPressed),
     ArmCmd(miyuki.arm, ArmConstants.autoInit)
         .waitUntil(rightTriggerIsJustPressed),
-    ResetPoseCmd(miyuki, Pose())
+    ResetPoseCmd(miyuki, startPose)
         .waitUntil(rightTriggerIsJustPressed)
 )

@@ -29,7 +29,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(Pose())
-        miyuki.odometry.unregister()
+//        miyuki.odometry.unregister()
         miyuki.vision.unregister()
         driver.leftStick.setDeadzone(0.12)
         driver.rightStick.setDeadzone(0.12)

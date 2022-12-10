@@ -28,7 +28,7 @@ class Miyuki(startPose: Pose) {
         hardware.br,
         hardware.fr,
         odometry,
-        false
+        true
     )
     val lift = Lift(hardware.liftLead, hardware.liftBottom, hardware.liftLeft)
     val arm = Arm(hardware.arm)
