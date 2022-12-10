@@ -22,8 +22,8 @@ abstract class SimpleAuto : KOpMode(photonEnabled = true) {
     }
 
     override fun mLoop() {
+        Logger.addTelemetryData("pose", miyuki.drive.pose)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addTelemetryData("arm pos", miyuki.arm.pos)
-        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
+        Logger.addTelemetryData("arm", miyuki.arm.pos)
     }
 }

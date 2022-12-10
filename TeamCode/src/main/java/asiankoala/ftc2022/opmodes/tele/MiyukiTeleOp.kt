@@ -104,6 +104,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         Logger.addTelemetryData("strat", miyuki.strategy)
         Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
+        Logger.addTelemetryData("powers", miyuki.drive.powers)
 //        Logger.addTelemetryData("power", miyuki.drive.powers)
 //        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
 

@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp
-@Disabled
 class AprilTagTest : KOpMode() {
     private lateinit var vision: Vision
 
