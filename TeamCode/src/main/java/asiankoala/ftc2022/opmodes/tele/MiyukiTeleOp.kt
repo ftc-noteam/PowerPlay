@@ -74,8 +74,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         + object : Cmd() {
             override fun execute() {
                 if(driver.rightTrigger.isJustPressed && miyuki.state == State.INTAKING) {
-                    + IntakeSeq(miyuki, driver.rightTrigger::isJustPressed).cancelIf(driver.leftBumper::isJustPressed)
-//                    + IntakeSeq(miyuki)
+                    + IntakeSeq(miyuki, driver.rightTrigger::isJustPressed, driver.leftBumper::isJustPressed, driver.leftTrigger::isJustPressed)
                     Logger.logInfo("scheduled intake sequence")
                 }
             }

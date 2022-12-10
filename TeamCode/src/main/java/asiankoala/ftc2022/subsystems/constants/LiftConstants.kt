@@ -19,7 +19,7 @@ object LiftConstants {
     @JvmField var ground = ready
     @JvmField var low = ready
     @JvmField var med = ready // 1.0
-    @JvmField var high = 9.8
+    @JvmField var high = 9.5
     @JvmField var disabledPosition = home
     @JvmField var allowedPositionError = 0.2
 }
