@@ -21,7 +21,7 @@ class DTTest : KOpMode() {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(Pose())
-        miyuki.hardware.odometry.unregister()
+        miyuki.odometry.unregister()
         miyuki.vision.unregister()
         miyuki.lift.unregister()
         miyuki.arm.unregister()

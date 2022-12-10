@@ -29,7 +29,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         miyuki = Miyuki(Pose())
-        miyuki.hardware.odometry.unregister()
+        miyuki.odometry.unregister()
         miyuki.vision.unregister()
         driver.leftStick.setDeadzone(0.12)
         driver.rightStick.setDeadzone(0.12)
@@ -102,8 +102,8 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     override fun mLoop() {
         Logger.addTelemetryData("state", miyuki.state)
         Logger.addTelemetryData("strat", miyuki.strategy)
-        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
-        Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
+        Logger.addTelemetryData("arm", miyuki.arm.pos)
+        Logger.addTelemetryData("lift", miyuki.lift.pos)
         Logger.addTelemetryData("powers", miyuki.drive.powers)
 //        Logger.addTelemetryData("power", miyuki.drive.powers)
 //        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)

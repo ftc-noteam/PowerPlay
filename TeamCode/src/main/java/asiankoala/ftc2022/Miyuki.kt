@@ -10,15 +10,24 @@ import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
+import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
 class Miyuki(startPose: Pose) {
     val hardware = Hardware(startPose)
+    val odometry = KThreeWheelOdometry(
+        hardware.leftEncoder,
+        hardware.rightEncoder,
+        hardware.auxEncoder,
+        Hardware.TRACK_WIDTH,
+        Hardware.PERP_TRACKER,
+        startPose
+    )
     val drive = KMecanumOdoDrive(
         hardware.fl,
         hardware.bl,
         hardware.br,
         hardware.fr,
-        hardware.odometry,
+        odometry,
         false
     )
     val lift = Lift(hardware.liftLead, hardware.liftBottom, hardware.liftLeft)

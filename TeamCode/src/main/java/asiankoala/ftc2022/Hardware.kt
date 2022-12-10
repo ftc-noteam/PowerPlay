@@ -86,29 +86,20 @@ class Hardware(startPose: Pose, hasZeroPositionAlready: Boolean = false) {
     val pivot = KServo("pivot")
         .startAt(PivotConstants.home)
 
-    private val leftEncoder = EncoderFactory(ticksPerUnit)
+    val leftEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
         .build(bl)
 
-    private val rightEncoder = EncoderFactory(ticksPerUnit)
+    val rightEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
         .build(fr)
 
-    private val auxEncoder = EncoderFactory(ticksPerUnit)
+    val auxEncoder = EncoderFactory(ticksPerUnit)
         .reverse
         .revEncoder
         .build(fl)
-
-    val odometry = KThreeWheelOdometry(
-        leftEncoder,
-        rightEncoder,
-        auxEncoder,
-        TRACK_WIDTH,
-        PERP_TRACKER,
-        startPose
-    )
 
     @Config
     companion object {
