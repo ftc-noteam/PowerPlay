@@ -20,9 +20,9 @@ object ArmConstants {
 
     @JvmField var home = -68.0 // thanks ritwik
     @JvmField var pickup = -67.0
-    @JvmField var ground = 130.0
-    @JvmField var low = 130.0
-    @JvmField var med = 130.0
+    @JvmField var ground = 150.0
+    @JvmField var low = 150.0
+    @JvmField var med = 138.0
     @JvmField var high = 130.0
     @JvmField var autoInit = 240.0
 }
