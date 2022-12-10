@@ -8,6 +8,7 @@ import asiankoala.ftc2022.commands.subsystem.PivotDepositCmd
 import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
+import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.util.OpModeState
 
 class PreInitSeq(miyuki: Miyuki, rightTriggerIsJustPressed: () -> Boolean) : SequentialGroup(
@@ -15,7 +16,6 @@ class PreInitSeq(miyuki: Miyuki, rightTriggerIsJustPressed: () -> Boolean) : Seq
         .waitUntil(rightTriggerIsJustPressed),
     ArmCmd(miyuki.arm, ArmConstants.autoInit)
         .waitUntil(rightTriggerIsJustPressed),
-    ResetPoseCmd(miyuki)
+    ResetPoseCmd(miyuki, Pose())
         .waitUntil(rightTriggerIsJustPressed)
-
 )
