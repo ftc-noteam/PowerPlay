@@ -11,10 +11,10 @@ class Arm(val motor: KMotor) : Subsystem() {
         motor.setProfileTarget(pos)
     }
 
-    fun openLoop(power: Double) {
-        motor.power = power
-    }
-
     val pos get() = motor.pos
     val vel get() = motor.vel
+
+    companion object {
+        var lastPos = ArmConstants.home
+    }
 }

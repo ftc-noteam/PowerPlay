@@ -1,5 +1,6 @@
 package asiankoala.ftc2022.subsystems
 
+import asiankoala.ftc2022.subsystems.constants.LiftConstants
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.subsystem.Subsystem
 
@@ -20,4 +21,8 @@ class Lift(
 
     val pos get() = leadMotor.pos
     val vel get() = leadMotor.vel
+
+    companion object {
+        var lastPos = LiftConstants.home
+    }
 }

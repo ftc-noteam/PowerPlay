@@ -1,5 +1,6 @@
 package asiankoala.ftc2022
 
+import asiankoala.ftc2022.subsystems.Arm
 import asiankoala.ftc2022.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.subsystems.constants.ClawConstants
 import asiankoala.ftc2022.subsystems.constants.LiftConstants
@@ -11,43 +12,40 @@ import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
-import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
-class Hardware(startPose: Pose) {
+class Hardware(startPose: Pose, hasZeroPositionAlready: Boolean = false) {
     val fl = MotorFactory("fl")
         .brake
         .reverse
+        .withStaticFeedforward(FuckThisRobot.flks)
         .build()
 
     val bl = MotorFactory("bl")
         .brake
         .reverse
+        .withStaticFeedforward(FuckThisRobot.blks)
         .build()
 
     val br = MotorFactory("br")
         .brake
         .forward
+        .withStaticFeedforward(FuckThisRobot.brks)
         .build()
 
     val fr = MotorFactory("fr")
         .brake
         .forward
+        .withStaticFeedforward(FuckThisRobot.frks)
         .build()
 
     val liftLead = MotorFactory("liftLead")
         .float
         .forward
         .pairEncoder(br, EncoderFactory(LiftConstants.ticksPerUnit)
-                .zero(LiftConstants.home)
+                .zero(if(hasZeroPositionAlready) LiftConstants.home else LiftConstants.home)
         )
-//        .withPositionControl(
-//            PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
-//            FFGains(kG = LiftConstants.kG),
-//            allowedPositionError = LiftConstants.allowedPositionError,
-//            disabledPosition = LiftConstants.disabledPosition
-//        )
         .withMotionProfileControl(
             PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
             FFGains(kG = LiftConstants.kG, kS = LiftConstants.kS, kV = LiftConstants.kV, kA = LiftConstants.kA),
@@ -72,7 +70,7 @@ class Hardware(startPose: Pose) {
         .reverse
         .createEncoder(EncoderFactory(ArmConstants.ticksPerUnit)
                 .reverse
-                .zero(ArmConstants.home)
+                .zero(if(hasZeroPositionAlready) Arm.lastPos else ArmConstants.home)
         )
         .withMotionProfileControl(
             PIDGains(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD),

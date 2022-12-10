@@ -33,6 +33,9 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
         miyuki.vision.unregister()
         driver.leftStick.setDeadzone(0.12)
         driver.rightStick.setDeadzone(0.12)
+
+        driver.leftTrigger.onPress(ArmHighCmd(miyuki.arm))
+        driver.rightTrigger.onPress(ArmPickupCmd(miyuki.arm))
         scheduleDrive()
         scheduleStrat()
         scheduleCycling()
@@ -50,7 +53,7 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
 
             override fun execute() {
                 val raws = NVector(
-                    -driver.leftStick.xSupplier.invoke(),
+                    driver.leftStick.xSupplier.invoke(),
                     -driver.leftStick.ySupplier.invoke(),
                     -driver.rightStick.xSupplier.invoke()
                 )
@@ -98,14 +101,15 @@ class MiyukiTeleOp : KOpMode(photonEnabled = true) {
     override fun mLoop() {
         Logger.addTelemetryData("state", miyuki.state)
         Logger.addTelemetryData("strat", miyuki.strategy)
-        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
+//        Logger.addTelemetryData("arm", miyuki.hardware.arm.pos)
         Logger.addTelemetryData("lift", miyuki.hardware.liftLead.pos)
-        Logger.addTelemetryData("power", miyuki.drive.powers)
-        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
+//        Logger.addTelemetryData("power", miyuki.drive.powers)
+//        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
 
-//        Logger.addVar("arm pos", miyuki.arm.pos)
-//        Logger.addVar("arm vel", miyuki.arm.vel)
-//        Logger.addVar("arm target pos", miyuki.hardware.arm.setpoint.x)
-//        Logger.addVar("arm target vel", miyuki.hardware.arm.setpoint.v)
+        Logger.addTelemetryData("arm power", miyuki.hardware.arm.power)
+        Logger.addVar("arm pos", miyuki.arm.pos)
+        Logger.addVar("arm vel", miyuki.arm.vel)
+        Logger.addVar("arm target pos", miyuki.hardware.arm.setpoint.x)
+        Logger.addVar("arm target vel", miyuki.hardware.arm.setpoint.v)
     }
 }
