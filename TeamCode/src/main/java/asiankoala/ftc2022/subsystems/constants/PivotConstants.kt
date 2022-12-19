@@ -8,4 +8,5 @@ object PivotConstants {
     @JvmField var deposit = 1.0
     @JvmField var FUCK = 0.4
     @JvmField var autoInit = 0.5
+    @JvmField var low = 0.65
 }
