@@ -11,7 +11,7 @@ import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
 
 class Hardware(
-    zeroFromFile: Boolean = false
+    zeroFromFile: Boolean
 ) {
     val fl = MotorFactory("fl")
         .brake

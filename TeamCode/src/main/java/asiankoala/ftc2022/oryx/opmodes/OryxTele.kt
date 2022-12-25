@@ -12,6 +12,7 @@ import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.WatchdogCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
+import com.asiankoala.koawalib.math.Pose
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp(name = "TELEOP がんばれニールくん！！！(ﾐ꒡ᆽ꒡ﾐ)/ᐠ_ ꞈ _ᐟ\\")
@@ -19,6 +20,7 @@ class OryxTele : KOpMode(photonEnabled = true) {
     private lateinit var oryx: Oryx
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
+        oryx = Oryx(Pose(), true)
         oryx.odo.unregister()
         oryx.vision.unregister()
         driver.leftStick.setDeadzone(0.1)

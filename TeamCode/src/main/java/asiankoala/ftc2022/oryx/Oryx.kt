@@ -12,8 +12,8 @@ import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KVelDrive
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
-class Oryx(pose: Pose) {
-    val hw = Hardware()
+class Oryx(pose: Pose, zeroFromFile: Boolean) {
+    val hw = Hardware(zeroFromFile)
     val odo = KThreeWheelOdometry(
         hw.leftEncoder,
         hw.rightEncoder,

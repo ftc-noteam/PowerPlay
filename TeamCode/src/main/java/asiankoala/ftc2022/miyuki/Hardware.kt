@@ -5,6 +5,7 @@ import asiankoala.ftc2022.miyuki.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.miyuki.subsystems.constants.ClawConstants
 import asiankoala.ftc2022.miyuki.subsystems.constants.LiftConstants
 import asiankoala.ftc2022.miyuki.subsystems.constants.PivotConstants
+import asiankoala.ftc2022.oryx.utils.FileInterface
 import com.acmerobotics.dashboard.config.Config
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains
@@ -43,7 +44,7 @@ class Hardware(startPose: Pose, hasZeroPositionAlready: Boolean = false) {
         .float
         .forward
         .pairEncoder(br, EncoderFactory(LiftConstants.ticksPerUnit)
-                .zero(if(hasZeroPositionAlready) LiftConstants.home else LiftConstants.home)
+                .zero(if(hasZeroPositionAlready) FileInterface.read(FileInterface.LIFT) else LiftConstants.home)
         )
         .withMotionProfileControl(
             PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
