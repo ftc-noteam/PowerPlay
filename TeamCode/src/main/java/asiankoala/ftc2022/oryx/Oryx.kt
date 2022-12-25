@@ -3,11 +3,13 @@ package asiankoala.ftc2022.oryx
 import asiankoala.ftc2022.oryx.subsystems.*
 import asiankoala.ftc2022.oryx.subsystems.constants.OdoConstants
 import asiankoala.ftc2022.oryx.subsystems.constants.ArmConstants
+import asiankoala.ftc2022.oryx.subsystems.constants.DriveConstants
 import asiankoala.ftc2022.oryx.subsystems.vision.Vision
 import asiankoala.ftc2022.oryx.utils.Strategy
 import asiankoala.ftc2022.oryx.utils.State
 import com.asiankoala.koawalib.control.profile.v2.Constraints
 import com.asiankoala.koawalib.math.Pose
+import com.asiankoala.koawalib.subsystem.drive.KVelDrive
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
 class Oryx(pose: Pose) {
@@ -20,13 +22,18 @@ class Oryx(pose: Pose) {
         OdoConstants.PERP_TRACKER,
         pose
     )
-    val drive = Drive(
+    val drive = KVelDrive(
         hw.fl,
         hw.bl,
         hw.br,
         hw.fr,
         odo,
-        ::state
+        true,
+        DriveConstants.kP,
+        DriveConstants.kS,
+        DriveConstants.kV,
+        DriveConstants.kA,
+        false
     )
     val lift = Lift(
         hw.lrt,

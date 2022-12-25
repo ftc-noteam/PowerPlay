@@ -1,20 +1,20 @@
 package asiankoala.ftc2022.oryx.opmodes
 
+import asiankoala.ftc2022.miyuki.commands.sequence.tele.DriveCmd
 import asiankoala.ftc2022.oryx.Oryx
 import asiankoala.ftc2022.oryx.commands.sequence.DepositSeq
 import asiankoala.ftc2022.oryx.commands.sequence.IntakeSeq
 import asiankoala.ftc2022.oryx.commands.subsystem.ClawOpenCmd
+import asiankoala.ftc2022.oryx.commands.subsystem.OryxStrategyCmd
 import asiankoala.ftc2022.oryx.utils.State
 import asiankoala.ftc2022.oryx.utils.Strategy
 import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.command.commands.Cmd
-import com.asiankoala.koawalib.command.commands.InstantCmd
-import com.asiankoala.koawalib.command.commands.MecanumCmd
+import com.asiankoala.koawalib.command.commands.WatchdogCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp(name = "TELE がんばれニールくん！！！")
+@TeleOp(name = "TELEOP がんばれニールくん！！！(ﾐ꒡ᆽ꒡ﾐ)/ᐠ_ ꞈ _ᐟ\\")
 class OryxTele : KOpMode(photonEnabled = true) {
     private lateinit var oryx: Oryx
     override fun mInit() {
@@ -26,41 +26,26 @@ class OryxTele : KOpMode(photonEnabled = true) {
     }
 
     private fun scheduleDrive() {
-        oryx.drive.defaultCommand = MecanumCmd(
+        oryx.drive.defaultCommand = DriveCmd(
             oryx.drive,
             driver.leftStick,
-            driver.rightStick
+            driver.rightStick,
+            driver.rightBumper
         )
     }
 
     private fun scheduleCycling() {
-        + object : Cmd() {
-            override fun execute() {
-                if(driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING) {
-                    + IntakeSeq(oryx, driver.rightTrigger, driver.leftBumper, driver.leftTrigger)
-                    Logger.logInfo("scheduled intake seq")
-                }
-            }
-        }
-
-        + object : Cmd() {
-            override fun execute() {
-                if(driver.leftTrigger.isJustPressed && oryx.state == State.DEPOSITING) {
-                    + DepositSeq(oryx)
-                    Logger.logInfo("scheduled deposit seq")
-                }
-            }
-        }
-
+        + WatchdogCmd(IntakeSeq(oryx, driver.rightTrigger, driver.leftBumper)) { driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING }
+        + WatchdogCmd(DepositSeq(oryx)) { driver.leftTrigger.isJustPressed && oryx.state == State.DEPOSITING }
         driver.leftBumper.onPress(ClawOpenCmd(oryx.claw))
     }
 
 
     private fun scheduleStrat() {
-        driver.y.onPress(InstantCmd({ oryx.strategy = Strategy.HIGH }))
-        driver.a.onPress(InstantCmd({ oryx.strategy = Strategy.GROUND }))
-        driver.x.onPress(InstantCmd({ oryx.strategy = Strategy.LOW }))
-        driver.b.onPress(InstantCmd({ oryx.strategy = Strategy.MED }))
+        driver.y.onPress(OryxStrategyCmd(oryx, Strategy.HIGH))
+        driver.a.onPress(OryxStrategyCmd(oryx, Strategy.GROUND))
+        driver.x.onPress(OryxStrategyCmd(oryx, Strategy.LOW))
+        driver.b.onPress(OryxStrategyCmd(oryx, Strategy.MED))
     }
 
     override fun mLoop() {
