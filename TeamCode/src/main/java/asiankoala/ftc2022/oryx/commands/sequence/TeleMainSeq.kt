@@ -3,6 +3,7 @@ package asiankoala.ftc2022.oryx.commands.sequence
 import asiankoala.ftc2022.oryx.Oryx
 import asiankoala.ftc2022.oryx.commands.subsystem.*
 import asiankoala.ftc2022.oryx.utils.State
+import com.asiankoala.koawalib.command.commands.ChooseCmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.ParallelGroup
@@ -11,15 +12,20 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.gamepad.KButton
 import com.asiankoala.koawalib.gamepad.KTrigger
 
-class IntakeSeq(
+class TeleMainSeq(
     oryx: Oryx,
     rt: KTrigger,
     lb: KButton,
 ) : RaceGroup(
     SequentialGroup(
-        ClawGripCmd(oryx.claw)
-            .andPause(0.3),
-        LiftReadyCmd(oryx.lift),
+        ChooseCmd(
+            StackIntakeSeq(oryx, oryx.stackNum, rt),
+            SequentialGroup(
+                ClawGripCmd(oryx.claw)
+                    .andPause(0.3),
+                LiftReadyCmd(oryx.lift),
+            ),
+        ) { oryx.isStacking },
         InstantCmd({ oryx.state = State.READYING }),
         ArmCmd(oryx.arm, 90.0)
             .waitUntil(rt::isJustPressed),
@@ -28,7 +34,9 @@ class IntakeSeq(
             ArmStateCmd(oryx.arm, oryx.strategy),
             WaitUntilCmd { oryx.arm.pos > 0.0 },
             PivotStateCmd(oryx.pivot, oryx.strategy)
-        ).waitUntil(rt::isJustPressed)
+        ).waitUntil(rt::isJustPressed),
+        DepositSeq(oryx)
+            .waitUntil(rt::isJustPressed)
     ),
     SequentialGroup(
         WaitUntilCmd(lb::isJustPressed),

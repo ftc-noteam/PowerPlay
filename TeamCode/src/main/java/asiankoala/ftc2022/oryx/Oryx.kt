@@ -53,4 +53,6 @@ class Oryx(pose: Pose, zeroFromFile: Boolean) {
     val vision = Vision()
     var state = State.INTAKING
     var strategy = Strategy.HIGH
+    var isStacking = false
+    var stackNum = 5
 }

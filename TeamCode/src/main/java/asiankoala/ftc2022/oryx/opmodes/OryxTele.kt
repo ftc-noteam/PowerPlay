@@ -2,14 +2,14 @@ package asiankoala.ftc2022.oryx.opmodes
 
 import asiankoala.ftc2022.miyuki.commands.sequence.tele.DriveCmd
 import asiankoala.ftc2022.oryx.Oryx
-import asiankoala.ftc2022.oryx.commands.sequence.DepositSeq
-import asiankoala.ftc2022.oryx.commands.sequence.IntakeSeq
+import asiankoala.ftc2022.oryx.commands.sequence.TeleMainSeq
 import asiankoala.ftc2022.oryx.commands.subsystem.ClawOpenCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.OryxStrategyCmd
 import asiankoala.ftc2022.oryx.utils.State
 import asiankoala.ftc2022.oryx.utils.Strategy
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.WatchdogCmd
+import com.asiankoala.koawalib.control.filter.Debouncer
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.math.Pose
@@ -23,8 +23,18 @@ class OryxTele : KOpMode(photonEnabled = true) {
         oryx = Oryx(Pose(), true)
         oryx.odo.unregister()
         oryx.vision.unregister()
+
+        configureControls()
+        scheduleDrive()
+        scheduleCycling()
+        scheduleStrat()
+    }
+
+    private fun configureControls() {
         driver.leftStick.setDeadzone(0.1)
         driver.rightStick.setDeadzone(0.1)
+        driver.leftTrigger.setDebouncer(Debouncer(0.3))
+        driver.rightTrigger.setDebouncer(Debouncer(0.3))
     }
 
     private fun scheduleDrive() {
@@ -37,9 +47,8 @@ class OryxTele : KOpMode(photonEnabled = true) {
     }
 
     private fun scheduleCycling() {
-        + WatchdogCmd(IntakeSeq(oryx, driver.rightTrigger, driver.leftBumper)) { driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING }
-        + WatchdogCmd(DepositSeq(oryx)) { driver.leftTrigger.isJustPressed && oryx.state == State.DEPOSITING }
-        driver.leftBumper.onPress(ClawOpenCmd(oryx.claw))
+        + WatchdogCmd(TeleMainSeq(oryx, driver.rightTrigger, driver.leftBumper)) { driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING }
+        driver.leftTrigger.onPress(ClawOpenCmd(oryx.claw))
     }
 
 
