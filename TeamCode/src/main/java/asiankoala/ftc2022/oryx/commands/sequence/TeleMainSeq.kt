@@ -15,16 +15,12 @@ import com.asiankoala.koawalib.gamepad.KTrigger
 class TeleMainSeq(
     oryx: Oryx,
     rt: KTrigger,
-    lb: KButton,
+    lt: KTrigger,
 ) : RaceGroup(
     SequentialGroup(
         ChooseCmd(
             StackIntakeSeq(oryx, oryx.stackNum, rt),
-            SequentialGroup(
-                ClawGripCmd(oryx.claw)
-                    .andPause(0.3),
-                LiftReadyCmd(oryx.lift),
-            ),
+            DefaultIntakeSeq(oryx)
         ) { oryx.isStacking },
         InstantCmd({ oryx.state = State.READYING }),
         ArmCmd(oryx.arm, 90.0)
@@ -39,7 +35,7 @@ class TeleMainSeq(
             .waitUntil(rt::isJustPressed)
     ),
     SequentialGroup(
-        WaitUntilCmd(lb::isJustPressed),
+        WaitUntilCmd(lt::isJustPressed),
         LiftHomeCmd(oryx.lift),
         InstantCmd({ oryx.state = State.INTAKING })
     )

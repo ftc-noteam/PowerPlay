@@ -8,12 +8,15 @@ import asiankoala.ftc2022.oryx.commands.subsystem.OryxStrategyCmd
 import asiankoala.ftc2022.oryx.utils.State
 import asiankoala.ftc2022.oryx.utils.Strategy
 import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WatchdogCmd
 import com.asiankoala.koawalib.control.filter.Debouncer
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.math.Pose
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import kotlin.math.max
+import kotlin.math.min
 
 @TeleOp(name = "TELEOP がんばれニールくん！！！(ﾐ꒡ᆽ꒡ﾐ)/ᐠ_ ꞈ _ᐟ\\")
 class OryxTele : KOpMode(photonEnabled = true) {
@@ -47,16 +50,19 @@ class OryxTele : KOpMode(photonEnabled = true) {
     }
 
     private fun scheduleCycling() {
-        + WatchdogCmd(TeleMainSeq(oryx, driver.rightTrigger, driver.leftBumper)) { driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING }
+        + WatchdogCmd(TeleMainSeq(oryx, driver.rightTrigger, driver.leftTrigger)) { driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING }
         driver.leftTrigger.onPress(ClawOpenCmd(oryx.claw))
     }
-
 
     private fun scheduleStrat() {
         driver.y.onPress(OryxStrategyCmd(oryx, Strategy.HIGH))
         driver.a.onPress(OryxStrategyCmd(oryx, Strategy.GROUND))
         driver.x.onPress(OryxStrategyCmd(oryx, Strategy.LOW))
         driver.b.onPress(OryxStrategyCmd(oryx, Strategy.MED))
+
+        driver.leftBumper.onPress(InstantCmd({ oryx.isStacking = !oryx.isStacking}))
+        driver.dpadUp.onPress(InstantCmd({ oryx.stackNum = min(4, oryx.stackNum + 1) }))
+        driver.dpadDown.onPress(InstantCmd({ oryx.stackNum = max(0, oryx.stackNum - 1) }))
     }
 
     override fun mLoop() {
