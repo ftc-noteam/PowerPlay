@@ -1,13 +1,13 @@
-package asiankoala.ftc2022.miyuki.commands.sequence.tele
+package asiankoala.ftc2022.oryx.commands.subsystem
 
 import asiankoala.ftc2022.oryx.subsystems.constants.DriveConstants
-import asiankoala.ftc2022.oryx.utils.State
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.gamepad.KButton
 import com.asiankoala.koawalib.gamepad.KStick
-import com.asiankoala.koawalib.math.NVector
+import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumDrive
-import kotlin.math.*
+import java.lang.Math.abs
+import kotlin.math.pow
 
 class DriveCmd(
     private val drive: KMecanumDrive,
@@ -15,7 +15,7 @@ class DriveCmd(
     private val rightStick: KStick,
     private val rb: KButton
 ) : Cmd() {
-    private val scalars: NVector
+    private val scalars: List<Double>
         get() = if(rb.isToggled) DriveConstants.slowScalars else DriveConstants.speedScalars
 
     private fun joystickFunction(s: Double, k: Double, x: Double): Double {
@@ -23,19 +23,18 @@ class DriveCmd(
     }
 
     override fun execute() {
-        val raws = NVector(
-            leftStick.xSupplier.invoke(),
-            -leftStick.ySupplier.invoke(),
-            -rightStick.xSupplier.invoke()
+        val raws = listOf(
+            leftStick.xAxis,
+            -leftStick.yAxis,
+            -rightStick.xAxis
         )
 
         drive.powers = raws
             .mapIndexed { i, d -> joystickFunction(scalars[i], 0.98, d) }
-            .asPose
+            .let { Pose(it[0], it[1], it[2]) }
     }
 
-    override val isFinished: Boolean
-        get() = false
+    override val isFinished = false
 
     init {
         addRequirements(drive)

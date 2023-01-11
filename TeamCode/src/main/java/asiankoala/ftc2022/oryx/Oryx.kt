@@ -9,11 +9,11 @@ import asiankoala.ftc2022.oryx.utils.Strategy
 import asiankoala.ftc2022.oryx.utils.State
 import com.asiankoala.koawalib.control.profile.v2.Constraints
 import com.asiankoala.koawalib.math.Pose
-import com.asiankoala.koawalib.subsystem.drive.KVelDrive
+import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
-class Oryx(pose: Pose, zeroFromFile: Boolean) {
-    val hw = Hardware(zeroFromFile)
+class Oryx(pose: Pose) {
+    private val hw = Hardware()
     val odo = KThreeWheelOdometry(
         hw.leftEncoder,
         hw.rightEncoder,
@@ -22,18 +22,13 @@ class Oryx(pose: Pose, zeroFromFile: Boolean) {
         OdoConstants.PERP_TRACKER,
         pose
     )
-    val drive = KVelDrive(
+    val drive = KMecanumOdoDrive(
         hw.fl,
         hw.bl,
         hw.br,
         hw.fr,
         odo,
         true,
-        DriveConstants.kP,
-        DriveConstants.kS,
-        DriveConstants.kV,
-        DriveConstants.kA,
-        false
     )
     val lift = Lift(
         hw.lrt,
@@ -50,6 +45,7 @@ class Oryx(pose: Pose, zeroFromFile: Boolean) {
         Constraints(ArmConstants.vel, ArmConstants.accel),
         ArmConstants.epsilon
     )
+    val retract = Retract(hw.retract)
     val vision = Vision()
     var state = State.INTAKING
     var strategy = Strategy.HIGH

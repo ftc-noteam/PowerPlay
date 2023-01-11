@@ -1,6 +1,6 @@
 package asiankoala.ftc2022.oryx.subsystems.vision
 
-import asiankoala.ftc2022.miyuki.Zones
+import asiankoala.ftc2022.oryx.utils.Zones
 import org.opencv.calib3d.Calib3d
 import org.opencv.core.*
 import org.opencv.imgproc.Imgproc

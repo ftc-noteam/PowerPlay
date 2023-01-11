@@ -8,7 +8,7 @@ import com.asiankoala.koawalib.hardware.servo.KServo
 import com.asiankoala.koawalib.math.angleWrap
 import com.asiankoala.koawalib.math.degrees
 import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.subsystem.Subsystem
+import com.asiankoala.koawalib.subsystem.KSubsystem
 import kotlin.math.absoluteValue
 
 class Arm(
@@ -17,7 +17,7 @@ class Arm(
     private val enc: AxonServoEncoder,
     private val constraints: Constraints,
     private val epsilon: Double
-) : Subsystem() {
+) : KSubsystem() {
     private var profile: OnlineProfile? = null
     private var target = enc.angle
     private var setpoint = enc.angle

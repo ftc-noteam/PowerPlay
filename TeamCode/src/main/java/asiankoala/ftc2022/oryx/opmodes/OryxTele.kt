@@ -1,10 +1,11 @@
 package asiankoala.ftc2022.oryx.opmodes
 
-import asiankoala.ftc2022.miyuki.commands.sequence.tele.DriveCmd
 import asiankoala.ftc2022.oryx.Oryx
 import asiankoala.ftc2022.oryx.commands.sequence.TeleMainSeq
 import asiankoala.ftc2022.oryx.commands.subsystem.ClawOpenCmd
+import asiankoala.ftc2022.oryx.commands.subsystem.DriveCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.OryxStrategyCmd
+import asiankoala.ftc2022.oryx.commands.subsystem.RetractCmd
 import asiankoala.ftc2022.oryx.utils.State
 import asiankoala.ftc2022.oryx.utils.Strategy
 import com.asiankoala.koawalib.command.KOpMode
@@ -23,9 +24,10 @@ class OryxTele : KOpMode(photonEnabled = true) {
     private lateinit var oryx: Oryx
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
-        oryx = Oryx(Pose(), true)
+        oryx = Oryx(Pose())
         oryx.odo.unregister()
         oryx.vision.unregister()
+        + RetractCmd(oryx.retract)
 
         configureControls()
         scheduleDrive()

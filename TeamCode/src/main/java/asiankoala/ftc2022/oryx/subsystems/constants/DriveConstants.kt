@@ -1,7 +1,6 @@
 package asiankoala.ftc2022.oryx.subsystems.constants
 
 import com.acmerobotics.dashboard.config.Config
-import com.asiankoala.koawalib.math.NVector
 
 @Config
 object DriveConstants {
@@ -19,6 +18,6 @@ object DriveConstants {
     @JvmField var yIS = 0.3
     @JvmField var rIS = 0.3
 
-    val speedScalars = NVector(xSS, ySS, rSS)
-    val slowScalars = NVector(xIS, yIS, rIS)
+    val speedScalars = listOf(xSS, ySS, rSS)
+    val slowScalars = listOf(xIS, yIS, rIS)
 }

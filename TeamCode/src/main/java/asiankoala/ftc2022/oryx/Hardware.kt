@@ -2,7 +2,6 @@ package asiankoala.ftc2022.oryx
 
 import asiankoala.ftc2022.oryx.subsystems.constants.*
 import asiankoala.ftc2022.oryx.utils.AxonServoEncoder
-import asiankoala.ftc2022.oryx.utils.FileInterface
 import com.asiankoala.koawalib.control.controller.PIDGains
 import com.asiankoala.koawalib.control.motor.FFGains
 import com.asiankoala.koawalib.control.profile.MotionConstraints
@@ -10,9 +9,7 @@ import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.hardware.servo.KServo
 
-class Hardware(
-    zeroFromFile: Boolean
-) {
+class Hardware {
     val fl = MotorFactory("fl")
         .brake
         .reverse
@@ -37,7 +34,7 @@ class Hardware(
         .float
         .forward
         .pairEncoder(br, EncoderFactory(LiftConstants.ticksPerUnit)
-            .zero(if(zeroFromFile) FileInterface.read(FileInterface.LIFT).toDouble() else LiftConstants.home)
+            .zero(LiftConstants.home)
         )
         .withMotionProfileControl(
             PIDGains(LiftConstants.kP, LiftConstants.kI, LiftConstants.kD),
@@ -68,7 +65,7 @@ class Hardware(
 
     val armR = KServo("armL")
             .startAt(ArmConstants.init)
-            .reverse
+            .reverse()
 
     val axonEnc = AxonServoEncoder("axonEnc")
         .zero(ArmConstants.init)
@@ -78,6 +75,9 @@ class Hardware(
 
     val pivot = KServo("pivot")
         .startAt(PivotConstants.home)
+
+    val retract = KServo("retract")
+        .startAt(RetractConstants.extend)
 
     val leftEncoder = EncoderFactory(OdoConstants.ticksPerUnit)
         .reverse

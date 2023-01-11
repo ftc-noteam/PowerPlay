@@ -1,12 +1,19 @@
 package asiankoala.ftc2022.oryx.subsystems.vision
 
-import asiankoala.ftc2022.miyuki.Zones
-import com.asiankoala.koawalib.subsystem.Subsystem
+import asiankoala.ftc2022.oryx.utils.Zones
+import com.asiankoala.koawalib.subsystem.KSubsystem
 import com.asiankoala.koawalib.subsystem.vision.KWebcam
+import org.openftc.easyopencv.OpenCvCameraRotation
 
-class Vision: Subsystem() {
+class Vision: KSubsystem() {
     private val pipeline = SleevePipeline()
-    private val webcam = KWebcam("Webcam", pipeline)
+    private val webcam = KWebcam(
+        "Webcam",
+        pipeline,
+        800,
+        448,
+        OpenCvCameraRotation.UPRIGHT
+    )
     var zone = Zones.WTF
         private set
 

@@ -1,14 +1,14 @@
 package asiankoala.ftc2022.oryx.subsystems
 
 import com.asiankoala.koawalib.hardware.motor.KMotor
-import com.asiankoala.koawalib.subsystem.Subsystem
+import com.asiankoala.koawalib.subsystem.KSubsystem
 
 class Lift(
     private val rt: KMotor,
     rb: KMotor,
     lt: KMotor,
     lb: KMotor
-) : Subsystem() {
+) : KSubsystem() {
     private val chainedMotors = listOf(rb, lt, lb)
 
     val pos get() = rt.pos
