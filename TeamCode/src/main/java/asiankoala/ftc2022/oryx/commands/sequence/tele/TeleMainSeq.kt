@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.oryx.commands.sequence
+package asiankoala.ftc2022.oryx.commands.sequence.tele
 
 import asiankoala.ftc2022.oryx.Oryx
 import asiankoala.ftc2022.oryx.commands.subsystem.*
@@ -9,7 +9,6 @@ import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.ParallelGroup
 import com.asiankoala.koawalib.command.group.RaceGroup
 import com.asiankoala.koawalib.command.group.SequentialGroup
-import com.asiankoala.koawalib.gamepad.KButton
 import com.asiankoala.koawalib.gamepad.KTrigger
 
 class TeleMainSeq(

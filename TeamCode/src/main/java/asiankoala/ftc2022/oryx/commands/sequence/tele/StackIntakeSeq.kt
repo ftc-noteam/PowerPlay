@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.oryx.commands.sequence
+package asiankoala.ftc2022.oryx.commands.sequence.tele
 
 import asiankoala.ftc2022.oryx.Oryx
 import asiankoala.ftc2022.oryx.commands.subsystem.ClawGripCmd

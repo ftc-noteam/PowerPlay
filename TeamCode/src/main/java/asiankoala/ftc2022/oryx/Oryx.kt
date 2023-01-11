@@ -51,4 +51,6 @@ class Oryx(pose: Pose) {
     var strategy = Strategy.HIGH
     var isStacking = false
     var stackNum = 5
+
+    val stackLiftHeight = stackNum * 3.0
 }

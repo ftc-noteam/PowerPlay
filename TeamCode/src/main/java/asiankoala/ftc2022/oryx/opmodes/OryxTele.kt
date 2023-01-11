@@ -1,7 +1,7 @@
 package asiankoala.ftc2022.oryx.opmodes
 
 import asiankoala.ftc2022.oryx.Oryx
-import asiankoala.ftc2022.oryx.commands.sequence.TeleMainSeq
+import asiankoala.ftc2022.oryx.commands.sequence.tele.TeleMainSeq
 import asiankoala.ftc2022.oryx.commands.subsystem.ClawOpenCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.DriveCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.OryxStrategyCmd

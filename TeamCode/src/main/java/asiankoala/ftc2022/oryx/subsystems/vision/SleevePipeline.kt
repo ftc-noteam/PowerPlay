@@ -9,7 +9,7 @@ import org.openftc.apriltag.AprilTagDetectorJNI
 import org.openftc.easyopencv.OpenCvPipeline
 
 class SleevePipeline : OpenCvPipeline() {
-    data class Pose(val rvec: Mat = Mat(), val tvec: Mat = Mat())
+    data class PipelinePose(val rvec: Mat = Mat(), val tvec: Mat = Mat())
 
     private var nativeApriltagPtr: Long
     private val grey = Mat()
@@ -87,7 +87,7 @@ class SleevePipeline : OpenCvPipeline() {
     private fun poseFromTrapezoid(
         points: Array<Point>,
         cameraMatrix: Mat,
-    ): Pose {
+    ): PipelinePose {
         val points2d = MatOfPoint2f(*points)
 
         val arrayPoints3d = arrayOfNulls<Point3>(4)
@@ -97,7 +97,7 @@ class SleevePipeline : OpenCvPipeline() {
         arrayPoints3d[3] = Point3(-tagsize / 2, -tagsize / 2, 0.0)
         val points3d = MatOfPoint3f(*arrayPoints3d)
 
-        val pose = Pose()
+        val pose = PipelinePose()
         Calib3d.solvePnP(
             points3d,
             points2d,
