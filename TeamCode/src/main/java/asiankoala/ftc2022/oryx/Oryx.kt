@@ -4,6 +4,7 @@ import asiankoala.ftc2022.oryx.subsystems.*
 import asiankoala.ftc2022.oryx.subsystems.constants.OdoConstants
 import asiankoala.ftc2022.oryx.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.oryx.subsystems.constants.DriveConstants
+import asiankoala.ftc2022.oryx.subsystems.constants.LiftConstants
 import asiankoala.ftc2022.oryx.subsystems.vision.Vision
 import asiankoala.ftc2022.oryx.utils.Strategy
 import asiankoala.ftc2022.oryx.utils.State
@@ -52,5 +53,5 @@ class Oryx(pose: Pose) {
     var isStacking = false
     var stackNum = 5
 
-    val stackLiftHeight = stackNum * 3.0
+    val stackLiftHeight = LiftConstants.ready + stackNum * 3.0
 }

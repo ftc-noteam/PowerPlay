@@ -24,5 +24,6 @@ object LiftConstants {
     @JvmField var allowedPositionError = 0.2
     @JvmField var coneDelta = 4.0
     val stackPositions = List(5) { ready + coneDelta * it }
-    val stackSafeRaiseDelta = 6.0
+    @JvmField var stackSafeRaiseDelta = 6.0
+    @JvmField var stackSafeRaiseHeight = 0.0
 }
