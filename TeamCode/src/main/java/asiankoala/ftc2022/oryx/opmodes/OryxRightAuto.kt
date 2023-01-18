@@ -1,6 +1,6 @@
 package asiankoala.ftc2022.oryx.opmodes
 
-import asiankoala.ftc2022.oryx.Oryx
+import asiankoala.ftc2022.oryx.Sunmi
 import asiankoala.ftc2022.oryx.commands.sequence.auto.AutoDepositSeq
 import asiankoala.ftc2022.oryx.commands.sequence.auto.AutoIntakeSeq
 import asiankoala.ftc2022.oryx.commands.subsystem.*
@@ -17,18 +17,14 @@ import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.path.DEFAULT_HEADING_CONTROLLER
-import com.asiankoala.koawalib.path.FLIPPED_HEADING_CONTROLLER
-import com.asiankoala.koawalib.path.HeadingController
-import com.asiankoala.koawalib.path.HermitePath
-import com.asiankoala.koawalib.path.ProjQuery
+import com.asiankoala.koawalib.path.*
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @TeleOp(name = "Right")
 open class OryxRightAuto : KOpMode(true) {
-    private lateinit var oryx: Oryx
+    private lateinit var sunmi: Sunmi
     protected open val start = Pose(-63.0, -36.0, 0.0)
     protected open val initReady = Pose(-24.0, -36.0, 0.0)
     protected open val deposit = Pose(-6.0, -30.0, 40.0.radians)
@@ -44,8 +40,8 @@ open class OryxRightAuto : KOpMode(true) {
         epsilon: Double = 2.0,
         thetaEpsilon: Double = 2.0
     ) = GVFCmd(
-        oryx.drive,
-        SimpleGVFController(path, oryx.drive, kN, kOmega, kF, kS, epsilon, thetaEpsilon),
+        sunmi.drive,
+        SimpleGVFController(path, sunmi.drive, kN, kOmega, kF, kS, epsilon, thetaEpsilon),
         *cmds
     )
 
@@ -59,26 +55,32 @@ open class OryxRightAuto : KOpMode(true) {
     }
     private val intakePath by lazy {
         HermitePath(
-            FLIPPED_HEADING_CONTROLLER,
-            deposit,
+            DEFAULT_HEADING_CONTROLLER.flip(),
+            deposit.copy(heading = 60.0.radians),
             intake
         )
     }
-    private val depositPath = intakePath.flip()
+    private val depositPath by lazy {
+        HermitePath(
+            DEFAULT_HEADING_CONTROLLER,
+            intake.copy(heading = 90.0.radians),
+            deposit
+        )
+    }
     private val initCmd = getGvfCmd(
         initDepositPath,
         ProjQuery(ParallelGroup(
-            LiftStateCmd(oryx.lift, Strategy.HIGH),
-            PivotStateCmd(oryx.pivot, Strategy.HIGH),
-            ArmStateCmd(oryx.arm, Strategy.HIGH)
+            LiftStateCmd(sunmi.lift, Strategy.HIGH),
+            PivotStateCmd(sunmi.pivot, Strategy.HIGH),
+            ArmStateCmd(sunmi.arm, Strategy.HIGH)
         ), 0.5),
-        ProjQuery(AutoDepositSeq(oryx), 0.99)
+        ProjQuery(AutoDepositSeq(sunmi), 0.99)
     )
-    private val intakeCmd = getGvfCmd(intakePath, ProjQuery(AutoIntakeSeq(oryx), 0.99))
+    private val intakeCmd = getGvfCmd(intakePath, ProjQuery(AutoIntakeSeq(sunmi), 0.99))
     private val depositCmd = getGvfCmd(
         depositPath,
-        ProjQuery(LiftStateCmd(oryx.lift, Strategy.HIGH), 0.5),
-        ProjQuery(AutoDepositSeq(oryx), 0.99)
+        ProjQuery(LiftStateCmd(sunmi.lift, Strategy.HIGH), 0.5),
+        ProjQuery(AutoDepositSeq(sunmi), 0.99)
     )
     private val endCmd by lazy {
         ChooseCmd(
@@ -88,31 +90,31 @@ open class OryxRightAuto : KOpMode(true) {
                     deposit.copy(heading = 90.0.radians),
                     deposit.copy(y = deposit.y + 18.0, heading = 90.0.radians)
                 ),
-                ProjQuery(LiftHomeCmd(oryx.lift), 0.5)
+                ProjQuery(LiftHomeCmd(sunmi.lift), 0.5)
             ),
             ChooseCmd(
-                LiftHomeCmd(oryx.lift),
+                LiftHomeCmd(sunmi.lift),
                 getGvfCmd(
                     HermitePath(
                         { 90.0 },
                         deposit.copy(heading = 270.0.radians),
                         deposit.copy(y = deposit.y - 36.0, heading = 270.0.radians)
                     ),
-                    ProjQuery(LiftHomeCmd(oryx.lift), 0.5)
+                    ProjQuery(LiftHomeCmd(sunmi.lift), 0.5)
                 )
-            ) { oryx.vision.zone == Zones.MIDDLE }
-        ) { oryx.vision.zone == Zones.LEFT }
+            ) { sunmi.vision.zone == Zones.MIDDLE }
+        ) { sunmi.vision.zone == Zones.LEFT }
     }
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
-        oryx = Oryx(start)
+        sunmi = Sunmi(start)
 
         + SequentialGroup(
-            ClawOpenCmd(oryx.claw),
-            ArmCmd(oryx.arm, 90.0),
+            ClawOpenCmd(sunmi.claw),
+            ArmCmd(sunmi.arm, 90.0),
             WaitUntilCmd(driver.rightTrigger::isJustPressed),
-            ClawGripCmd(oryx.claw),
+            ClawGripCmd(sunmi.claw),
             WaitUntilCmd { opModeState == OpModeState.START },
             initCmd,
             WaitCmd(3.0),
@@ -125,6 +127,6 @@ open class OryxRightAuto : KOpMode(true) {
     }
 
     override fun mInitLoop() {
-        Logger.addTelemetryData("zone", oryx.vision.zone)
+        Logger.addTelemetryData("zone", sunmi.vision.zone)
     }
 }

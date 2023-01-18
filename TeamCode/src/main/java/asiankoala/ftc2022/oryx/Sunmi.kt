@@ -3,7 +3,6 @@ package asiankoala.ftc2022.oryx
 import asiankoala.ftc2022.oryx.subsystems.*
 import asiankoala.ftc2022.oryx.subsystems.constants.OdoConstants
 import asiankoala.ftc2022.oryx.subsystems.constants.ArmConstants
-import asiankoala.ftc2022.oryx.subsystems.constants.DriveConstants
 import asiankoala.ftc2022.oryx.subsystems.constants.LiftConstants
 import asiankoala.ftc2022.oryx.subsystems.vision.Vision
 import asiankoala.ftc2022.oryx.utils.Strategy
@@ -13,7 +12,7 @@ import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
-class Oryx(pose: Pose) {
+class Sunmi(pose: Pose) {
     private val hw = Hardware()
     val odo = KThreeWheelOdometry(
         hw.leftEncoder,

@@ -1,8 +1,7 @@
 package asiankoala.ftc2022.oryx.opmodes
 
-import asiankoala.ftc2022.oryx.Oryx
+import asiankoala.ftc2022.oryx.Sunmi
 import asiankoala.ftc2022.oryx.commands.sequence.tele.TeleMainSeq
-import asiankoala.ftc2022.oryx.commands.subsystem.ClawOpenCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.DriveCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.OryxStrategyCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.RetractCmd
@@ -10,7 +9,6 @@ import asiankoala.ftc2022.oryx.utils.State
 import asiankoala.ftc2022.oryx.utils.Strategy
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.InstantCmd
-import com.asiankoala.koawalib.command.commands.WatchdogCmd
 import com.asiankoala.koawalib.control.filter.Debouncer
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
@@ -21,13 +19,13 @@ import kotlin.math.min
 
 @TeleOp(name = "TELEOP がんばれニールくん！！！(ﾐ꒡ᆽ꒡ﾐ)/ᐠ_ ꞈ _ᐟ\\")
 class OryxTele : KOpMode(photonEnabled = true) {
-    private lateinit var oryx: Oryx
+    private lateinit var sunmi: Sunmi
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
-        oryx = Oryx(Pose())
-        oryx.odo.unregister()
-        oryx.vision.unregister()
-        + RetractCmd(oryx.retract)
+        sunmi = Sunmi(Pose())
+        sunmi.odo.unregister()
+        sunmi.vision.unregister()
+        + RetractCmd(sunmi.retract)
 
         configureControls()
         scheduleDrive()
@@ -43,8 +41,8 @@ class OryxTele : KOpMode(photonEnabled = true) {
     }
 
     private fun scheduleDrive() {
-        oryx.drive.defaultCommand = DriveCmd(
-            oryx.drive,
+        sunmi.drive.defaultCommand = DriveCmd(
+            sunmi.drive,
             driver.leftStick,
             driver.rightStick,
             driver.rightBumper
@@ -52,25 +50,27 @@ class OryxTele : KOpMode(photonEnabled = true) {
     }
 
     private fun scheduleCycling() {
-        + WatchdogCmd(TeleMainSeq(oryx, driver.rightTrigger, driver.leftTrigger)) { driver.rightTrigger.isJustPressed && oryx.state == State.INTAKING }
-        driver.leftTrigger.onPress(ClawOpenCmd(oryx.claw))
+        driver.rightTrigger.scheduleConditional(TeleMainSeq(sunmi, driver.rightTrigger, driver.leftTrigger)) { sunmi.state == State.INTAKING }
     }
 
     private fun scheduleStrat() {
-        driver.y.onPress(OryxStrategyCmd(oryx, Strategy.HIGH))
-        driver.a.onPress(OryxStrategyCmd(oryx, Strategy.GROUND))
-        driver.x.onPress(OryxStrategyCmd(oryx, Strategy.LOW))
-        driver.b.onPress(OryxStrategyCmd(oryx, Strategy.MED))
+        driver.y.onPress(OryxStrategyCmd(sunmi, Strategy.HIGH))
+        driver.a.onPress(OryxStrategyCmd(sunmi, Strategy.GROUND))
+        driver.x.onPress(OryxStrategyCmd(sunmi, Strategy.LOW))
+        driver.b.onPress(OryxStrategyCmd(sunmi, Strategy.MED))
 
-        driver.leftBumper.onPress(InstantCmd({ oryx.isStacking = !oryx.isStacking}))
-        driver.dpadUp.onPress(InstantCmd({ oryx.stackNum = min(4, oryx.stackNum + 1) }))
-        driver.dpadDown.onPress(InstantCmd({ oryx.stackNum = max(0, oryx.stackNum - 1) }))
+        driver.dpadLeft.onPress(InstantCmd({ sunmi.isStacking = true }))
+        driver.dpadRight.onPress(InstantCmd({ sunmi.isStacking = false }))
+        driver.dpadUp.onPress(InstantCmd({ sunmi.stackNum = min(5, sunmi.stackNum + 1) }))
+        driver.dpadDown.onPress(InstantCmd({ sunmi.stackNum = max(0, sunmi.stackNum - 1) }))
     }
 
     override fun mLoop() {
-        Logger.addTelemetryData("state", oryx.state)
-        Logger.addTelemetryData("strat", oryx.strategy)
-        Logger.addTelemetryData("arm", oryx.arm.pos)
-        Logger.addTelemetryData("lift", oryx.lift)
+        Logger.addTelemetryData("state", sunmi.state)
+        Logger.addTelemetryData("strat", sunmi.strategy)
+        Logger.addTelemetryData("is stacking", sunmi.isStacking)
+        Logger.addTelemetryData("stack num", sunmi.stackNum)
+        Logger.addTelemetryData("arm", sunmi.arm.pos)
+        Logger.addTelemetryData("lift", sunmi.lift)
     }
 }

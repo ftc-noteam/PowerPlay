@@ -4,7 +4,7 @@ enum class State {
     INTAKING,
     READYING,
     DEPOSITING,
-    HOMING;
+    IDLE;
 }
 
 enum class Strategy {
