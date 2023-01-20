@@ -2,7 +2,7 @@ package asiankoala.ftc2022.oryx.commands.subsystem
 
 import asiankoala.ftc2022.oryx.subsystems.Pivot
 import asiankoala.ftc2022.oryx.subsystems.constants.PivotConstants
-import asiankoala.ftc2022.oryx.utils.Strategy
+import asiankoala.ftc2022.oryx.Strategy
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 open class PivotCmd(private val pivot: Pivot, private val pos: Double) :

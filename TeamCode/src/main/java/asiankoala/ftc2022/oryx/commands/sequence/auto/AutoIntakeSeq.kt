@@ -3,7 +3,7 @@ package asiankoala.ftc2022.oryx.commands.sequence.auto
 import asiankoala.ftc2022.oryx.Sunmi
 import asiankoala.ftc2022.oryx.commands.subsystem.*
 import asiankoala.ftc2022.oryx.subsystems.constants.LiftConstants
-import asiankoala.ftc2022.oryx.utils.Strategy
+import asiankoala.ftc2022.oryx.Strategy
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 

@@ -4,11 +4,6 @@ import com.acmerobotics.dashboard.config.Config
 
 @Config
 object DriveConstants {
-    @JvmField var kP = 0.0
-    @JvmField var kS = 0.0
-    @JvmField var kV = 0.0
-    @JvmField var kA = 0.0
-
     // driving scalars
     @JvmField var xSS = 1.0
     @JvmField var ySS = 1.0

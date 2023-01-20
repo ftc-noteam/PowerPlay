@@ -4,7 +4,7 @@ import asiankoala.ftc2022.oryx.Sunmi
 import asiankoala.ftc2022.oryx.commands.subsystem.ArmHomeCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.LiftHomeCmd
 import asiankoala.ftc2022.oryx.commands.subsystem.PivotHomeCmd
-import asiankoala.ftc2022.oryx.utils.State
+import asiankoala.ftc2022.oryx.State
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.group.ParallelGroup
 

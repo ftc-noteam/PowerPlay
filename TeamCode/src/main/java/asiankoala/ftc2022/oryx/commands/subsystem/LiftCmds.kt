@@ -2,7 +2,7 @@ package asiankoala.ftc2022.oryx.commands.subsystem
 
 import asiankoala.ftc2022.oryx.subsystems.Lift
 import asiankoala.ftc2022.oryx.subsystems.constants.LiftConstants
-import asiankoala.ftc2022.oryx.utils.Strategy
+import asiankoala.ftc2022.oryx.Strategy
 import com.asiankoala.koawalib.command.commands.InstantCmd
 
 open class LiftCmd(private val lift: Lift, private val pos: Double) :

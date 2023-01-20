@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.oryx.utils
+package asiankoala.ftc2022.oryx
 
 enum class State {
     INTAKING,

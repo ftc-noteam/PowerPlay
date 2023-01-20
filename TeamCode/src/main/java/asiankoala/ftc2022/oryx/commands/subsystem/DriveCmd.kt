@@ -6,7 +6,7 @@ import com.asiankoala.koawalib.gamepad.KButton
 import com.asiankoala.koawalib.gamepad.KStick
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumDrive
-import java.lang.Math.abs
+import kotlin.math.abs
 import kotlin.math.pow
 
 class DriveCmd(
@@ -18,9 +18,7 @@ class DriveCmd(
     private val scalars: List<Double>
         get() = if(rb.isToggled) DriveConstants.slowScalars else DriveConstants.speedScalars
 
-    private fun joystickFunction(s: Double, k: Double, x: Double): Double {
-        return 2.6 * x * (k * abs(x).pow(3) - k / 5.0 + 1)
-    }
+    private val fx: (Double) -> Double = { 2.6 * it * (0.98 * abs(it).pow(3) - 0.98 / 5.0 + 1) }
 
     override fun execute() {
         val raws = listOf(
@@ -30,7 +28,7 @@ class DriveCmd(
         )
 
         drive.powers = raws
-            .mapIndexed { i, d -> joystickFunction(scalars[i], 0.98, d) }
+            .mapIndexed { i, x -> fx.invoke(x) * scalars[i] }
             .let { Pose(it[0], it[1], it[2]) }
     }
 

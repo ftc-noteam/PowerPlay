@@ -6,5 +6,5 @@ import com.asiankoala.koawalib.command.commands.InstantCmd
 
 open class ClawCmd(claw: Claw, pos: Double) :
     InstantCmd({ claw.setPos(pos) })
-class ClawGripCmd(claw: Claw) : ClawCmd(claw, ClawConstants.grip)
+class ClawGripCmd(claw: Claw) : ClawCmd(claw, ClawConstants.close)
 class ClawOpenCmd(claw: Claw) : ClawCmd(claw, ClawConstants.open)

@@ -1,6 +1,6 @@
 package asiankoala.ftc2022.oryx.subsystems.vision
 
-import asiankoala.ftc2022.oryx.utils.Zones
+import asiankoala.ftc2022.oryx.Zones
 import com.asiankoala.koawalib.subsystem.KSubsystem
 import com.asiankoala.koawalib.subsystem.vision.KWebcam
 import org.openftc.easyopencv.OpenCvCameraRotation
