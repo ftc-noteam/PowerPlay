@@ -9,7 +9,6 @@ import asiankoala.ftc2022.sunmi.commands.subsystem.SunmiStratCmd
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
-import com.asiankoala.koawalib.command.commands.MecanumCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.math.NVector
@@ -26,7 +25,8 @@ class SunmiTele : KOpMode(photonEnabled = true) {
     var slowMode = false
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
-        sunmi.drive.defaultCommand = MecanumCmd(sunmi.drive, driver.leftStick, driver.rightStick, rScalar = 0.85)
+        sunmi.vision.unregister()
+//        sunmi.odo.unregister()
 
         driver.y.onPress(SunmiStratCmd(sunmi, Strategy.HIGH))
         driver.a.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))

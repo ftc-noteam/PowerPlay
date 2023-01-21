@@ -8,11 +8,11 @@ import org.openftc.easyopencv.OpenCvCameraRotation
 class Vision: Subsystem() {
     private val pipeline = SleevePipeline()
     private val webcam = KWebcam(
-        "Webcam",
+        "webcam",
         pipeline,
         800,
         448,
-        OpenCvCameraRotation.UPRIGHT
+        OpenCvCameraRotation.UPSIDE_DOWN
     )
     var zone = Zones.WTF
         private set

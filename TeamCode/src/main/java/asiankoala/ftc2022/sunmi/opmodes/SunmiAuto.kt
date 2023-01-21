@@ -19,11 +19,13 @@ import com.asiankoala.koawalib.path.HermitePath
 import com.asiankoala.koawalib.path.Path
 import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
+@Autonomous
 class SunmiAuto : KOpMode(photonEnabled = true) {
     private lateinit var sunmi: Sunmi
 
-    private val startPose = Pose(-63.0, -36.0, 180.0)
+    private val startPose = Pose(-63.0, -36.0, 180.0.radians)
     private val pathStart = startPose.copy(heading = 0.0)
 
     private val leftPath = HermitePath(
@@ -61,9 +63,6 @@ class SunmiAuto : KOpMode(photonEnabled = true) {
         sunmi = Sunmi(startPose)
         sunmi.vision.start()
         + SequentialGroup(
-            ArmCmd(sunmi.arm, ArmConstants.gidle),
-            PivotHomeCmd(sunmi.pivot),
-            ClawOpenCmd(sunmi.claw),
             WaitUntilCmd { opModeState == OpModeState.START },
             ChooseCmd(
                 getGVFCmd(sunmi, leftPath),

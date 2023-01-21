@@ -5,7 +5,7 @@ import com.acmerobotics.dashboard.config.Config
 @Config
 object LiftConstants {
     @JvmField var kP = 0.4
-    @JvmField var kI = 0.01
+    @JvmField var kI = 0.03
     @JvmField var kD = 0.005
     @JvmField var kG = 0.1
     @JvmField var vel = 80.0
