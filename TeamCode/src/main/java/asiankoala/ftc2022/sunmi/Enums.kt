@@ -2,8 +2,6 @@ package asiankoala.ftc2022.sunmi
 
 enum class State {
     INTAKING,
-    READYING,
-    DEPOSITING,
     IDLE;
 }
 

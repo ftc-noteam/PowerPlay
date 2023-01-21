@@ -18,7 +18,7 @@ class Lift(bl: KMotor) : Subsystem() {
         .withMotionProfileControl(
             PIDGains(
                 LiftConstants.kP,
-                0.0,
+                LiftConstants.kI,
                 LiftConstants.kD
             ),
             FFGains(kG = LiftConstants.kG),
@@ -37,14 +37,6 @@ class Lift(bl: KMotor) : Subsystem() {
 
     fun setTarget(pos: Double) {
         lt.setProfileTarget(pos)
-    }
-
-    fun setPower() {
-        lt.power = 0.8
-    }
-
-    fun bruh() {
-        lt.power = 0.0
     }
 
     override fun periodic() {

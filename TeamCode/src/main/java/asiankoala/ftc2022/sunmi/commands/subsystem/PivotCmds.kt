@@ -9,10 +9,3 @@ open class PivotCmd(private val pivot: Pivot, private val pos: Double) :
     InstantCmd({ pivot.setPos(pos) })
 
 class PivotHomeCmd(pivot: Pivot) : PivotCmd(pivot, PivotConstants.home)
-
-class PivotStateCmd(pivot: Pivot, strat: Strategy) : PivotCmd(pivot, when(strat) {
-    Strategy.GROUND -> PivotConstants.ground
-    Strategy.LOW -> PivotConstants.low
-    Strategy.MED-> PivotConstants.med
-    Strategy.HIGH -> PivotConstants.high
-})

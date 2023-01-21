@@ -12,13 +12,8 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class IdleSeq(sunmi: Sunmi) : ParallelGroup(
     InstantCmd({ sunmi.state = State.IDLE }),
-    SequentialGroup(
-        ClawCloseCmd(sunmi.claw),
-        WaitCmd(0.5),
-        ArmCmd(sunmi.arm, ArmConstants.gidle),
-        LiftCmd(sunmi.lift, LiftConstants.homeAfterIntaking),
-        WaitCmd(1.0),
-        ClawOpenCmd(sunmi.claw)
-    ),
+    ArmCmd(sunmi.arm, ArmConstants.gidle),
+    LiftCmd(sunmi.lift, LiftConstants.homeAfterIntaking),
     PivotHomeCmd(sunmi.pivot),
+    ClawOpenCmd(sunmi.claw)
 )
