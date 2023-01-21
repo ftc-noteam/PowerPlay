@@ -4,46 +4,46 @@ import asiankoala.ftc2022.sunmi.commands.subsystem.ArmCmd
 import asiankoala.ftc2022.sunmi.commands.subsystem.LiftCmd
 import asiankoala.ftc2022.sunmi.commands.subsystem.PivotCmd
 import asiankoala.ftc2022.sunmi.subsystems.*
-import asiankoala.ftc2022.sunmi.subsystems.constants.ArmConstants
-import asiankoala.ftc2022.sunmi.subsystems.constants.DriveConstants
-import asiankoala.ftc2022.sunmi.subsystems.constants.LiftConstants
-import asiankoala.ftc2022.sunmi.subsystems.constants.PivotConstants
+import asiankoala.ftc2022.sunmi.subsystems.constants.*
+import asiankoala.ftc2022.sunmi.subsystems.vision.Vision
+import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumDrive
+import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
+import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
 class Sunmi(pose: Pose) {
-//    val odo = KThreeWheelOdometry(
-//        hw.leftEncoder,
-//        hw.rightEncoder,
-//        hw.auxEncoder,
-//        OdoConstants.TRACK_WIDTH,
-//        OdoConstants.PERP_TRACKER,
-//        pose
-//    )
-//    val vision = Vision()
+    val vision = Vision()
+    val fl = MotorFactory("fl")
+        .brake
+        .reverse
+        .build()
     val bl = MotorFactory("bl")
         .brake
         .reverse
         .build()
-    val drive = KMecanumDrive(
-        MotorFactory("fl")
-            .brake
-            .reverse
-            .build(),
-        bl,
-        MotorFactory("br")
+    val br = MotorFactory("br")
             .brake
             .forward
             .withStaticFeedforward(DriveConstants.brKStatic)
-            .build(),
+            .build()
 
-        MotorFactory("fr")
+    val fr = MotorFactory("fr")
             .brake
             .forward
             .build()
+
+    val odo = KThreeWheelOdometry(
+        EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
+        EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(br),
+        EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+        OdoConstants.TRACK_WIDTH,
+        OdoConstants.PERP_TRACKER,
+        pose
     )
+    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, true)
     val lift = Lift(bl)
     val claw = Claw()
     val pivot = Pivot()
