@@ -15,7 +15,7 @@ class GIDLE(sunmi: Sunmi, b: () -> Boolean) : SequentialGroup(
     InstantCmd({ sunmi.state = State.INTAKING }),
     ChooseCmd(
         SequentialGroup(
-            LiftCmd(sunmi.lift, sunmi.stack * 1.0),
+            LiftCmd(sunmi.lift, sunmi.stackHeight),
             WaitUntilCmd(b),
             ArmCmd(sunmi.arm, ArmConstants.intake),
             WaitCmd(0.4),

@@ -8,4 +8,5 @@ object ArmConstants {
     @JvmField var intake = 0.15
     @JvmField var gidle = 0.25
     @JvmField var deposit = 0.3
+    @JvmField var ground = 0.275
 }

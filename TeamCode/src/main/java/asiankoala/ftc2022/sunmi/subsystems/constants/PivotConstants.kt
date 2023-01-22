@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config
 
 @Config
 object PivotConstants {
-    @JvmField var home = 0.23
-    @JvmField var deposit = 0.43
+    @JvmField var deposit = 0.69
+    @JvmField var ground = 0.58
+    @JvmField var home = 0.56
 }

@@ -43,7 +43,7 @@ class Sunmi(pose: Pose) {
         OdoConstants.PERP_TRACKER,
         pose
     )
-    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, true)
+    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, false)
     val lift = Lift(bl)
     val claw = Claw()
     val pivot = Pivot()
@@ -52,6 +52,7 @@ class Sunmi(pose: Pose) {
     var state = State.IDLE
     var isStacking = false
     var stack = 5
+    val stackHeight get() = (stack - 1) - 0.5
     val liftCmd
         get() = LiftCmd(
             lift,
@@ -67,8 +68,8 @@ class Sunmi(pose: Pose) {
         get() = ArmCmd(
             arm,
             when(strat) {
-                Strategy.GROUND -> ArmConstants.gidle
-                else -> ArmConstants.deposit
+                Strategy.GROUND -> ArmConstants.intake
+                else -> ArmConstants.ground
             }
         )
 
@@ -76,7 +77,7 @@ class Sunmi(pose: Pose) {
         get() = PivotCmd(
             pivot,
             when(strat) {
-                Strategy.GROUND -> PivotConstants.home
+                Strategy.GROUND -> PivotConstants.ground
                 else -> PivotConstants.deposit
             }
         )

@@ -26,14 +26,14 @@ class SunmiTele : KOpMode(photonEnabled = true) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         sunmi.vision.unregister()
-//        sunmi.odo.unregister()
+        sunmi.odo.unregister()
 
         driver.y.onPress(SunmiStratCmd(sunmi, Strategy.HIGH))
         driver.a.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))
         driver.x.onPress(SunmiStratCmd(sunmi, Strategy.LOW))
         driver.b.onPress(SunmiStratCmd(sunmi, Strategy.MED))
-        driver.dpadLeft.onPress(InstantCmd({ sunmi.stack = min(sunmi.stack + 1, 5) }))
-        driver.dpadRight.onPress(InstantCmd({ sunmi.stack = max(sunmi.stack - 1, 0) }))
+        driver.dpadRight.onPress(InstantCmd({ sunmi.stack = min(sunmi.stack + 1, 5) }))
+        driver.dpadLeft.onPress(InstantCmd({ sunmi.stack = max(sunmi.stack - 1, 0) }))
         driver.dpadUp.onPress(InstantCmd({ sunmi.isStacking = true }))
         driver.dpadDown.onPress(InstantCmd({ sunmi.isStacking = false }))
 
@@ -68,7 +68,7 @@ class SunmiTele : KOpMode(photonEnabled = true) {
 
         + object : Cmd() {
             override fun execute() {
-                if(driver.leftTrigger.isJustPressed && sunmi.state == State.IDLE) {
+                if(driver.rightTrigger.isJustPressed && sunmi.state == State.IDLE) {
                     + GIDLE(sunmi, driver.rightTrigger::isJustPressed)
                     Logger.logInfo("scheduled intake sequence")
                 }
