@@ -11,7 +11,6 @@ import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
-import com.asiankoala.koawalib.math.NVector
 import com.asiankoala.koawalib.math.Pose
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import kotlin.math.max
@@ -38,8 +37,8 @@ class SunmiTele : KOpMode(photonEnabled = true) {
         driver.dpadDown.onPress(InstantCmd({ sunmi.isStacking = false }))
 
         sunmi.drive.defaultCommand = object : Cmd() {
-            val fastScalars = NVector(1.0, 1.0, 0.85)
-            val slowScalars = NVector(0.4, 0.4, 0.4)
+            val fastScalars = listOf(1.0, 1.0, 0.85)
+            val slowScalars = listOf(0.4, 0.4, 0.4)
             val scalars get() = if(slowMode) slowScalars else fastScalars
 
             private fun joystickFunction(s: Double, k: Double, x: Double): Double {
@@ -47,15 +46,15 @@ class SunmiTele : KOpMode(photonEnabled = true) {
             }
 
             override fun execute() {
-                val raws = NVector(
-                    driver.leftStick.xSupplier.invoke(),
-                    -driver.leftStick.ySupplier.invoke(),
-                    -driver.rightStick.xSupplier.invoke()
+                val raws = listOf(
+                    driver.leftStick.xAxis,
+                    -driver.leftStick.yAxis,
+                    -driver.rightStick.xAxis
                 )
 
                 sunmi.drive.powers = raws
                     .mapIndexed { i, d -> joystickFunction(scalars[i], 1.0, d) }
-                    .asPose
+                    .let { Pose(it[0], it[1], it[2]) }
             }
 
             init {

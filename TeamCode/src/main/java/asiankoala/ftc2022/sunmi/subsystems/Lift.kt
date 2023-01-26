@@ -7,9 +7,9 @@ import com.asiankoala.koawalib.control.profile.MotionConstraints
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
-import com.asiankoala.koawalib.subsystem.Subsystem
+import com.asiankoala.koawalib.subsystem.KSubsystem
 
-class Lift(bl: KMotor) : Subsystem() {
+class Lift(bl: KMotor) : KSubsystem() {
     private val lt = MotorFactory("lt")
         .pairEncoder(
             bl,

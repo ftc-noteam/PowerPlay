@@ -13,8 +13,5 @@ object DriveConstants {
     @JvmField var yIS = 0.3
     @JvmField var rIS = 0.3
 
-    val speedScalars = listOf(xSS, ySS, rSS)
-    val slowScalars = listOf(xIS, yIS, rIS)
-
     @JvmField var brKStatic = 0.09
 }

@@ -1,11 +1,11 @@
 package asiankoala.ftc2022.sunmi.subsystems.vision
 
 import asiankoala.ftc2022.sunmi.Zones
-import com.asiankoala.koawalib.subsystem.Subsystem
+import com.asiankoala.koawalib.subsystem.KSubsystem
 import com.asiankoala.koawalib.subsystem.vision.KWebcam
 import org.openftc.easyopencv.OpenCvCameraRotation
 
-class Vision: Subsystem() {
+class Vision: KSubsystem() {
     private val pipeline = SleevePipeline()
     private val webcam = KWebcam(
         "webcam",
