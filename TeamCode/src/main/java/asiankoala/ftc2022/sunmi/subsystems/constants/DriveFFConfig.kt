@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.sunmi.opmodes
+package asiankoala.ftc2022.sunmi.subsystems.constants
 
 import com.acmerobotics.dashboard.config.Config
 

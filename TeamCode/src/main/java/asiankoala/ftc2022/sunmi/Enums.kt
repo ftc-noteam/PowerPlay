@@ -18,3 +18,9 @@ enum class Zones {
     RIGHT,
     WTF
 }
+
+enum class Cone {
+    NONE,
+    LOOKING,
+    GRABBED
+}

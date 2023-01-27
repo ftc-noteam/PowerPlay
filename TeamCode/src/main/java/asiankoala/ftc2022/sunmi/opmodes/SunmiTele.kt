@@ -21,7 +21,7 @@ import kotlin.math.sign
 @TeleOp(name = "TELEOP がんばれニールくん！！！(ﾐ꒡ᆽ꒡ﾐ)/ᐠ_ ꞈ _ᐟ\\")
 class SunmiTele : KOpMode(photonEnabled = true) {
     private val sunmi by lazy { Sunmi(Pose()) }
-    var slowMode = false
+
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         sunmi.vision.unregister()
@@ -38,8 +38,6 @@ class SunmiTele : KOpMode(photonEnabled = true) {
 
         sunmi.drive.defaultCommand = object : Cmd() {
             val fastScalars = listOf(1.0, 1.0, 0.85)
-            val slowScalars = listOf(0.4, 0.4, 0.4)
-            val scalars get() = if(slowMode) slowScalars else fastScalars
 
             private fun joystickFunction(s: Double, k: Double, x: Double): Double {
                 return max(0.0, s * x * (k * x.pow(3) - k + 1)) * x.sign
@@ -53,7 +51,7 @@ class SunmiTele : KOpMode(photonEnabled = true) {
                 )
 
                 sunmi.drive.powers = raws
-                    .mapIndexed { i, d -> joystickFunction(scalars[i], 1.0, d) }
+                    .mapIndexed { i, d -> joystickFunction(fastScalars[i], 1.0, d) }
                     .let { Pose(it[0], it[1], it[2]) }
             }
 
@@ -61,9 +59,6 @@ class SunmiTele : KOpMode(photonEnabled = true) {
                 addRequirements(sunmi.drive)
             }
         }
-
-        driver.leftBumper.onPress(InstantCmd({ slowMode = true }))
-        driver.rightBumper.onPress(InstantCmd({ slowMode = false }))
 
         + object : Cmd() {
             override fun execute() {
@@ -85,5 +80,6 @@ class SunmiTele : KOpMode(photonEnabled = true) {
         Logger.addTelemetryData("is stacking", sunmi.isStacking)
         Logger.addTelemetryData("stack", sunmi.stack)
         Logger.addTelemetryData("state", sunmi.state)
+        Logger.addTelemetryData("sensor", sunmi.claw.lastRead)
     }
 }

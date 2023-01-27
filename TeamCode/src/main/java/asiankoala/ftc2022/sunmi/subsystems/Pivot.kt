@@ -6,7 +6,7 @@ import com.asiankoala.koawalib.subsystem.KSubsystem
 
 class Pivot : KSubsystem() {
     private val servo = KServo("pivot").startAt(PivotConstants.home)
-    fun setPos(pos: Double) {
+    fun setTarget(pos: Double) {
         servo.position = pos
     }
 }

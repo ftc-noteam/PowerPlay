@@ -8,12 +8,13 @@ import asiankoala.ftc2022.sunmi.subsystems.constants.LiftConstants
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.group.ParallelGroup
-import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class IdleSeq(sunmi: Sunmi) : ParallelGroup(
+    InstantCmd(sunmi.lift::startAttemptingZero),
     InstantCmd({ sunmi.state = State.IDLE }),
     ArmCmd(sunmi.arm, ArmConstants.gidle),
-    LiftCmd(sunmi.lift, LiftConstants.homeAfterIntaking),
+    LiftCmd(sunmi.lift, LiftConstants.home),
     PivotHomeCmd(sunmi.pivot),
-    ClawOpenCmd(sunmi.claw)
+    ClawCloseCmd(sunmi.claw),
+    WaitCmd(1.0).andThen(ClawOpenCmd(sunmi.claw))
 )

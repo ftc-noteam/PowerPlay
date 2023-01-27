@@ -5,11 +5,11 @@ import com.asiankoala.koawalib.hardware.servo.KServo
 import com.asiankoala.koawalib.subsystem.KSubsystem
 
 class Arm : KSubsystem() {
-    val arm1 = KServo("arm1")
-        .startAt(ArmConstants.init)
+    private val arm1 = KServo("arm1")
+        .startAt(ArmConstants.home)
 
-    val arm2 = KServo("arm2")
-        .startAt(ArmConstants.init)
+    private val arm2 = KServo("arm2")
+        .startAt(ArmConstants.home)
         .reverse()
 
     fun setTarget(pos: Double) {

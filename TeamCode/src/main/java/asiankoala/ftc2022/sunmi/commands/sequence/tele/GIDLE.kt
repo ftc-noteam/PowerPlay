@@ -14,34 +14,14 @@ import com.asiankoala.koawalib.command.group.SequentialGroup
 class GIDLE(sunmi: Sunmi, b: () -> Boolean) : SequentialGroup(
     InstantCmd({ sunmi.state = State.INTAKING }),
     ChooseCmd(
-        SequentialGroup(
-            LiftCmd(sunmi.lift, sunmi.stackHeight),
-            WaitUntilCmd(b),
-            ArmCmd(sunmi.arm, ArmConstants.intake),
-            WaitCmd(0.4),
-            ClawCloseCmd(sunmi.claw),
-            WaitCmd(0.7),
-            LiftCmd(sunmi.lift, 10.0),
-            WaitCmd(1.5),
-            ArmCmd(sunmi.arm, ArmConstants.deposit),
-            PivotCmd(sunmi.pivot, PivotConstants.deposit)
-        ),
-        SequentialGroup(
-            ArmCmd(sunmi.arm, ArmConstants.intake),
-            WaitCmd(0.4),
-            ClawCloseCmd(sunmi.claw),
-            WaitCmd(0.7),
-            ArmCmd(sunmi.arm, ArmConstants.deposit),
-            PivotCmd(sunmi.pivot, PivotConstants.deposit),
-        ),
+        StackSeq(sunmi, b),
+        SmartIntakeSeq(sunmi.claw, sunmi.arm),
         sunmi::isStacking
     ),
     SequentialGroup(
-        Soyeon(sunmi)
-            .waitUntil(b),
-        ClawOpenCmd(sunmi.claw)
-            .waitUntil(b),
-        WaitCmd(1.0),
+        Soyeon(sunmi).waitUntil(b),
+        ClawOpenCmd(sunmi.claw).waitUntil(b),
+        WaitCmd(0.5),
         IdleSeq(sunmi)
     )
 )
