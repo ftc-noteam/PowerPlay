@@ -14,7 +14,7 @@ class IntakeTest : KOpMode(true, 8) {
         sunmi = Sunmi(Pose())
         sunmi.vision.unregister()
         sunmi.odo.unregister()
-        driver.rightTrigger.onPress(SmartIntakeSeq(sunmi.claw, sunmi.arm))
+        driver.rightTrigger.onPress(SmartIntakeSeq(sunmi.claw, sunmi.arm, sunmi.lift))
     }
 
     override fun mStart() {

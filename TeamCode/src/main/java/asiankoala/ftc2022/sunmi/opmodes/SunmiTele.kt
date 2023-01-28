@@ -31,10 +31,10 @@ class SunmiTele : KOpMode(photonEnabled = true) {
         driver.leftStick.setXRateLimiter(DriveConstants.xLimiter)
         driver.leftStick.setYRateLimiter(DriveConstants.yLimiter)
         driver.rightStick.setXRateLimiter(DriveConstants.rLimiter)
-        driver.y.onPress(SunmiStratCmd(sunmi, Strategy.MED))
-        driver.a.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))
-        driver.x.onPress(SunmiStratCmd(sunmi, Strategy.LOW))
-        driver.b.onPress(SunmiStratCmd(sunmi, Strategy.HIGH))
+        driver.rightBumper.onPress(SunmiStratCmd(sunmi, Strategy.MED))
+        driver.y.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))
+        driver.leftBumper.onPress(SunmiStratCmd(sunmi, Strategy.LOW))
+        driver.leftTrigger.onPress(SunmiStratCmd(sunmi, Strategy.HIGH))
         driver.dpadRight.onPress(InstantCmd({ sunmi.stack = min(sunmi.stack + 1, 5) }))
         driver.dpadLeft.onPress(InstantCmd({ sunmi.stack = max(sunmi.stack - 1, 0) }))
         driver.dpadUp.onPress(InstantCmd({ sunmi.isStacking = true }))
@@ -68,10 +68,13 @@ class SunmiTele : KOpMode(photonEnabled = true) {
             override fun execute() {
                 if(driver.rightTrigger.isJustPressed && sunmi.state == State.IDLE) {
                     + GIDLE(sunmi, driver.rightTrigger::isJustPressed)
+                        .cancelIf(driver.a::isJustPressed)
                     Logger.logInfo("scheduled intake sequence")
                 }
             }
         }
+
+        driver.a.onPress(IdleSeq(sunmi))
     }
 
     override fun mStart() {

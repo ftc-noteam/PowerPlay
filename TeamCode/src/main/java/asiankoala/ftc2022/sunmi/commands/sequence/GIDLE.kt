@@ -12,7 +12,7 @@ class GIDLE(sunmi: Sunmi, b: () -> Boolean) : SequentialGroup(
     InstantCmd({ sunmi.state = State.INTAKING }),
     ChooseCmd(
         StackSeq(sunmi, b),
-        SmartIntakeSeq(sunmi.claw, sunmi.arm),
+        SmartIntakeSeq(sunmi.claw, sunmi.arm, sunmi.lift),
         sunmi::isStacking
     ),
     SequentialGroup(
