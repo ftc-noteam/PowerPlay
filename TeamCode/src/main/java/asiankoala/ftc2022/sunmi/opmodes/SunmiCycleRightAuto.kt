@@ -1,5 +1,6 @@
 package asiankoala.ftc2022.sunmi.opmodes
 
+import asiankoala.ftc2022.sunmi.Strategy
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.auto.CommandPathGen
 import asiankoala.ftc2022.sunmi.auto.rightSideRobotStartPose
@@ -23,6 +24,7 @@ class SunmiCycleRightAuto : KOpMode(true, 8) {
         Logger.config = LoggerConfig.COMP_CONFIG
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.unregister()
+        sunmi.strat = Strategy.HIGH
 
         val gen = CommandPathGen(sunmi)
 

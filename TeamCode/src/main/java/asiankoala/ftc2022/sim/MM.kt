@@ -12,84 +12,28 @@ object MM {
     fun main(args: Array<String>) {
         val mm = MeepMeep(800, 144)
         val deposit = Pose2d(-6.0, -30.0, 40.0.radians)
-        val intake = Pose2d(-12.0, -60.0, 270.0.radians)
-        val otherDeposit = deposit.copy(y = 30.0, heading = (40.0 + 270.0).radians)
-        val otherIntake = intake.copy(y = 60.0, heading = 90.0.radians)
+        val intake = Pose2d(-12.0, -65.0, 270.0.radians)
         val conePickupTime = 0.5
 
 
         val bot = DefaultBotBuilder(mm)
-            .setConstraints(130.0, 130.0, 180.0.radians, 180.0.radians, 13.3)
+            .setConstraints(80.0, 80.0, 180.0.radians, 180.0.radians, 13.3)
             .setDimensions(13.3, 13.3)
             .followTrajectorySequence {
-                it.trajectorySequenceBuilder(Pose2d(-63.0, -36.0, 0.0))
+                it.trajectorySequenceBuilder(Pose2d(-63.0, -32.0, 0.0))
                     .splineTo(Vector2d(-24.0, -36.0), 0.0)
                     .splineTo(deposit.vec(), deposit.heading)
                     .setReversed(true)
+                    .splineTo(Vector2d(-12.0, -48.0), intake.heading)
                     .splineTo(intake.vec(), intake.heading)
                     .waitSeconds(conePickupTime)
                     .setReversed(false)
 
-                    .splineTo(deposit.vec(), deposit.heading)
-                    .setReversed(true)
-                    .splineTo(intake.vec(), intake.heading)
-                    .waitSeconds(conePickupTime)
-                    .setReversed(false)
-
-                    .splineTo(deposit.vec(), deposit.heading)
-                    .setReversed(true)
-                    .splineTo(intake.vec(), intake.heading)
-                    .waitSeconds(conePickupTime)
-                    .setReversed(false)
-
-                    .splineTo(deposit.vec(), deposit.heading)
-                    .setReversed(true)
-                    .splineTo(intake.vec(), intake.heading)
-                    .waitSeconds(conePickupTime)
-                    .setReversed(false)
-
-                    .splineTo(deposit.vec(), deposit.heading)
-                    .setReversed(true)
-                    .splineTo(intake.vec(), intake.heading)
-                    .waitSeconds(conePickupTime)
-                    .setReversed(false)
-
-                    .splineTo(Vector2d(-12.0, 0.0), 90.0.radians)
-                    .splineTo(deposit.vec().copy(y = 18.0), 40.0.radians)
-                    .splineTo(Vector2d(deposit.x - 2.0, 24.0), 160.0.radians)
-
-                    .splineToSplineHeading(otherIntake.copy(heading = 270.0.radians), otherIntake.heading)
-                    .waitSeconds(conePickupTime)
-
-                    .setReversed(false)
-                    .splineTo(otherDeposit.vec(), otherDeposit.heading)
-                    .setReversed(true)
-                    .splineTo(otherIntake.vec(), otherIntake.heading)
-                    .waitSeconds(conePickupTime)
-
-                    .setReversed(false)
-                    .splineTo(otherDeposit.vec(), otherDeposit.heading)
-                    .setReversed(true)
-                    .splineTo(otherIntake.vec(), otherIntake.heading)
-                    .waitSeconds(conePickupTime)
-
-                    .setReversed(false)
-                    .splineTo(otherDeposit.vec(), otherDeposit.heading)
-                    .setReversed(true)
-                    .splineTo(otherIntake.vec(), otherIntake.heading)
-                    .waitSeconds(conePickupTime)
-
-                    .setReversed(false)
-                    .splineTo(otherDeposit.vec(), otherDeposit.heading)
-                    .setReversed(true)
-                    .splineTo(otherIntake.vec(), otherIntake.heading)
-                    .waitSeconds(conePickupTime)
-
-                    .setReversed(false)
-                    .splineTo(otherDeposit.vec(), otherDeposit.heading)
-                    .setReversed(true)
-                    .splineTo(otherIntake.vec(), otherIntake.heading)
-                    .waitSeconds(conePickupTime)
+//                    .splineTo(deposit.vec(), deposit.heading)
+//                    .setReversed(true)
+//                    .splineTo(intake.vec(), intake.heading)
+//                    .waitSeconds(conePickupTime)
+//                    .setReversed(false)
 
                     .build()
             }

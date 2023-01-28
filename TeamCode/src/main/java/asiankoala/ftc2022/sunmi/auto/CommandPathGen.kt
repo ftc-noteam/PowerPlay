@@ -1,6 +1,7 @@
 package asiankoala.ftc2022.sunmi.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
+import asiankoala.ftc2022.sunmi.commands.sequence.Soyeon
 import asiankoala.ftc2022.sunmi.subsystems.constants.SimpleGVFConstants
 import com.asiankoala.koawalib.command.commands.GVFCmd
 import com.asiankoala.koawalib.path.HermitePath
@@ -28,7 +29,7 @@ class CommandPathGen(private val sunmi: Sunmi) {
     val firstDepositWithCmd = GVFCmd(
         sunmi.drive,
         genGVFController(initPath),
-        ProjQuery(AutoDepoReadyCmd(sunmi), 0.5)
+        ProjQuery(Soyeon(sunmi), 0.5)
     )
 
     val intakeNoCmd = GVFCmd(sunmi.drive, genGVFController(intakePath))
@@ -42,6 +43,6 @@ class CommandPathGen(private val sunmi: Sunmi) {
     val depositWithCmd = GVFCmd(
         sunmi.drive,
         genGVFController(depositPath),
-        ProjQuery(AutoDepoReadyCmd(sunmi), 0.5)
+        ProjQuery(Soyeon(sunmi), 0.5)
     )
 }

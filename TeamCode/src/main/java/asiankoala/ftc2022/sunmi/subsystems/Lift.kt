@@ -37,7 +37,7 @@ class Lift(bl: KMotor) : KSubsystem() {
     private val rb = MotorFactory("rb").float.reverse.build()
     private val limit = KLimitSwitch("limit")
     val chainedMotors = listOf(lb, rt, rb)
-    var isAttemptingZero = true
+    var isAttemptingZero = false
     val pos get() = lt.pos
     val vel get() = lt.vel
     val setpoint get() = lt.setpoint
@@ -52,9 +52,11 @@ class Lift(bl: KMotor) : KSubsystem() {
 
     override fun periodic() {
         chainedMotors.forEach { it.power = lt.power }
+        Logger.logInfo("is pressed", limit.invoke())
         if(isAttemptingZero && limit.invoke()) {
             lt.zero()
             isAttemptingZero = false
+            setTarget(LiftConstants.home)
             Logger.logInfo("zeroed")
         }
     }

@@ -8,7 +8,7 @@ import com.asiankoala.koawalib.path.HermitePath
 
 fun Pose.headingFlip() = copy(heading = (this.heading + 180.0.radians).angleWrap)
 // robot heading is 180, path heading is 0
-val rightSideRobotStartPose = Pose(-66.0, -36.0, 180.0)
+val rightSideRobotStartPose = Pose(-66.0, -32.0, 180.0)
 val firstDepositPathStartPose = rightSideRobotStartPose.headingFlip()
 val firstDepositPathMediumPose = Pose(-24.0, -36.0, 0.0)
 val depositPose = Pose(-6.0, -30.0, 45.0.radians)

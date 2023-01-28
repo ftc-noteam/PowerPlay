@@ -4,6 +4,6 @@ import com.acmerobotics.dashboard.config.Config
 
 @Config
 object SeqConstants {
-    @JvmField var afterArmDownDt = 0.3
-    @JvmField var afterClawGrabDt = 0.5
+    @JvmField var afterArmDownDt = 0.27
+    @JvmField var afterClawGrabDt = 0.22
 }
