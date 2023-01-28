@@ -14,7 +14,6 @@ import com.asiankoala.koawalib.util.Clock
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 import kotlin.math.sign
 
-@TeleOp
 class DriveFFTuner : KOpMode() {
     private val sunmi by lazy { Sunmi(Pose()) }
     private var forward = true
@@ -23,7 +22,7 @@ class DriveFFTuner : KOpMode() {
     private var target = 0.0
     private var start = Clock.seconds
     private var state = MotionState()
-    private var dt = 100000.0 // just init to big value so profile is generated in start
+    private var dt = 0.0 // just init to big value so profile is generated in start
     private lateinit var profile: MotionProfile
 
     private fun genProfile() {
@@ -38,6 +37,10 @@ class DriveFFTuner : KOpMode() {
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
+    }
+
+    override fun mStart() {
+        genProfile()
     }
 
     override fun mLoop() {

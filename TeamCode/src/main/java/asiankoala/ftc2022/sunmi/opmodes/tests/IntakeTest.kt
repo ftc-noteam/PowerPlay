@@ -7,7 +7,6 @@ import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.math.Pose
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class IntakeTest : KOpMode(true, 8) {
     private lateinit var sunmi: Sunmi
 

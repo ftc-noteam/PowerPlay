@@ -11,7 +11,6 @@ import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class LiftTest : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
     private lateinit var lift: Lift
 

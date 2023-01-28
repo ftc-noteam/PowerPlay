@@ -8,7 +8,6 @@ import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.subsystem.drive.KMecanumDrive
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class DriveTest : KOpMode(true, 8) {
     override fun mInit() {
         val fl = MotorFactory("fl")

@@ -14,7 +14,6 @@ import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class TuneServos : KOpMode(true, 8) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
