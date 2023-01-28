@@ -5,7 +5,6 @@ import com.asiankoala.koawalib.hardware.sensor.KDistanceSensor
 import com.asiankoala.koawalib.logger.Logger
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
 class SensorTest : KOpMode(true, 8) {
     private lateinit var sensor: KDistanceSensor
 
