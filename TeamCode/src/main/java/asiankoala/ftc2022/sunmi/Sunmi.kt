@@ -8,10 +8,7 @@ import asiankoala.ftc2022.sunmi.subsystems.constants.*
 import asiankoala.ftc2022.sunmi.subsystems.vision.Vision
 import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
-import com.asiankoala.koawalib.hardware.sensor.KLimitSwitch
-import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.math.Pose
-import com.asiankoala.koawalib.subsystem.drive.KMecanumDrive
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 

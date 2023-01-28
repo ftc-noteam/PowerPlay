@@ -42,9 +42,9 @@ class OdometryTest : KOpMode(true, 8) {
             .build()
 
         val odo = KThreeWheelOdometry(
-            leftEnc = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
-            rightEnc = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
-            perpEnc = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
+            leftEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+            rightEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
+            auxEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
             OdoConstants.TRACK_WIDTH,
             OdoConstants.PERP_TRACKER,
             Pose()
