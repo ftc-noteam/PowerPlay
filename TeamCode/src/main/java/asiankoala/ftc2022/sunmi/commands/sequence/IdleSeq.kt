@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.sunmi.commands.sequence.tele
+package asiankoala.ftc2022.sunmi.commands.sequence
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.State

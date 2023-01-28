@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.sunmi.commands.sequence.auto
+package asiankoala.ftc2022.sunmi.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.commands.subsystem.ArmCmd
@@ -19,6 +19,4 @@ class AutoIntakeSeq(sunmi: Sunmi) : SequentialGroup(
     LiftCmd(sunmi.lift, 10.0),
     WaitCmd(3.0),
     ArmCmd(sunmi.arm, ArmConstants.home),
-    WaitCmd(3.0),
-    PivotCmd(sunmi.pivot, PivotConstants.deposit)
 )

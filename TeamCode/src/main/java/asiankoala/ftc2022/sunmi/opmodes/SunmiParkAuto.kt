@@ -18,7 +18,7 @@ import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
 @Autonomous
-class SunmiAuto : KOpMode(photonEnabled = true) {
+class SunmiParkAuto : KOpMode(photonEnabled = true) {
     private lateinit var sunmi: Sunmi
 
     private val startPose = Pose(-63.0, -36.0, 180.0.radians)

@@ -1,14 +1,11 @@
-package asiankoala.ftc2022.sunmi.commands.sequence.tele
+package asiankoala.ftc2022.sunmi.commands.sequence
 
 import asiankoala.ftc2022.sunmi.State
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.commands.subsystem.*
-import asiankoala.ftc2022.sunmi.subsystems.constants.ArmConstants
-import asiankoala.ftc2022.sunmi.subsystems.constants.PivotConstants
 import com.asiankoala.koawalib.command.commands.ChooseCmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitCmd
-import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
 
 class GIDLE(sunmi: Sunmi, b: () -> Boolean) : SequentialGroup(
