@@ -21,26 +21,30 @@ class OdometryTest : KOpMode(true, 8) {
         val fl = MotorFactory("fl")
             .brake
             .reverse
+            .voltageCorrected
             .build()
         val bl = MotorFactory("bl")
             .brake
             .reverse
             .withStaticFeedforward(DriveConstants.blKStatic)
+            .voltageCorrected
             .build()
         val br = MotorFactory("br")
             .brake
             .forward
             .withStaticFeedforward(DriveConstants.brKStatic)
+            .voltageCorrected
             .build()
         val fr = MotorFactory("fr")
             .brake
             .forward
+            .voltageCorrected
             .build()
 
         val odo = KThreeWheelOdometry(
-            EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
-            EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(br),
-            EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+            leftEnc = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+            rightEnc = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
+            perpEnc = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
             OdoConstants.TRACK_WIDTH,
             OdoConstants.PERP_TRACKER,
             Pose()
