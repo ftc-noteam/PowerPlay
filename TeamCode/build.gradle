@@ -28,7 +28,7 @@ configurations.all {
 dependencies {
     implementation project(':FtcRobotController')
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
-    implementation 'org.openftc:easyopencv:1.5.1'
+    implementation 'org.openftc:easyopencv:1.5.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:1.2.0'
     implementation 'org.openftc:apriltag:1.1.0'

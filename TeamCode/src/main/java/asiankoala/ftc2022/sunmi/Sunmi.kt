@@ -38,7 +38,7 @@ class Sunmi(pose: Pose) {
         auxEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
         OdoConstants.TRACK_WIDTH,
         OdoConstants.PERP_TRACKER,
-        Pose()
+        pose
     )
     val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, true)
     val vision = Vision()

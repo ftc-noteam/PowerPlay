@@ -25,20 +25,20 @@ class SunmiParkAuto : KOpMode(photonEnabled = true) {
     private val pathStart = startPose.copy(heading = 0.0)
 
     private val leftPath = HermitePath(
-        { 90.0.radians },
+        { _, _ -> 90.0.radians },
         pathStart,
         Pose(-40.0, -36.0, 0.0),
         Pose(-36.0, -14.0, 90.0.radians)
     )
 
     private val middlePath = HermitePath(
-        { 90.0.radians },
+        { _, _ -> 90.0.radians },
         pathStart,
         Pose(-36.0, -36.0, 0.0)
     )
 
     private val rightPath = HermitePath(
-        { 90.0.radians },
+        { _, _ -> 90.0.radians },
         pathStart,
         Pose(-40.0, -36.0, 0.0),
         Pose(-36.0, -58.0, 270.0.radians)

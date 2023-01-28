@@ -1,5 +1,6 @@
 package asiankoala.ftc2022.sim
 
+import asiankoala.ftc2022.sunmi.subsystems.constants.FieldConstants
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
 import com.acmerobotics.roadrunner.trajectory.TrajectoryBuilder
@@ -20,10 +21,10 @@ object MM {
             .setConstraints(60.0, 60.0, 180.0.radians, 180.0.radians, 13.3)
             .setDimensions(13.3, 13.3)
             .followTrajectorySequence {
-                it.trajectorySequenceBuilder(Pose2d(-62.0, -32.0, 0.0))
+                it.trajectorySequenceBuilder(Pose2d(FieldConstants.startX, FieldConstants.startY, 0.0))
                     .splineTo(Vector2d(-48.0, -34.0), (-10.0).radians)
-                    .splineTo(Vector2d(-24.0, -36.0), 0.0)
-                    .splineTo(deposit.vec(), deposit.heading)
+                    .splineTo(Vector2d(-24.0, -38.0), 0.0)
+                    .splineTo(Vector2d(FieldConstants.depositX, FieldConstants.depositY), 45.0.radians)
 //                    .setReversed(true)
 //                    .splineTo(Vector2d(-12.0, -48.0), intake.heading)
 //                    .splineTo(intake.vec(), intake.heading)

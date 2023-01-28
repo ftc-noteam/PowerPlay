@@ -3,6 +3,7 @@ package asiankoala.ftc2022.sunmi.opmodes
 import asiankoala.ftc2022.sunmi.State
 import asiankoala.ftc2022.sunmi.Strategy
 import asiankoala.ftc2022.sunmi.Sunmi
+import asiankoala.ftc2022.sunmi.auto.rightSideRobotStartPose
 import asiankoala.ftc2022.sunmi.commands.sequence.GIDLE
 import asiankoala.ftc2022.sunmi.commands.sequence.IdleSeq
 import asiankoala.ftc2022.sunmi.commands.subsystem.DriveCmd
@@ -20,10 +21,11 @@ import kotlin.math.min
 
 @TeleOp(name = "TELEOP がんばれニールくん！！！(ﾐ꒡ᆽ꒡ﾐ)/ᐠ_ ꞈ _ᐟ\\")
 class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
-    private val sunmi by lazy { Sunmi(Pose()) }
+    private lateinit var sunmi: Sunmi
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
+        sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.unregister()
 //        sunmi.odo.unregister()
         sunmi.drive.defaultCommand = DriveCmd(sunmi.drive, driver.leftStick, driver.rightStick)
@@ -51,7 +53,7 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
     }
 
     override fun mStart() {
-        + IdleSeq(sunmi)
+//        + IdleSeq(sunmi)
     }
 
     override fun mLoop() {
@@ -61,5 +63,6 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
         Logger.addTelemetryData("stack", sunmi.stack)
         Logger.addTelemetryData("state", sunmi.state)
         Logger.addTelemetryData("sensor", sunmi.claw.lastRead)
+        Logger.drawRobot(sunmi.drive.pose)
     }
 }

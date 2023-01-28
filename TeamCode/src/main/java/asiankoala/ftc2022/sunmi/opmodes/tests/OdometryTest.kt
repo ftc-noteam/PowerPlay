@@ -13,7 +13,7 @@ import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
-@TeleOp
+//@TeleOp
 class OdometryTest : KOpMode(true, 8) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG

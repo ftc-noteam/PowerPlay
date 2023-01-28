@@ -21,7 +21,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 @Autonomous
 class StraightLineTest : KOpMode() {
     private val path = HermitePath(
-        { 0.0 },
+        { t, s -> 0.0 },
         Pose(),
         Pose(24.0)
     )

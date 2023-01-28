@@ -2,12 +2,12 @@ package asiankoala.ftc2022.sunmi.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.commands.sequence.Soyeon
+import asiankoala.ftc2022.sunmi.subsystems.BasedGVFController
 import asiankoala.ftc2022.sunmi.subsystems.constants.SimpleGVFConstants
 import com.asiankoala.koawalib.command.commands.GVFCmd
 import com.asiankoala.koawalib.path.HermitePath
 import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.path.gvf.GVFController
-import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 
 class CommandPathGen(private val sunmi: Sunmi) {
     private fun genGVFController(
@@ -18,18 +18,19 @@ class CommandPathGen(private val sunmi: Sunmi) {
         kS: Double = SimpleGVFConstants.kS,
         epsilon: Double = SimpleGVFConstants.epsilon,
         thetaEpsilon: Double = SimpleGVFConstants.thetaEpsilon,
-        errorMap: (Double) -> Double = SimpleGVFConstants.errorMap
-    ) : GVFController = SimpleGVFController(
+        errorMap: (Double) -> Double = SimpleGVFConstants.errorMap,
+        epsilonToPID: Double = SimpleGVFConstants.epsilonToPID
+    ) : GVFController = BasedGVFController(
         path,
         sunmi.drive,
-        kN, kOmega, kF, kS, epsilon, thetaEpsilon, errorMap
+        kN, kOmega, kF, kS, epsilon, thetaEpsilon, errorMap, epsilonToPID
     )
 
     val firstDepositNoCmd = GVFCmd(sunmi.drive, genGVFController(initPath))
     val firstDepositWithCmd = GVFCmd(
         sunmi.drive,
         genGVFController(initPath),
-        ProjQuery(Soyeon(sunmi), 0.5)
+        ProjQuery(Soyeon(sunmi), 0.4)
     )
 
     val intakeNoCmd = GVFCmd(sunmi.drive, genGVFController(intakePath))

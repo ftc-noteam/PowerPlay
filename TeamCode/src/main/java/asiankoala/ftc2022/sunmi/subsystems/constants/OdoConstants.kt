@@ -6,5 +6,5 @@ import com.acmerobotics.dashboard.config.Config
 object OdoConstants {
     const val ticksPerUnit = 1892.3724
     @JvmField var TRACK_WIDTH = (13.7 * 2.0) / 2.54 // prayge johnathan
-    @JvmField var PERP_TRACKER = -6.146
+    @JvmField var PERP_TRACKER = -5.0903
 }
