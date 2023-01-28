@@ -9,6 +9,7 @@ import asiankoala.ftc2022.sunmi.commands.subsystem.DriveCmd
 import asiankoala.ftc2022.sunmi.commands.subsystem.SunmiStratCmd
 import asiankoala.ftc2022.sunmi.subsystems.constants.DriveConstants
 import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.commands.Cmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
@@ -26,15 +27,18 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
         sunmi.vision.unregister()
         sunmi.odo.unregister()
         sunmi.drive.defaultCommand = DriveCmd(sunmi.drive, driver.leftStick, driver.rightStick)
+        configureGamepad()
     }
 
     private fun configureGamepad() {
-        driver.leftStick.setXRateLimiter(DriveConstants.xLimiter)
-        driver.leftStick.setYRateLimiter(DriveConstants.yLimiter)
-        driver.rightStick.setXRateLimiter(DriveConstants.rLimiter)
-        driver.rightTrigger.scheduleConditional(
-            GIDLE(sunmi, driver.rightTrigger::isJustPressed)
-                .cancelIf(driver.a::isJustPressed)) { sunmi.state == State.IDLE}
+        + object : Cmd() {
+            override fun execute() {
+                if(driver.rightTrigger.isJustPressed && sunmi.state == State.IDLE) {
+                    + GIDLE(sunmi, driver.rightTrigger::isJustPressed)
+                        .cancelIf(driver.a::isJustPressed)
+                }
+            }
+        }
         driver.a.onPress(IdleSeq(sunmi))
         driver.rightBumper.onPress(SunmiStratCmd(sunmi, Strategy.MED))
         driver.y.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))

@@ -13,7 +13,7 @@ class DriveCmd(
     private val leftStick: KStick,
     private val rightStick: KStick
 ) : Cmd() {
-    private val fastScalars = listOf(1.0, 1.0, 0.85)
+    private val fastScalars = listOf(1.0, 1.0, 0.7)
 
     private fun joystickFunction(s: Double, k: Double, x: Double): Double {
         return max(0.0, s * x * (k * x.pow(3) - k + 1)) * x.sign

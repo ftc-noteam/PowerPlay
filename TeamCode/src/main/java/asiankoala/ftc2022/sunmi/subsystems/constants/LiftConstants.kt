@@ -8,8 +8,8 @@ object LiftConstants {
     @JvmField var kI = 0.0
     @JvmField var kD = 0.006
     @JvmField var kG = 0.1
-    @JvmField var vel = 100.0
-    @JvmField var accel = 100.0
+    @JvmField var vel = 140.0
+    @JvmField var accel = 140.0
     @JvmField var home = 0.0
     @JvmField var ground = 0.0
     @JvmField var juncMult = 10.0
