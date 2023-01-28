@@ -17,17 +17,18 @@ object MM {
 
 
         val bot = DefaultBotBuilder(mm)
-            .setConstraints(80.0, 80.0, 180.0.radians, 180.0.radians, 13.3)
+            .setConstraints(60.0, 60.0, 180.0.radians, 180.0.radians, 13.3)
             .setDimensions(13.3, 13.3)
             .followTrajectorySequence {
-                it.trajectorySequenceBuilder(Pose2d(-63.0, -32.0, 0.0))
+                it.trajectorySequenceBuilder(Pose2d(-62.0, -32.0, 0.0))
+                    .splineTo(Vector2d(-48.0, -34.0), (-10.0).radians)
                     .splineTo(Vector2d(-24.0, -36.0), 0.0)
                     .splineTo(deposit.vec(), deposit.heading)
-                    .setReversed(true)
-                    .splineTo(Vector2d(-12.0, -48.0), intake.heading)
-                    .splineTo(intake.vec(), intake.heading)
-                    .waitSeconds(conePickupTime)
-                    .setReversed(false)
+//                    .setReversed(true)
+//                    .splineTo(Vector2d(-12.0, -48.0), intake.heading)
+//                    .splineTo(intake.vec(), intake.heading)
+//                    .waitSeconds(conePickupTime)
+//                    .setReversed(false)
 
 //                    .splineTo(deposit.vec(), deposit.heading)
 //                    .setReversed(true)

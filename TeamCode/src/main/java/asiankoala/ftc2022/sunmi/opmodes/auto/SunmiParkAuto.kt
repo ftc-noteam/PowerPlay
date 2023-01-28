@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.sunmi.opmodes
+package asiankoala.ftc2022.sunmi.opmodes.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.Zones

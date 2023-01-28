@@ -52,7 +52,6 @@ class Lift(bl: KMotor) : KSubsystem() {
 
     override fun periodic() {
         chainedMotors.forEach { it.power = lt.power }
-        Logger.logInfo("is pressed", limit.invoke())
         if(isAttemptingZero && limit.invoke()) {
             lt.zero()
             isAttemptingZero = false
