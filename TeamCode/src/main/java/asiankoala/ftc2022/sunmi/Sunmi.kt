@@ -33,14 +33,14 @@ class Sunmi(pose: Pose) {
         .build()
 
     val odo = KThreeWheelOdometry(
-        EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
-        EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(br),
-        EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+        leftEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+        rightEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
+        auxEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
         OdoConstants.TRACK_WIDTH,
         OdoConstants.PERP_TRACKER,
-        pose
+        Pose()
     )
-    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, false)
+    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, true)
     val vision = Vision()
     val lift = Lift(br)
     val claw = Claw()

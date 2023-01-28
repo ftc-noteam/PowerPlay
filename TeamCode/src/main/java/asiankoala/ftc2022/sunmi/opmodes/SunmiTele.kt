@@ -25,7 +25,7 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         sunmi.vision.unregister()
-        sunmi.odo.unregister()
+//        sunmi.odo.unregister()
         sunmi.drive.defaultCommand = DriveCmd(sunmi.drive, driver.leftStick, driver.rightStick)
         configureGamepad()
     }
@@ -39,9 +39,9 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
                 }
             }
         }
-        driver.a.onPress(IdleSeq(sunmi))
+        driver.y.onPress(IdleSeq(sunmi))
         driver.rightBumper.onPress(SunmiStratCmd(sunmi, Strategy.MED))
-        driver.y.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))
+        driver.a.onPress(SunmiStratCmd(sunmi, Strategy.GROUND))
         driver.leftBumper.onPress(SunmiStratCmd(sunmi, Strategy.LOW))
         driver.leftTrigger.onPress(SunmiStratCmd(sunmi, Strategy.HIGH))
         driver.dpadRight.onPress(InstantCmd({ sunmi.stack = min(sunmi.stack + 1, 5) }))
