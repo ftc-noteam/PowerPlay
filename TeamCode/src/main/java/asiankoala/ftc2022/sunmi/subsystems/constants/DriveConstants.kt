@@ -4,6 +4,6 @@ import com.acmerobotics.dashboard.config.Config
 
 @Config
 object DriveConstants {
-    @JvmField var blKStatic = 0.05
-    @JvmField var brKStatic = 0.09
+    @JvmField var blKStatic = 0.1
+    @JvmField var brKStatic = 0.1
 }
