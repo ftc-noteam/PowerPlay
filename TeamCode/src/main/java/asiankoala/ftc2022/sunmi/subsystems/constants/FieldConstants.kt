@@ -10,7 +10,7 @@ object FieldConstants {
     @JvmField var depositY = -28.7
     @JvmField var depositHeading = 65.0
     @JvmField var headingControllerDepositAngle = 45.0
-    @JvmField var afterDepositX = -4.0
+    @JvmField var afterDepositX = -4.2
     @JvmField var afterDepositY = -29.0
     @JvmField var afterDepositHeading = 45.0
 }

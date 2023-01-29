@@ -6,6 +6,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
 @Autonomous
 class SunmiLeftAuto : SunmiRightAuto() {
-    override val autoPaths by lazy { leftAutoPaths }
+//    override val autoPaths by lazy { leftAutoPaths }
     override val startPose by lazy { flipPose(rightSideRobotStartPose) }
 }
