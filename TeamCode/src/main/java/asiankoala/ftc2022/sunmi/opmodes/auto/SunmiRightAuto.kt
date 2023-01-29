@@ -4,7 +4,6 @@ import asiankoala.ftc2022.sunmi.Strategy
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.Zones
 import asiankoala.ftc2022.sunmi.auto.*
-import asiankoala.ftc2022.sunmi.commands.sequence.IdleSeq
 import asiankoala.ftc2022.sunmi.commands.subsystem.*
 import asiankoala.ftc2022.sunmi.subsystems.constants.LiftConstants
 import com.asiankoala.koawalib.command.KOpMode
@@ -13,20 +12,19 @@ import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
+import com.asiankoala.koawalib.hardware.motor.KMotor
 import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.logger.LoggerConfig
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @Autonomous
-open class SunmiRightAuto : KOpMode(true, 8) {
+class SunmiRightAuto : KOpMode(true, 8) {
     private lateinit var sunmi: Sunmi
-    protected open val autoPaths by lazy { rightAutoPaths }
-    protected open val startPose by lazy { rightSideRobotStartPose }
 
     override fun mInit() {
-        Logger.config = LoggerConfig.DASHBOARD_CONFIG
+        Logger.config = LoggerConfig.SIMPLE_CONFIG
+        KMotor.setVoltageConstant(12.7)
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.start()
         sunmi.strat = Strategy.HIGH
@@ -39,31 +37,35 @@ open class SunmiRightAuto : KOpMode(true, 8) {
             JustDepositSeq(sunmi),
 
             gen.intakeWithCmd(LiftConstants.fiveHeight),
-            WaitCmd(0.3),
             AutoIntakeSeq(sunmi),
             gen.depositWithCmd,
             JustDepositSeq(sunmi),
 
             gen.intakeWithCmd(LiftConstants.fourHeight),
-            WaitCmd(0.3),
             AutoIntakeSeq(sunmi),
             gen.depositWithCmd,
             JustDepositSeq(sunmi),
 
             gen.intakeWithCmd(LiftConstants.threeHeight),
-            WaitCmd(0.3),
             AutoIntakeSeq(sunmi),
             gen.depositWithCmd,
             JustDepositSeq(sunmi),
 
+            gen.medPark,
+            WaitCmd(0.2),
+
             ChooseCmd(
                 gen.leftPark,
                 ChooseCmd(
-                    gen.midPark,
+                    InstantCmd({}),
                     gen.rightPark
                 ) { sunmi.vision.zone == Zones.MIDDLE }
             ) { sunmi.vision.zone == Zones.LEFT },
         )
+    }
+
+    override fun mInitLoop() {
+        Logger.addTelemetryData("zone", sunmi.vision.zone)
     }
 
     override fun mStart() {

@@ -18,19 +18,19 @@ object MM {
         val conePickupTime = 0.5
 
 
-        val bot = DefaultBotBuilder(mm)
-            .setConstraints(60.0, 60.0, 180.0.radians, 180.0.radians, 13.3)
-            .setDimensions(13.3, 13.3)
-            .followTrajectorySequence {
-                it.trajectorySequenceBuilder(Pose2d(parkLeftStartPose.x, parkLeftStartPose.y, parkLeftStartPose.heading))
-                    .splineToSplineHeading(Pose2d(parkLeftEndPose.x, parkLeftEndPose.y, (180.0).radians), 90.0.radians)
-
-                    .build()
-            }
-
-        mm.setBackground(MeepMeep.Background.FIELD_POWERPLAY_KAI_DARK)
-            .setDarkMode(true)
-            .addEntity(bot)
-            .start()
+//        val bot = DefaultBotBuilder(mm)
+//            .setConstraints(60.0, 60.0, 180.0.radians, 180.0.radians, 13.3)
+//            .setDimensions(13.3, 13.3)
+//            .followTrajectorySequence {
+//                it.trajectorySequenceBuilder(Pose2d(parkLeftStartPose.x, parkLeftStartPose.y, parkLeftStartPose.heading))
+//                    .splineToSplineHeading(Pose2d(parkLeftEndPose.x, parkLeftEndPose.y, (180.0).radians), 90.0.radians)
+//
+//                    .build()
+//            }
+//
+//        mm.setBackground(MeepMeep.Background.FIELD_POWERPLAY_KAI_DARK)
+//            .setDarkMode(true)
+//            .addEntity(bot)
+//            .start()
     }
 }

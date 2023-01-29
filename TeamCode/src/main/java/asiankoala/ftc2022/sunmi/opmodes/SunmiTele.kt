@@ -53,7 +53,7 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
     }
 
     override fun mStart() {
-//        + IdleSeq(sunmi)
+        + IdleSeq(sunmi)
     }
 
     override fun mLoop() {
@@ -63,6 +63,5 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
         Logger.addTelemetryData("stack", sunmi.stack)
         Logger.addTelemetryData("state", sunmi.state)
         Logger.addTelemetryData("sensor", sunmi.claw.lastRead)
-        Logger.drawRobot(sunmi.drive.pose)
     }
 }

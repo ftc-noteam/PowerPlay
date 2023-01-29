@@ -9,22 +9,22 @@ import com.asiankoala.koawalib.path.HermitePath
 
 fun Pose.headingFlip() = copy(heading = (this.heading + 180.0.radians).angleWrap)
 val rightSideRobotStartPose = Pose(FieldConstants.startX, FieldConstants.startY, 180.0.radians)
-val firstDepositPathStartPose = rightSideRobotStartPose.headingFlip()
-val firstDepositPathFirstMediumPose = Pose(-48.0, -34.75, (-10.0).radians)
-val firstDepositPathSecondMediumPose = Pose(-24.0, -36.0, 0.0)
-val depositPose = Pose(FieldConstants.depositX, FieldConstants.depositY, FieldConstants.depositHeading.radians)
-val intakePathStartPose = depositPose.headingFlip()
-val intakePathMediumPose = Pose(-12.0, -48.0, 270.0.radians)
-val intakePathEndPose = Pose(-12.4, -60.9, 270.0.radians)
-val depositPathStartPose = intakePathEndPose.headingFlip()
-val depositPathMediumPose = intakePathMediumPose.headingFlip().copy(x = -10.0, y = -36.0, heading = 65.0.radians)
-val afterDepositPose = Pose(FieldConstants.afterDepositX, FieldConstants.afterDepositY, FieldConstants.afterDepositHeading.radians)
-val parkMiddleStartPose = afterDepositPose.copy(x = -4.0, heading = (-135.0).radians)
-val parkMiddleEndPose = Pose(-12.0, -36.0, (-135.0).radians)
-val parkLeftStartPose = parkMiddleStartPose
-val parkLeftEndPose = Pose(-12.0, -12.0, 90.0.radians)
-val parkRightStartPose = parkMiddleStartPose
-val parkRightEndPose = Pose(-12.0, -58.0, (-90.0).radians)
+private val firstDepositPathStartPose = rightSideRobotStartPose.headingFlip()
+private val firstDepositPathFirstMediumPose = Pose(-48.0, -34.75, (-10.0).radians)
+private val firstDepositPathSecondMediumPose = Pose(-24.0, -36.0, 0.0)
+private val depositPose = Pose(FieldConstants.depositX, FieldConstants.depositY, FieldConstants.depositHeading.radians)
+private val intakePathStartPose = depositPose.headingFlip()
+private val intakePathMediumPose = Pose(-12.0, -48.0, 270.0.radians)
+private val intakePathEndPose = Pose(-12.4, -60.9, 270.0.radians)
+private val depositPathStartPose = intakePathEndPose.headingFlip()
+private val depositPathMediumPose = intakePathMediumPose.headingFlip().copy(x = -11.0, y = -34.0, heading = 65.0.radians)
+private val afterDepositPose = Pose(FieldConstants.afterDepositX, FieldConstants.afterDepositY, FieldConstants.afterDepositHeading.radians)
+
+private val rightParkStartPose = afterDepositPose.copy(x = -4.0, heading = (-135.0).radians)
+private val rightParkMediumEndPose = Pose(-12.0, -42.0, (-135.0).radians)
+
+private val rightParkLeftEndPose = Pose(-12.0, -13.5, 90.0.radians)
+private val rightParkRightEndPose = Pose(-12.0, -58.0, (-90.0).radians)
 
 private val initPath = HermitePath(
     HeadingController { v, t -> if(t < 0.55) v.angle else FieldConstants.headingControllerDepositAngle.radians }.flip(),
@@ -48,22 +48,22 @@ private val depositPath = HermitePath(
     afterDepositPose
 )
 
-private val leftParkPath = HermitePath(
-    { _, _ -> (-90.0).radians },
-    parkLeftStartPose,
-    parkLeftEndPose
+private val rightParkMediumPath = HermitePath(
+    { _, _, -> 90.0.radians },
+    rightParkStartPose,
+    rightParkMediumEndPose
 )
 
-private val middleParkPath = HermitePath(
-    { _, _ -> (-90.0).radians },
-    parkMiddleStartPose,
-    parkMiddleEndPose
+private val rightParkLeftPath = HermitePath(
+    { _, _, -> 90.0.radians },
+    rightParkMediumEndPose.copy(heading = 90.0.radians),
+    rightParkLeftEndPose
 )
 
-private val rightParkPath = HermitePath(
-    { _, _ -> (-90.0).radians },
-    parkRightStartPose,
-    parkRightEndPose
+private val rightParkRightPath = HermitePath(
+    { _, _, -> 90.0.radians },
+    rightParkMediumEndPose.copy(heading = (-90.0).radians),
+    rightParkRightEndPose
 )
 
 data class AutoPaths(
@@ -72,20 +72,10 @@ data class AutoPaths(
     val initPath: HermitePath = paths[0]
     val intakePath: HermitePath = paths[1]
     val depositPath: HermitePath = paths[2]
-    val leftParkPath: HermitePath = paths[3]
-    val middleParkPath: HermitePath = paths[4]
-    val rightParkPath: HermitePath = paths[5]
+    val parkMediumPath: HermitePath = paths[3]
+    val parkLeftPath: HermitePath = paths[4]
+    val parkRightPath: HermitePath = paths[5]
 }
 
-fun flipPose(it: Pose) = Pose(it.x, -it.y, -it.heading.angleWrap )
-fun flipPath(path: HermitePath) = path.map(::flipPose)
-private val rightPaths = listOf(initPath, intakePath, depositPath, leftParkPath, middleParkPath, rightParkPath)
+private val rightPaths = listOf(initPath, intakePath, depositPath, rightParkMediumPath, rightParkLeftPath, rightParkRightPath)
 val rightAutoPaths by lazy { AutoPaths(rightPaths) }
-val leftAutoPaths by lazy { AutoPaths(listOf(
-    flipPath(initPath),
-    flipPath(intakePath),
-    flipPath(depositPath),
-    flipPath(rightParkPath),
-    flipPath(middleParkPath),
-    flipPath(leftParkPath)
-)) }
