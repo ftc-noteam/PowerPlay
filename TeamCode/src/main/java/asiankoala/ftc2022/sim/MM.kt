@@ -1,5 +1,8 @@
 package asiankoala.ftc2022.sim
 
+import asiankoala.ftc2022.sunmi.auto.afterDepositPose
+import asiankoala.ftc2022.sunmi.auto.depositPathMediumPose
+import asiankoala.ftc2022.sunmi.auto.depositPathStartPose
 import asiankoala.ftc2022.sunmi.auto.intakePathEndPose
 import asiankoala.ftc2022.sunmi.subsystems.constants.FieldConstants
 import com.acmerobotics.roadrunner.geometry.Pose2d
@@ -22,24 +25,9 @@ object MM {
             .setConstraints(60.0, 60.0, 180.0.radians, 180.0.radians, 13.3)
             .setDimensions(13.3, 13.3)
             .followTrajectorySequence {
-                it.trajectorySequenceBuilder(Pose2d(intakePathEndPose.x, intakePathEndPose.y, 90.0.radians))
-                    .splineTo(Vector2d(-12.0, -52.0), 100.0)
-                    .splineTo(Vector2d(-18.0, -48.0), 135.0.radians)
-//                    .splineTo(Vector2d(-26.0, -54.0), 135.0.radians)
-//                    .splineTo(Vector2d(-48.0, -34.0), (-10.0).radians)
-//                    .splineTo(Vector2d(-24.0, -38.0), 0.0)
-//                    .splineTo(Vector2d(FieldConstants.depositX, FieldConstants.depositY), 45.0.radians)
-//                    .setReversed(true)
-//                    .splineTo(Vector2d(-12.0, -48.0), intake.heading)
-//                    .splineTo(intake.vec(), intake.heading)
-//                    .waitSeconds(conePickupTime)
-//                    .setReversed(false)
-
-//                    .splineTo(deposit.vec(), deposit.heading)
-//                    .setReversed(true)
-//                    .splineTo(intake.vec(), intake.heading)
-//                    .waitSeconds(conePickupTime)
-//                    .setReversed(false)
+                it.trajectorySequenceBuilder(Pose2d(depositPathStartPose.x, depositPathStartPose.y, depositPathStartPose.heading))
+                    .splineTo(Vector2d(depositPathMediumPose.x, depositPathMediumPose.y), depositPathMediumPose.heading)
+                    .splineTo(Vector2d(afterDepositPose.x, afterDepositPose.y), afterDepositPose.heading)
 
                     .build()
             }

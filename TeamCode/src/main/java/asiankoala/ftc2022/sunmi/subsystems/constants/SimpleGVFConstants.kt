@@ -14,7 +14,7 @@ object SimpleGVFConstants {
     @JvmField var epsilon = 3.0
     @JvmField var thetaEpsilon = 5.0
     @JvmField var kP = 0.09
-    @JvmField var epsilonToPID = 6.0
+    @JvmField var epsilonToPID = 4.0
     @JvmField var kD = 0.0015
     val errorMap: (Double) -> Double = { it }
 }

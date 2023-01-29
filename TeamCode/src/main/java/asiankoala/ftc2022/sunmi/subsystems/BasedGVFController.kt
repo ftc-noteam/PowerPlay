@@ -27,10 +27,10 @@ class BasedGVFController(
     private val epsilon: Double,
     private val thetaEpsilon: Double,
     private val errorMap: (Double) -> Double = { it },
-    private val epsilonToUsePID: Double = 8.0
+    private val epsilonToUsePID: Double = 4.0,
+    private val pidControlEnabled: Boolean = false
 ) : GVFController {
     private var pose: Pose = Pose()
-    private val pidControlEnabled = false
     private var headingError = 0.0
 
     override var s: Double = 0.0

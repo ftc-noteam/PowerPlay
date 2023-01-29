@@ -18,4 +18,10 @@ object LiftConstants {
     @JvmField var high = low + juncMult * 2.0
     @JvmField var lowAutoDepositUp = 10.0
     @JvmField var lowAutoDepositDown = 6.5
+    private fun getStackHeight(n: Int) = n - 1.2
+    val fiveHeight = getStackHeight(5)
+    val fourHeight = getStackHeight(4)
+    val threeHeight = getStackHeight(3)
+    val twoHeight = getStackHeight(2)
+    val oneHeight = getStackHeight(1)
 }

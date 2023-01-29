@@ -10,6 +10,7 @@ import com.asiankoala.koawalib.hardware.motor.EncoderFactory
 import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
+import com.asiankoala.koawalib.subsystem.odometry.KOffsetOdometry
 import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
 class Sunmi(pose: Pose) {
@@ -32,11 +33,20 @@ class Sunmi(pose: Pose) {
         .forward
         .build()
 
-    val odo = KThreeWheelOdometry(
+//    val odo = KThreeWheelOdometry(
+//        leftEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
+//        rightEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
+//        auxEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
+//        OdoConstants.TRACK_WIDTH,
+//        OdoConstants.PERP_TRACKER,
+//        pose
+//    )
+    val odo = KOffsetOdometry(
         leftEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fr),
         rightEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(fl),
         auxEncoder = EncoderFactory(OdoConstants.ticksPerUnit).revEncoder.build(bl),
-        OdoConstants.TRACK_WIDTH,
+        OdoConstants.LEFT_OFFSET,
+        OdoConstants.RIGHT_OFFSET,
         OdoConstants.PERP_TRACKER,
         pose
     )

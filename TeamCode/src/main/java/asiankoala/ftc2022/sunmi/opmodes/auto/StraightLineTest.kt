@@ -18,7 +18,6 @@ import com.asiankoala.koawalib.path.gvf.SimpleGVFController
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
-@Autonomous
 class StraightLineTest : KOpMode() {
     private val path = HermitePath(
         { t, s -> 0.0 },

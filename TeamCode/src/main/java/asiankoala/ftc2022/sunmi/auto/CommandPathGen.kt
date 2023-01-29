@@ -35,20 +35,24 @@ class CommandPathGen(private val sunmi: Sunmi) {
         ProjQuery(Soyeon(sunmi), 0.4)
     )
 
-    val intakeWithCmd = GVFCmd(
+    fun intakeWithCmd(height: Double) = GVFCmd(
         sunmi.drive,
         genGVFController(
-            intakePath,
-            kF = 8.0,
-            kOmega = 25.0,
+        intakePath,
+        kF = 4.0,
+        kOmega = 20.0,
+        epsilon = 2.0
         ),
-        ProjQuery(LiftCmd(sunmi.lift, sunmi.stackHeight)
-            .andThen(InstantCmd({ Logger.logInfo("STACK AT ${sunmi.stack}") })), 0.2),
+        ProjQuery(LiftCmd(sunmi.lift, height), 0.2),
     )
 
     val depositWithCmd = GVFCmd(
         sunmi.drive,
-        genGVFController(depositPath),
+        genGVFController(
+            depositPath,
+            kF = 6.0,
+            kOmega = 25.0,
+        ),
         ProjQuery(Soyeon(sunmi), 0.2)
     )
 

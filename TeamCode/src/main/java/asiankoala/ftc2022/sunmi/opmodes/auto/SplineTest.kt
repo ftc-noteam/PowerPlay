@@ -17,7 +17,6 @@ import com.asiankoala.koawalib.path.Path
 import com.asiankoala.koawalib.util.OpModeState
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 
-@Autonomous
 class SplineTest : KOpMode() {
     private val path = HermitePath(
         DEFAULT_HEADING_CONTROLLER,
