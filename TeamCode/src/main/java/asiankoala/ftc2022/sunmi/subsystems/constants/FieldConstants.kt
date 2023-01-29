@@ -6,9 +6,9 @@ import com.asiankoala.koawalib.math.radians
 
 @Config
 object FieldConstants {
-    @JvmField var startX = -61.3
+    @JvmField var startX = -62.6
     @JvmField var startY = -33.0
-    @JvmField var depositX = -6.9
+    @JvmField var depositX = -7.8 // used to be 8.0
     @JvmField var depositY = -28.7
     @JvmField var depositHeading = 65.0
     @JvmField var headingControllerDepositAngle = 45.0
