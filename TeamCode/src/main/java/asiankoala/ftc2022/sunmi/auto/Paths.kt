@@ -19,10 +19,6 @@ val intakePathEndPose = Pose(-12.4, -60.9, 270.0.radians)
 val depositPathStartPose = intakePathEndPose.headingFlip()
 val depositPathMediumPose = intakePathMediumPose.headingFlip().copy(x = -10.0, y = -36.0, heading = 65.0.radians)
 val afterDepositPose = Pose(FieldConstants.afterDepositX, FieldConstants.afterDepositY, FieldConstants.afterDepositHeading.radians)
-val lowDepositPathStartPose = intakePathEndPose.copy(heading = 90.0.radians)
-val lowDepositPathEndPose = Pose(-12.0, -52.0, 90.0.radians)
-val lowIntakePathStartPose = lowDepositPathEndPose.copy(heading = 270.0.radians)
-val lowIntakePathEndPose = lowDepositPathStartPose.copy(heading = 270.0.radians)
 val parkMiddleStartPose = afterDepositPose.copy(heading = (-135.0).radians)
 val parkMiddleEndPose = Pose(-12.0, -36.0, (-135.0).radians)
 val parkLeftStartPose = parkMiddleStartPose
@@ -30,7 +26,7 @@ val parkLeftEndPose = Pose(-12.0, -12.0, 90.0.radians)
 val parkRightStartPose = parkMiddleStartPose
 val parkRightEndPose = Pose(-12.0, -50.0, (-90.0).radians)
 
-val initPath = HermitePath(
+private val initPath = HermitePath(
     HeadingController { v, t -> if(t < 0.55) v.angle else FieldConstants.headingControllerDepositAngle.radians }.flip(),
     firstDepositPathStartPose,
     firstDepositPathFirstMediumPose,
@@ -38,46 +34,51 @@ val initPath = HermitePath(
     depositPose
 )
 
-val intakePath = HermitePath(
-    { v, t -> 270.0.radians.angleWrap },
+private val intakePath = HermitePath(
+    { _, _-> 270.0.radians.angleWrap },
     intakePathStartPose,
     intakePathMediumPose,
     intakePathEndPose
 )
 
-val depositPath = HermitePath(
+private val depositPath = HermitePath(
     HeadingController { v, t -> if(t < 0.2) v.angle else FieldConstants.headingControllerDepositAngle.radians }.flip(),
     depositPathStartPose,
     depositPathMediumPose,
     afterDepositPose
 )
 
-val lowDepositPath = HermitePath(
-    { v, t -> if(t > 0.2) (-45.0).radians else (-90.0).radians },
-    lowDepositPathStartPose,
-    lowDepositPathEndPose
-)
-
-val lowIntakePath = HermitePath(
-    { _, _ -> (-90.0).radians },
-    lowIntakePathStartPose,
-    lowIntakePathEndPose
-)
-
-val leftParkPath = HermitePath(
-    { _, _ -> (-90.0).radians },
+private val leftParkPath = HermitePath(
+    { _, _ -> 180.0.radians },
     parkLeftStartPose,
     parkLeftEndPose
 )
 
-val middleParkPath = HermitePath(
-    { _, _ -> (-90.0).radians },
+private val middleParkPath = HermitePath(
+    { _, _ -> 180.0.radians },
     parkMiddleStartPose,
     parkMiddleEndPose
 )
 
-val rightParkPath = HermitePath(
+private val rightParkPath = HermitePath(
     { _, _ -> (-90.0).radians },
     parkRightStartPose,
     parkRightEndPose
 )
+
+data class AutoPaths(
+    val paths: List<HermitePath>
+) {
+    val initPath: HermitePath = paths[0]
+    val intakePath: HermitePath = paths[1]
+    val depositPath: HermitePath = paths[2]
+    val leftParkPath: HermitePath = paths[3]
+    val middleParkPath: HermitePath = paths[4]
+    val rightParkPath: HermitePath = paths[5]
+}
+
+fun flipPose(it: Pose) = Pose(it.x, -it.y, -it.heading.angleWrap )
+fun flipPath(path: HermitePath) = path.map(::flipPose)
+private val rightPaths = listOf(initPath, intakePath, depositPath, leftParkPath, middleParkPath, rightParkPath)
+val rightAutoPaths = AutoPaths(rightPaths)
+val leftAutoPaths = AutoPaths(rightPaths.map(::flipPath))

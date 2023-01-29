@@ -24,10 +24,10 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
     private lateinit var sunmi: Sunmi
 
     override fun mInit() {
-        Logger.config = LoggerConfig.DASHBOARD_CONFIG
+        Logger.config = LoggerConfig.SIMPLE_CONFIG
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.unregister()
-//        sunmi.odo.unregister()
+        sunmi.odo.unregister()
         sunmi.drive.defaultCommand = DriveCmd(sunmi.drive, driver.leftStick, driver.rightStick)
         configureGamepad()
     }

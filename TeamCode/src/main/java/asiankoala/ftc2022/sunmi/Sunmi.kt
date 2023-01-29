@@ -11,7 +11,6 @@ import com.asiankoala.koawalib.hardware.motor.MotorFactory
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.subsystem.drive.KMecanumOdoDrive
 import com.asiankoala.koawalib.subsystem.odometry.KOffsetOdometry
-import com.asiankoala.koawalib.subsystem.odometry.KThreeWheelOdometry
 
 class Sunmi(pose: Pose) {
     private val fl = MotorFactory("fl")
@@ -50,7 +49,7 @@ class Sunmi(pose: Pose) {
         OdoConstants.PERP_TRACKER,
         pose
     )
-    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, true)
+    val drive = KMecanumOdoDrive(fl, bl, br, fr, odo, false)
     val vision = Vision()
     val lift = Lift(br)
     val claw = Claw()

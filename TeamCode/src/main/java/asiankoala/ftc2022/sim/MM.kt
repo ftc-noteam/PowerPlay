@@ -1,9 +1,6 @@
 package asiankoala.ftc2022.sim
 
-import asiankoala.ftc2022.sunmi.auto.afterDepositPose
-import asiankoala.ftc2022.sunmi.auto.depositPathMediumPose
-import asiankoala.ftc2022.sunmi.auto.depositPathStartPose
-import asiankoala.ftc2022.sunmi.auto.intakePathEndPose
+import asiankoala.ftc2022.sunmi.auto.*
 import asiankoala.ftc2022.sunmi.subsystems.constants.FieldConstants
 import com.acmerobotics.roadrunner.geometry.Pose2d
 import com.acmerobotics.roadrunner.geometry.Vector2d
@@ -25,9 +22,8 @@ object MM {
             .setConstraints(60.0, 60.0, 180.0.radians, 180.0.radians, 13.3)
             .setDimensions(13.3, 13.3)
             .followTrajectorySequence {
-                it.trajectorySequenceBuilder(Pose2d(depositPathStartPose.x, depositPathStartPose.y, depositPathStartPose.heading))
-                    .splineTo(Vector2d(depositPathMediumPose.x, depositPathMediumPose.y), depositPathMediumPose.heading)
-                    .splineTo(Vector2d(afterDepositPose.x, afterDepositPose.y), afterDepositPose.heading)
+                it.trajectorySequenceBuilder(Pose2d(parkLeftStartPose.x, parkLeftStartPose.y, parkLeftStartPose.heading))
+                    .splineToSplineHeading(Pose2d(parkLeftEndPose.x, parkLeftEndPose.y, (180.0).radians), 90.0.radians)
 
                     .build()
             }

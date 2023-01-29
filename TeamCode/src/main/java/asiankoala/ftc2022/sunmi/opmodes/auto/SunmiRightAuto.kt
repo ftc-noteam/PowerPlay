@@ -20,15 +20,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
 
 @Autonomous
-class SunmiRightAuto : KOpMode(true, 8) {
+open class SunmiRightAuto : KOpMode(true, 8) {
     private lateinit var sunmi: Sunmi
+    protected open val autoPaths by lazy { rightAutoPaths }
+    protected open val startPose by lazy { rightSideRobotStartPose }
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.start()
         sunmi.strat = Strategy.HIGH
-        val gen = CommandPathGen(sunmi)
+        val gen = CommandPathGen(sunmi, rightAutoPaths)
 
         + SequentialGroup(
             ClawCloseCmd(sunmi.claw),
@@ -54,18 +56,6 @@ class SunmiRightAuto : KOpMode(true, 8) {
             gen.depositWithCmd,
             JustDepositSeq(sunmi),
 
-//            gen.intakeWithCmd(LiftConstants.twoHeight),
-//            WaitCmd(0.3),
-//            AutoIntakeSeq(sunmi),
-//            gen.depositWithCmd,
-//            JustDepositSeq(sunmi),
-//
-//            gen.intakeWithCmd(LiftConstants.oneHeight),
-//            WaitCmd(0.3),
-//            AutoIntakeSeq(sunmi),
-//            gen.depositWithCmd,
-//            JustDepositSeq(sunmi),
-
             ChooseCmd(
                 gen.leftPark,
                 ChooseCmd(
@@ -79,9 +69,5 @@ class SunmiRightAuto : KOpMode(true, 8) {
     override fun mStart() {
         sunmi.vision.stop()
         sunmi.vision.unregister()
-    }
-
-    override fun mLoop() {
-        Logger.drawRobot(sunmi.drive.pose)
     }
 }

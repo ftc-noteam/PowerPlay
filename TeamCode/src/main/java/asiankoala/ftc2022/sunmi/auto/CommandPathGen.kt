@@ -12,7 +12,7 @@ import com.asiankoala.koawalib.path.HermitePath
 import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.path.gvf.GVFController
 
-class CommandPathGen(private val sunmi: Sunmi) {
+class CommandPathGen(private val sunmi: Sunmi, private val autoPaths: AutoPaths) {
     private fun genGVFController(
         path: HermitePath,
         kN: Double = SimpleGVFConstants.kN,
@@ -31,14 +31,14 @@ class CommandPathGen(private val sunmi: Sunmi) {
 
     val firstDepositWithCmd = GVFCmd(
         sunmi.drive,
-        genGVFController(initPath),
+        genGVFController(autoPaths.initPath),
         ProjQuery(Soyeon(sunmi), 0.4)
     )
 
     fun intakeWithCmd(height: Double) = GVFCmd(
         sunmi.drive,
         genGVFController(
-        intakePath,
+        autoPaths.intakePath,
         kF = 4.0,
         kOmega = 20.0,
         epsilon = 2.0
@@ -49,34 +49,14 @@ class CommandPathGen(private val sunmi: Sunmi) {
     val depositWithCmd = GVFCmd(
         sunmi.drive,
         genGVFController(
-            depositPath,
+            autoPaths.depositPath,
             kF = 6.0,
             kOmega = 25.0,
         ),
         ProjQuery(Soyeon(sunmi), 0.2)
     )
 
-    val lowDeposit = GVFCmd(
-        sunmi.drive,
-        genGVFController(
-            lowDepositPath,
-            kF = 5.0,
-            kOmega = 25.0,
-        ),
-    )
-
-    val lowIntake = GVFCmd(
-        sunmi.drive,
-        genGVFController(
-            lowIntakePath,
-            kF = 4.0,
-            kOmega = 25.0,
-            epsilon = 2.0,
-            thetaEpsilon = 2.0
-        ),
-    )
-
-    val leftPark = GVFCmd(sunmi.drive, genGVFController(leftParkPath))
-    val midPark = GVFCmd(sunmi.drive, genGVFController(middleParkPath))
-    val rightPark = GVFCmd(sunmi.drive, genGVFController(rightParkPath))
+    val leftPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.leftParkPath))
+    val midPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.middleParkPath))
+    val rightPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.rightParkPath))
 }

@@ -1,4 +1,4 @@
-package asiankoala.ftc2022.sunmi.opmodes.auto
+package asiankoala.ftc2022.sunmi.opmodes.tests
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.subsystems.BasedGVFController
