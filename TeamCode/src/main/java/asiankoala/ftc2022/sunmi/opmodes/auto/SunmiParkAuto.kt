@@ -2,6 +2,7 @@ package asiankoala.ftc2022.sunmi.opmodes.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.Zones
+import asiankoala.ftc2022.sunmi.subsystems.BasedGVFController
 import com.asiankoala.koawalib.command.KOpMode
 import com.asiankoala.koawalib.command.commands.ChooseCmd
 import com.asiankoala.koawalib.command.commands.GVFCmd
@@ -53,7 +54,7 @@ class SunmiParkAuto : KOpMode(photonEnabled = true) {
     fun getGVFCmd(
         sunmi: Sunmi,
         path: Path
-    ) = GVFCmd(sunmi.drive, SimpleGVFController(path, sunmi.drive, kN, kOmega, kF, kS, epsilon, thetaEpsilon))
+    ) = GVFCmd(sunmi.drive, BasedGVFController(path, sunmi.drive, kN, kOmega, kF, kS, epsilon, thetaEpsilon))
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG

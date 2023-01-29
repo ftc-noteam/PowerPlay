@@ -23,7 +23,7 @@ class SunmiRightAuto : KOpMode(true, 8) {
     private lateinit var sunmi: Sunmi
 
     override fun mInit() {
-        Logger.config = LoggerConfig.SIMPLE_CONFIG
+        Logger.config = LoggerConfig.DASHBOARD_CONFIG
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.start()
         sunmi.strat = Strategy.HIGH
@@ -35,20 +35,20 @@ class SunmiRightAuto : KOpMode(true, 8) {
             gen.firstDepositWithCmd,
             JustDepositSeq(sunmi),
 
-            gen.intakeWithCmd(LiftConstants.fiveHeight),
-            AutoIntakeSeq(sunmi),
-            gen.depositWithCmd,
-            JustDepositSeq(sunmi),
+//            gen.intakeWithCmd(LiftConstants.fiveHeight),
+//            AutoIntakeSeq(sunmi),
+//            gen.depositWithCmd,
+//            JustDepositSeq(sunmi),
 
-            gen.intakeWithCmd(LiftConstants.fourHeight),
-            AutoIntakeSeq(sunmi),
-            gen.depositWithCmd,
-            JustDepositSeq(sunmi),
-
-            gen.intakeWithCmd(LiftConstants.threeHeight),
-            AutoIntakeSeq(sunmi),
-            gen.depositWithCmd,
-            JustDepositSeq(sunmi),
+//            gen.intakeWithCmd(LiftConstants.fourHeight),
+//            AutoIntakeSeq(sunmi),
+//            gen.depositWithCmd,
+//            JustDepositSeq(sunmi),
+//
+//            gen.intakeWithCmd(LiftConstants.threeHeight),
+//            AutoIntakeSeq(sunmi),
+//            gen.depositWithCmd,
+//            JustDepositSeq(sunmi),
 
             gen.medPark,
 

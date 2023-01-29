@@ -36,7 +36,6 @@ class SunmiLeftAuto : KOpMode(true, 8) {
             JustDepositSeq(sunmi),
 
             gen.medPark,
-            WaitCmd(0.2),
 
             ChooseCmd(
                 gen.leftPark,
