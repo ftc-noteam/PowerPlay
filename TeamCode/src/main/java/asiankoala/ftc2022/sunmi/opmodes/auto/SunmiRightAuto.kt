@@ -24,7 +24,6 @@ class SunmiRightAuto : KOpMode(true, 8) {
 
     override fun mInit() {
         Logger.config = LoggerConfig.SIMPLE_CONFIG
-        KMotor.setVoltageConstant(12.7)
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.start()
         sunmi.strat = Strategy.HIGH

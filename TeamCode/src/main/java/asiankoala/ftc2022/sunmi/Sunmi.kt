@@ -16,24 +16,20 @@ class Sunmi(pose: Pose) {
     private val fl = MotorFactory("fl")
         .brake
         .reverse
-        .voltageCorrected
         .build()
     private val bl = MotorFactory("bl")
         .brake
         .reverse
         .withStaticFeedforward(DriveConstants.blKStatic)
-        .voltageCorrected
         .build()
     private val br = MotorFactory("br")
         .brake
         .forward
         .withStaticFeedforward(DriveConstants.brKStatic)
-        .voltageCorrected
         .build()
     private val fr = MotorFactory("fr")
         .brake
         .forward
-        .voltageCorrected
         .build()
 
 //    val odo = KThreeWheelOdometry(

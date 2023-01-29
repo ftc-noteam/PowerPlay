@@ -3,11 +3,15 @@ package asiankoala.ftc2022.sunmi.auto
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.commands.sequence.Soyeon
 import asiankoala.ftc2022.sunmi.commands.subsystem.ArmCmd
+import asiankoala.ftc2022.sunmi.commands.subsystem.ClawCloseCmd
+import asiankoala.ftc2022.sunmi.commands.subsystem.ClawCmd
 import asiankoala.ftc2022.sunmi.commands.subsystem.LiftCmd
 import asiankoala.ftc2022.sunmi.subsystems.BasedGVFController
 import asiankoala.ftc2022.sunmi.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.sunmi.subsystems.constants.SimpleGVFConstants
 import com.asiankoala.koawalib.command.commands.GVFCmd
+import com.asiankoala.koawalib.command.commands.WaitCmd
+import com.asiankoala.koawalib.command.group.SequentialGroup
 import com.asiankoala.koawalib.path.HermitePath
 import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.path.gvf.GVFController
@@ -54,13 +58,18 @@ class CommandPathGen(private val sunmi: Sunmi, private val autoPaths: AutoPaths)
         sunmi.drive,
         genGVFController(
             autoPaths.depositPath,
-            kF = 6.0,
+            kF = 4.5,
             kOmega = 20.0,
+            pidControlEnabled = true,
+            epsilonToPID = 4.0
         ),
         ProjQuery(Soyeon(sunmi), 0.2)
     )
 
     val leftPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkLeftPath))
-    val medPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkMediumPath), ProjQuery(ArmCmd(sunmi.arm, ArmConstants.home), 0.7))
+    val medPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkMediumPath), ProjQuery(SequentialGroup(
+        ClawCloseCmd(sunmi.claw),
+        WaitCmd(0.5),
+        ArmCmd(sunmi.arm, ArmConstants.home)), 0.7))
     val rightPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkRightPath))
 }
