@@ -37,7 +37,7 @@ class SunmiTele : KOpMode(photonEnabled = true, maxParallelCommands = 8) {
             override fun execute() {
                 if(driver.rightTrigger.isJustPressed && sunmi.state == State.IDLE) {
                     + GIDLE(sunmi, driver.rightTrigger::isJustPressed)
-                        .cancelIf(driver.a::isJustPressed)
+                        .cancelIf(driver.y::isJustPressed)
                 }
             }
         }

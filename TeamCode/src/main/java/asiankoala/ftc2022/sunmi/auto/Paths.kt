@@ -4,13 +4,10 @@ import asiankoala.ftc2022.sunmi.subsystems.constants.FieldConstants
 import com.asiankoala.koawalib.math.Pose
 import com.asiankoala.koawalib.math.angleWrap
 import com.asiankoala.koawalib.math.radians
-import com.asiankoala.koawalib.path.ConstantHeadingController
-import com.asiankoala.koawalib.path.DEFAULT_HEADING_CONTROLLER
 import com.asiankoala.koawalib.path.HeadingController
 import com.asiankoala.koawalib.path.HermitePath
 
 fun Pose.headingFlip() = copy(heading = (this.heading + 180.0.radians).angleWrap)
-// robot heading is 180, path heading is 0
 val rightSideRobotStartPose = Pose(FieldConstants.startX, FieldConstants.startY, 180.0.radians)
 val firstDepositPathStartPose = rightSideRobotStartPose.headingFlip()
 val firstDepositPathFirstMediumPose = Pose(-48.0, -34.75, (-10.0).radians)
@@ -26,6 +23,12 @@ val lowDepositPathStartPose = intakePathEndPose.copy(heading = 90.0.radians)
 val lowDepositPathEndPose = Pose(-12.0, -52.0, 90.0.radians)
 val lowIntakePathStartPose = lowDepositPathEndPose.copy(heading = 270.0.radians)
 val lowIntakePathEndPose = lowDepositPathStartPose.copy(heading = 270.0.radians)
+val parkMiddleStartPose = afterDepositPose.copy(heading = (-135.0).radians)
+val parkMiddleEndPose = Pose(-12.0, -36.0, (-135.0).radians)
+val parkLeftStartPose = parkMiddleStartPose
+val parkLeftEndPose = Pose(-12.0, -12.0, 90.0.radians)
+val parkRightStartPose = parkMiddleStartPose
+val parkRightEndPose = Pose(-12.0, -50.0, (-90.0).radians)
 
 val initPath = HermitePath(
     HeadingController { v, t -> if(t < 0.55) v.angle else FieldConstants.headingControllerDepositAngle.radians }.flip(),
@@ -59,4 +62,22 @@ val lowIntakePath = HermitePath(
     { _, _ -> (-90.0).radians },
     lowIntakePathStartPose,
     lowIntakePathEndPose
+)
+
+val leftParkPath = HermitePath(
+    { _, _ -> (-90.0).radians },
+    parkLeftStartPose,
+    parkLeftEndPose
+)
+
+val middleParkPath = HermitePath(
+    { _, _ -> (-90.0).radians },
+    parkMiddleStartPose,
+    parkMiddleEndPose
+)
+
+val rightParkPath = HermitePath(
+    { _, _ -> (-90.0).radians },
+    parkRightStartPose,
+    parkRightEndPose
 )

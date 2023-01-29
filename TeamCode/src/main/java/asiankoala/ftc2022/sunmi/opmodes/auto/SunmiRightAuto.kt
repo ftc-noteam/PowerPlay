@@ -2,11 +2,13 @@ package asiankoala.ftc2022.sunmi.opmodes.auto
 
 import asiankoala.ftc2022.sunmi.Strategy
 import asiankoala.ftc2022.sunmi.Sunmi
+import asiankoala.ftc2022.sunmi.Zones
 import asiankoala.ftc2022.sunmi.auto.*
 import asiankoala.ftc2022.sunmi.commands.sequence.IdleSeq
 import asiankoala.ftc2022.sunmi.commands.subsystem.*
 import asiankoala.ftc2022.sunmi.subsystems.constants.LiftConstants
 import com.asiankoala.koawalib.command.KOpMode
+import com.asiankoala.koawalib.command.commands.ChooseCmd
 import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
@@ -24,7 +26,7 @@ class SunmiRightAuto : KOpMode(true, 8) {
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
         sunmi = Sunmi(rightSideRobotStartPose)
-        sunmi.vision.unregister()
+        sunmi.vision.start()
         sunmi.strat = Strategy.HIGH
         val gen = CommandPathGen(sunmi)
 
@@ -52,18 +54,31 @@ class SunmiRightAuto : KOpMode(true, 8) {
             gen.depositWithCmd,
             JustDepositSeq(sunmi),
 
-            gen.intakeWithCmd(LiftConstants.twoHeight),
-            WaitCmd(0.3),
-            AutoIntakeSeq(sunmi),
-            gen.depositWithCmd,
-            JustDepositSeq(sunmi),
+//            gen.intakeWithCmd(LiftConstants.twoHeight),
+//            WaitCmd(0.3),
+//            AutoIntakeSeq(sunmi),
+//            gen.depositWithCmd,
+//            JustDepositSeq(sunmi),
+//
+//            gen.intakeWithCmd(LiftConstants.oneHeight),
+//            WaitCmd(0.3),
+//            AutoIntakeSeq(sunmi),
+//            gen.depositWithCmd,
+//            JustDepositSeq(sunmi),
 
-            gen.intakeWithCmd(LiftConstants.oneHeight),
-            WaitCmd(0.3),
-            AutoIntakeSeq(sunmi),
-            gen.depositWithCmd,
-            JustDepositSeq(sunmi),
+            ChooseCmd(
+                gen.leftPark,
+                ChooseCmd(
+                    gen.midPark,
+                    gen.rightPark
+                ) { sunmi.vision.zone == Zones.MIDDLE }
+            ) { sunmi.vision.zone == Zones.LEFT },
         )
+    }
+
+    override fun mStart() {
+        sunmi.vision.stop()
+        sunmi.vision.unregister()
     }
 
     override fun mLoop() {

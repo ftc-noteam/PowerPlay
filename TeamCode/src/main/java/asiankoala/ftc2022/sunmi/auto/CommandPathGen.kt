@@ -75,4 +75,8 @@ class CommandPathGen(private val sunmi: Sunmi) {
             thetaEpsilon = 2.0
         ),
     )
+
+    val leftPark = GVFCmd(sunmi.drive, genGVFController(leftParkPath))
+    val midPark = GVFCmd(sunmi.drive, genGVFController(middleParkPath))
+    val rightPark = GVFCmd(sunmi.drive, genGVFController(rightParkPath))
 }

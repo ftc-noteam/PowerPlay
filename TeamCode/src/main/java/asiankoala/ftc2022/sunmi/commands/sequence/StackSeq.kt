@@ -16,7 +16,5 @@ class StackSeq(sunmi: Sunmi, b: () -> Boolean) : SequentialGroup(
     ClawCloseCmd(sunmi.claw),
     WaitCmd(0.7),
     LiftCmd(sunmi.lift, 10.0),
-    WaitCmd(1.5),
-    ArmCmd(sunmi.arm, ArmConstants.deposit),
     PivotCmd(sunmi.pivot, PivotConstants.deposit)
 )
