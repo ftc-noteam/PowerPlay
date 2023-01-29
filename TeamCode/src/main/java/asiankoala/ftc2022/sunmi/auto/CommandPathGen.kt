@@ -2,9 +2,12 @@ package asiankoala.ftc2022.sunmi.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.commands.sequence.Soyeon
+import asiankoala.ftc2022.sunmi.commands.subsystem.LiftCmd
 import asiankoala.ftc2022.sunmi.subsystems.BasedGVFController
 import asiankoala.ftc2022.sunmi.subsystems.constants.SimpleGVFConstants
 import com.asiankoala.koawalib.command.commands.GVFCmd
+import com.asiankoala.koawalib.command.commands.InstantCmd
+import com.asiankoala.koawalib.logger.Logger
 import com.asiankoala.koawalib.path.HermitePath
 import com.asiankoala.koawalib.path.ProjQuery
 import com.asiankoala.koawalib.path.gvf.GVFController
@@ -26,24 +29,46 @@ class CommandPathGen(private val sunmi: Sunmi) {
         kN, kOmega, kF, kS, epsilon, thetaEpsilon, errorMap, epsilonToPID
     )
 
-    val firstDepositNoCmd = GVFCmd(sunmi.drive, genGVFController(initPath))
     val firstDepositWithCmd = GVFCmd(
         sunmi.drive,
         genGVFController(initPath),
         ProjQuery(Soyeon(sunmi), 0.4)
     )
 
-    val intakeNoCmd = GVFCmd(sunmi.drive, genGVFController(intakePath))
     val intakeWithCmd = GVFCmd(
         sunmi.drive,
-        genGVFController(intakePath),
-        ProjQuery(AutoIntakeSeq(sunmi), 1.0)
+        genGVFController(
+            intakePath,
+            kF = 8.0,
+            kOmega = 25.0,
+        ),
+        ProjQuery(LiftCmd(sunmi.lift, sunmi.stackHeight)
+            .andThen(InstantCmd({ Logger.logInfo("STACK AT ${sunmi.stack}") })), 0.2),
     )
 
-    val depositNoCmd = GVFCmd(sunmi.drive, genGVFController(depositPath))
     val depositWithCmd = GVFCmd(
         sunmi.drive,
         genGVFController(depositPath),
-        ProjQuery(Soyeon(sunmi), 0.5)
+        ProjQuery(Soyeon(sunmi), 0.2)
+    )
+
+    val lowDeposit = GVFCmd(
+        sunmi.drive,
+        genGVFController(
+            lowDepositPath,
+            kF = 5.0,
+            kOmega = 25.0,
+        ),
+    )
+
+    val lowIntake = GVFCmd(
+        sunmi.drive,
+        genGVFController(
+            lowIntakePath,
+            kF = 4.0,
+            kOmega = 25.0,
+            epsilon = 2.0,
+            thetaEpsilon = 2.0
+        ),
     )
 }

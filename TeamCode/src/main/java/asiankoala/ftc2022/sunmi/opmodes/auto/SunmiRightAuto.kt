@@ -2,16 +2,11 @@ package asiankoala.ftc2022.sunmi.opmodes.auto
 
 import asiankoala.ftc2022.sunmi.Strategy
 import asiankoala.ftc2022.sunmi.Sunmi
-import asiankoala.ftc2022.sunmi.auto.CommandPathGen
-import asiankoala.ftc2022.sunmi.auto.rightSideRobotStartPose
+import asiankoala.ftc2022.sunmi.auto.*
 import asiankoala.ftc2022.sunmi.commands.sequence.IdleSeq
-import asiankoala.ftc2022.sunmi.commands.subsystem.ClawCloseCmd
-import asiankoala.ftc2022.sunmi.commands.subsystem.ClawCmd
-import asiankoala.ftc2022.sunmi.commands.subsystem.ClawOpenCmd
-import asiankoala.ftc2022.sunmi.commands.subsystem.DriveCmd
-import asiankoala.ftc2022.sunmi.subsystems.constants.ClawConstants
+import asiankoala.ftc2022.sunmi.commands.subsystem.*
 import com.asiankoala.koawalib.command.KOpMode
-import com.asiankoala.koawalib.command.commands.LoopUntilCmd
+import com.asiankoala.koawalib.command.commands.InstantCmd
 import com.asiankoala.koawalib.command.commands.WaitCmd
 import com.asiankoala.koawalib.command.commands.WaitUntilCmd
 import com.asiankoala.koawalib.command.group.SequentialGroup
@@ -26,6 +21,7 @@ class SunmiRightAuto : KOpMode(true, 8) {
 
     override fun mInit() {
         Logger.config = LoggerConfig.DASHBOARD_CONFIG
+//        sunmi = Sunmi(rightSideRobotStartPose)
         sunmi = Sunmi(rightSideRobotStartPose)
         sunmi.vision.unregister()
         sunmi.strat = Strategy.HIGH
@@ -35,14 +31,52 @@ class SunmiRightAuto : KOpMode(true, 8) {
         sunmi.drive.defaultCommand = DriveCmd(sunmi.drive, driver.leftStick, driver.rightStick)
 
         + SequentialGroup(
-//            ClawCmd(sunmi.claw, ClawConstants.semiOpenForAuto),
-//            WaitUntilCmd(driver.rightTrigger::isJustPressed),
             ClawCloseCmd(sunmi.claw),
             WaitUntilCmd { opModeState == OpModeState.LOOP },
             gen.firstDepositWithCmd,
-            ClawOpenCmd(sunmi.claw),
-            WaitCmd(0.5),
-            IdleSeq(sunmi)
+            JustDepositSeq(sunmi),
+
+            gen.intakeWithCmd,
+            WaitCmd(0.3),
+            AutoIntakeSeq(sunmi),
+            gen.depositWithCmd,
+            JustDepositSeq(sunmi),
+
+            InstantCmd({ sunmi.stack-- }),
+
+            gen.intakeWithCmd,
+            WaitCmd(0.3),
+            AutoIntakeSeq(sunmi),
+            gen.depositWithCmd,
+            JustDepositSeq(sunmi),
+
+            InstantCmd({ sunmi.stack-- }),
+
+            gen.intakeWithCmd,
+            WaitCmd(0.3),
+            AutoIntakeSeq(sunmi),
+            gen.depositWithCmd,
+            JustDepositSeq(sunmi),
+
+            InstantCmd({ sunmi.stack-- }),
+
+
+            gen.intakeWithCmd,
+            WaitCmd(0.3),
+            AutoIntakeSeq(sunmi),
+            gen.depositWithCmd,
+            JustDepositSeq(sunmi),
+
+            InstantCmd({ sunmi.stack-- }),
+
+
+            gen.intakeWithCmd,
+            WaitCmd(0.3),
+            AutoIntakeSeq(sunmi),
+            gen.depositWithCmd,
+            JustDepositSeq(sunmi),
+
+            InstantCmd({ sunmi.stack-- }),
         )
     }
 

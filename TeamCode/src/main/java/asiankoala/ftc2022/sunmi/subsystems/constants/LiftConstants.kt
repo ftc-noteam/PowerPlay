@@ -16,4 +16,6 @@ object LiftConstants {
     @JvmField var low = 7.7
     @JvmField var med = low + juncMult
     @JvmField var high = low + juncMult * 2.0
+    @JvmField var lowAutoDepositUp = 10.0
+    @JvmField var lowAutoDepositDown = 6.5
 }
