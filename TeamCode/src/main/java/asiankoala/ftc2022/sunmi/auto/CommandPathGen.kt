@@ -2,8 +2,10 @@ package asiankoala.ftc2022.sunmi.auto
 
 import asiankoala.ftc2022.sunmi.Sunmi
 import asiankoala.ftc2022.sunmi.commands.sequence.Soyeon
+import asiankoala.ftc2022.sunmi.commands.subsystem.ArmCmd
 import asiankoala.ftc2022.sunmi.commands.subsystem.LiftCmd
 import asiankoala.ftc2022.sunmi.subsystems.BasedGVFController
+import asiankoala.ftc2022.sunmi.subsystems.constants.ArmConstants
 import asiankoala.ftc2022.sunmi.subsystems.constants.SimpleGVFConstants
 import com.asiankoala.koawalib.command.commands.GVFCmd
 import com.asiankoala.koawalib.path.HermitePath
@@ -59,6 +61,6 @@ class CommandPathGen(private val sunmi: Sunmi, private val autoPaths: AutoPaths)
     )
 
     val leftPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkLeftPath))
-    val medPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkMediumPath))
+    val medPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkMediumPath), ProjQuery(ArmCmd(sunmi.arm, ArmConstants.home), 0.7))
     val rightPark = GVFCmd(sunmi.drive, genGVFController(autoPaths.parkRightPath))
 }
